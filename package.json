@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.18.0",
+    "@iconify/react": "^3.2.1",
     "@svgr/webpack": "^6.2.1",
     "depcheck": "^1.4.3",
     "eslint": "latest",
