@@ -8,12 +8,10 @@ import { DrawerHeader } from 'components/layouts/drawer.styled.js';
 export default function Layout({ children }) {
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => {
-    debugger
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
-    debugger
     setOpen(false);
   };
   return (
