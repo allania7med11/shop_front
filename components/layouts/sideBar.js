@@ -27,7 +27,6 @@ export default function MiniDrawer({ open, handleDrawerClose }) {
           boxSizing: 'border-box',
         },
       }}
-        variant=""
         anchor="left"
         open={open}>
         <DrawerHeader>
