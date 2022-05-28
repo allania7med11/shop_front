@@ -28,6 +28,7 @@ export default function MiniDrawer({ open, handleDrawerClose }) {
         },
       }}
         anchor="left"
+        onClose={handleDrawerClose}
         open={open}>
         <DrawerHeader>
           <Button variant="text">
