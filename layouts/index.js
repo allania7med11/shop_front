@@ -19,7 +19,6 @@ export default function Layout({ children }) {
       <Navbar open={open} handleDrawerOpen={handleDrawerOpen} />
       <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
       <Main open={open}>
-        <DrawerHeader />
         {children}
       </Main>
     </>
