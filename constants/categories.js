@@ -1,13 +1,13 @@
 const productMobile = {
     name: "SAMSUNG GALAXY A03",
     price: "$256.99",
-    oldPrice: "$279.99",
+    oldPrice: "$284.99",
     image: "/static/images/mobile.png"
 }
 const productLaptop = {
     name: "HP 15DW3018NK I3 11È GÉN",
     price: "$478.99",
-    oldPrice: "$522.99",
+    oldPrice: "$542.99",
     image: "/static/images/laptop.png"
 }
 const productTv = {
