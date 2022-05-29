@@ -18,7 +18,7 @@ const productTv = {
 }
 
 export const categories = [
-    { name: "Mobiles", products: [...Array(4).keys()].map(() => productMobile)},
-    { name: "Laptops", products: [...Array(4).keys()].map(() => productLaptop) },
-    { name: "Tvs", products: [...Array(4).keys()].map(() => productTv) }
+    { name: "Mobiles", products: [...Array(5).keys()].map(() => productMobile)},
+    { name: "Laptops", products: [...Array(5).keys()].map(() => productLaptop) },
+    { name: "Tvs", products: [...Array(5).keys()].map(() => productTv) }
 ]

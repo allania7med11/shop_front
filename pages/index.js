@@ -7,7 +7,7 @@ import { Categories } from 'components/pages/index/categories';
 
 export default function Index() {
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
         <PageTitle sx={{ py: 7 }}>
           Discover Our Products and Categories

@@ -8,7 +8,7 @@ export const Categories = () => {
         <Box
             sx={{ display: "flex", flexDirection: "column", gap: 6 }}
         >
-            {categories.map(category => <Category category={category} />)}
+            {categories.map((category, key) => <Category key={key} category={category} />)}
         </Box>
     )
 }
