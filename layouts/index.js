@@ -2,7 +2,6 @@ import * as React from 'react';
 import Navbar from 'components/layouts/navBar'
 import Sidebar from 'components/layouts/sideBar'
 import { Main } from 'components/layouts/main.styled.js';
-import { DrawerHeader } from 'components/layouts/drawer.styled.js';
 
 
 export default function Layout({ children }) {
@@ -19,7 +18,6 @@ export default function Layout({ children }) {
       <Navbar open={open} handleDrawerOpen={handleDrawerOpen} />
       <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
       <Main open={open}>
-        <DrawerHeader />
         {children}
       </Main>
     </>
