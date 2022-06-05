@@ -20,6 +20,7 @@
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-swiper": "^0.1.5",
     "swiper": "^8.1.6"
   },
   "devDependencies": {
