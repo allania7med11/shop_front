@@ -4,6 +4,9 @@ import { useQuery } from 'react-query';
 
 export const useCategoriesRead = () => {
     const client = useApi();
-    const queryFn = async () => client.get("/categories/");
+    const queryFn = async () => {
+        const reponse = await client.get("/categories/")
+        return reponse.data
+    };
     return useQuery('categories', queryFn)
 };

@@ -6,5 +6,15 @@ module.exports = {
     });
 
     return config;
+  },
+  async rewrites() {
+    return {
+      fallback: [
+        {
+          source: '/:path*',
+          destination: `http://localhost:8080/api/categories/`,
+        },
+      ],
+    }
   }
 };
