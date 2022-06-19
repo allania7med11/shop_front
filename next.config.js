@@ -3,7 +3,7 @@ module.exports = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: ["@svgr/webpack"]
+      use: ["@svgr/webpack"],
     });
 
     return config;
@@ -11,9 +11,9 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/api/:path/',
-        destination: `http://localhost:8080/api/:path/`,
+        source: "/api/:path/",
+        destination: `${process.env.SHOP_BACKEND_URL}/api/:path/`,
       },
-    ]
+    ];
   },
 };
