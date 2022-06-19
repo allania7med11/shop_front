@@ -16,10 +16,13 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
+    "axios": "^0.27.2",
+    "currency-symbol-map": "^5.1.0",
     "next": "latest",
     "prop-types": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "react-query": "^3.39.1",
     "react-swiper": "^0.1.5",
     "swiper": "^8.1.6"
   },
