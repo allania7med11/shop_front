@@ -4,7 +4,7 @@ import getSymbolFromCurrency from "currency-symbol-map";
 
 const getPrices = (price, price_currency, discount) => {
   const symbol = getSymbolFromCurrency(price_currency);
-  if (!discount.active) {
+  if (!discount || !discount.active) {
     return { priceAfterDiscount: `${symbol}${Math.round(price * 100) / 100}` };
   }
   const discountValue = (Number(price) * Number(discount.percent)) / 100;
