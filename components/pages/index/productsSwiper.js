@@ -9,7 +9,11 @@ import Box from "@mui/material/Box";
 export function ProductsSwiper({ products }) {
   return (
     <Box
-      sx={{ backgroundColor: blue[50], py: 4, "& .swiper-wrapper": { px: 4 } }}
+      sx={{
+        backgroundColor: blue[50],
+        py: 4,
+        "& .swiper-wrapper": { px: 4, alignItems: "center" },
+      }}
     >
       <Swiper
         navigation={true}
