@@ -7,14 +7,14 @@ import Tooltip from "@mui/material/Tooltip";
 import { ProductPrice } from "components/pages/productPrice";
 
 export const CardProduct = ({ product }) => {
-  const { name, image, price, price_currency, discount } = product;
+  const { name, files, price, price_currency, discount } = product;
   return (
     <Card sx={{ maxWidth: 220 }}>
       <CardMedia
         component="img"
         alt="green iguana"
         height="140"
-        image={image}
+        image={files[0].url}
         sx={{ objectFit: "contain" }}
       />
       <CardContent>
