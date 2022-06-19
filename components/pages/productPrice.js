@@ -1,17 +1,19 @@
 import { Box, Chip, Typography } from "@mui/material";
 import { green } from "@mui/material/colors";
+import getSymbolFromCurrency from "currency-symbol-map";
 
 const getPrices = (price, price_currency, discount) => {
+  const symbol = getSymbolFromCurrency(price_currency);
   if (!discount.active) {
-    return { priceAfterDiscount: `$${Math.round(price * 100) / 100}` };
+    return { priceAfterDiscount: `${symbol}${Math.round(price * 100) / 100}` };
   }
   const discountValue = (Number(price) * Number(discount.percent)) / 100;
   const priceAfterDiscountValue =
     Math.round((Number(price) - discountValue) * 100) / 100;
   return {
-    oldPrice: `$${Math.round(price * 100) / 100}`,
+    oldPrice: `${symbol}${Math.round(price * 100) / 100}`,
     discount_text: `${Math.round(discount.percent)}% OFF`,
-    priceAfterDiscount: `$${priceAfterDiscountValue}`,
+    priceAfterDiscount: `${symbol}${priceAfterDiscountValue}`,
   };
 };
 export const ProductPrice = ({ price, price_currency, discount }) => {
