@@ -1,4 +1,5 @@
 FROM node:16-alpine
+RUN apk add --no-cache git
 
 WORKDIR /app
 
@@ -8,8 +9,5 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
-
-RUN npm run build
-RUN npm run export
-CMD npx serve out -p 3000
+ENTRYPOINT ["sh", "./run.sh"]
+CMD ["dev", "3000"]

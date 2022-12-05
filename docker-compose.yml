@@ -1,9 +1,11 @@
 version: '3.4'
 services:
   shop:
-    image: shop
+    image: shop_front
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
       - 3000:3000
+    volumes:
+      - $PWD:/app

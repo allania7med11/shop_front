@@ -8,13 +8,14 @@ import { ProductPrice } from "components/pages/productPrice";
 
 export const CardProduct = ({ product }) => {
   const { name, files, price, price_currency, discount } = product;
+  const imageUrl = files.length > 0 ? files[0].url : "";
   return (
     <Card sx={{ maxWidth: 220 }}>
       <CardMedia
         component="img"
         alt="green iguana"
         height="140"
-        image={files[0].url}
+        image={imageUrl}
         sx={{ objectFit: "contain" }}
       />
       <CardContent>

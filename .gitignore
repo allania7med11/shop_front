@@ -18,5 +18,7 @@ yarn-error.log*
 # Next.js
 /.next
 out
+.vscode
+.env
 
 
