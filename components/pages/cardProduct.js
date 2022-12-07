@@ -10,15 +10,15 @@ export const CardProduct = ({ product }) => {
   const { name, files, price, price_currency, discount } = product;
   const imageUrl = files.length > 0 ? files[0].url : "";
   return (
-    <Card sx={{ maxWidth: 220 }}>
+    <Card sx={{ maxWidth: 220, display: "flex", flexDirection: "column", px: 1 }}>
       <CardMedia
         component="img"
         alt="green iguana"
         height="140"
         image={imageUrl}
-        sx={{ objectFit: "contain" }}
+        sx={{ objectFit: "contain", mt: 2 }}
       />
-      <CardContent>
+      <CardContent sx={{ display: "flex", flexDirection: "column", gap: 0.5, pt: 3 }}>
         <Tooltip title={name} arrow>
           <Typography noWrap gutterBottom variant="body1" component="div">
             {name}
