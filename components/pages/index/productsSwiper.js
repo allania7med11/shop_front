@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
-import { CardProduct } from "../cardProduct";
+import { CardProduct } from "../../common/cardProduct";
 import { blue } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 

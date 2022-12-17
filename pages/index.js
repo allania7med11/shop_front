@@ -2,7 +2,7 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Copyright from 'src/Copyright';
 import Box from '@mui/material/Box';
-import { PageTitle } from 'components/pages/pageTitle';
+import { PageTitle } from 'components/common/pageTitle';
 import { Categories } from 'components/pages/index/categories';
 
 export default function Index() {

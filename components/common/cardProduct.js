@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
-import { ProductPrice } from "components/pages/productPrice";
+import { ProductPrice } from "components/common/productPrice";
 
 export const CardProduct = ({ product }) => {
   const { name, files, price, price_currency, discount } = product;
