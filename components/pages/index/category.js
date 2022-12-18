@@ -4,6 +4,14 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { ProductsSwiper } from "components/pages/index/productsSwiper";
+import Link from "next/link";
+
+const linkSX = {
+  textDecoration: "underline", textTransform: "none", color: "white",
+  "&:hover": {
+    textDecoration: "underline"
+  }
+}
 
 export const Category = ({ category }) => {
   return (
@@ -13,12 +21,13 @@ export const Category = ({ category }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {category.name}
           </Typography>
-          <Button
-            color="inherit"
-            sx={{ textDecoration: "underline", textTransform: "none" }}
-          >
-            See More
-          </Button>
+          <Link href={`/categories/${category.slug}/`} passHref>
+            <Button
+              sx={linkSX}
+            >
+              See More
+            </Button>
+          </Link>
         </Toolbar>
       </AppBar>
       <ProductsSwiper products={category.products} />
