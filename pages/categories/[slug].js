@@ -3,7 +3,6 @@ import Container from '@mui/material/Container';
 import Copyright from 'src/Copyright';
 import Box from '@mui/material/Box';
 import { PageTitle } from 'components/common/pageTitle';
-import { Typography } from '@mui/material';
 import { useRouter } from 'next/router'
 import { useCategoryRead } from 'hooks/api/categories';
 import { Category } from 'components/pages/index/category';
@@ -17,9 +16,9 @@ export default function Index() {
         <Container maxWidth="lg">
             <Box sx={{ my: 4 }}>
                 <PageTitle sx={{ py: 7 }}>
-                    {category} category page
+                    category page
                 </PageTitle>
-                <Category category={category} />
+                {category && <Category category={category} />}
                 <Copyright sx={{ py: 7 }} />
             </Box>
         </Container>
