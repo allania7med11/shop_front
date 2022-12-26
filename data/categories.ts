@@ -14,7 +14,7 @@ export interface IsProduct {
   price: string;
   price_currency: string;
   category: number;
-  files: File[];
+  files: IsFile[];
   discount: IsDiscount;
 }
 

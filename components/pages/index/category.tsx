@@ -6,6 +6,8 @@ import Paper from "@mui/material/Paper";
 import { ProductsSwiper } from "components/pages/index/productsSwiper";
 import Link from "next/link";
 import { blueGrey } from '@mui/material/colors';
+import { FC } from "react";
+import { IsCategory } from "@/data/categories";
 
 const linkSX = {
   textDecoration: "underline", textTransform: "none", color: "white",
@@ -14,7 +16,7 @@ const linkSX = {
   }
 }
 
-export const Category = ({ category }) => {
+export const Category: FC<{ category: IsCategory }> = ({ category }) => {
   return (
     <Paper elevation={3}>
       <AppBar position="static">
