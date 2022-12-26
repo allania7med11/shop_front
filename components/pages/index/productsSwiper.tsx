@@ -5,8 +5,11 @@ import { Navigation } from "swiper";
 import { CardProduct } from "../../common/cardProduct";
 import { blue } from "@mui/material/colors";
 import Box from "@mui/material/Box";
+import { IsProduct } from "@/data/categories";
+import { FC } from "react";
 
-export function ProductsSwiper({ products }) {
+export const ProductsSwiper: FC<{ products:IsProduct[] }> = ({ products }) => {
+  console.log("products", products)
   return (
     <Box
       sx={{

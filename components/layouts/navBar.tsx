@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { Button, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Logo from "components/layouts/logo.js"
-import { AppBar } from 'components/layouts/appBar.styled.js';
+import Logo from "@/components/layouts/logo"
+import { AppBar } from '@/components/layouts/appBar.styled';
 
 
 
