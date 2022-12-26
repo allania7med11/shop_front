@@ -17,6 +17,7 @@ const linkSX = {
 }
 
 export const Category: FC<{ category: IsCategory }> = ({ category }) => {
+  let products = category? category.products: []
   return (
     <Paper elevation={3}>
       <AppBar position="static">
@@ -33,7 +34,7 @@ export const Category: FC<{ category: IsCategory }> = ({ category }) => {
           </Link>
         </Toolbar>
       </AppBar>
-      <ProductsSwiper products={category.products} />
+      <ProductsSwiper products={products} />
     </Paper>
   );
 };
