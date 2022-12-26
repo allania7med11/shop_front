@@ -10,12 +10,17 @@ import { Category } from "@/components/pages/categories/category";
 export default function Index() {
   const router = useRouter();
   const { slug } = router.query;
-  let category = null;
-  if (slug) {
-    const { data } = useCategoryRead(slug);
-    category = data;
+  const { status, data } = useCategoryRead(slug, router.isReady);
+  const category = data;
+  if (status === "idle") {
+    return ;
   }
-
+  if (status === "loading") {
+    return <p>Loading data...</p>;
+  }
+  if (status === "error") {
+    return <p>Error fetching data</p>;
+  }
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>

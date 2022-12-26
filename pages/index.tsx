@@ -7,8 +7,14 @@ import { Categories } from "@/components/pages/index/categories";
 import { useCategoriesRead } from "@/hooks/api/categories";
 
 export default function Index() {
-  const { data } = useCategoriesRead();
+  const { status, data } = useCategoriesRead();
   let categories = data ? data : [];
+  if (status === "loading") {
+    return <p>Loading data...</p>;
+  }
+  if (status === "error") {
+    return <p>Error fetching data</p>;
+  }
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
