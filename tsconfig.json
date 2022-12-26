@@ -24,7 +24,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "hooks/api/index.js",
+    "hooks/api/index.ts",
     "pages/index.tsx"
   ],
   "exclude": [
