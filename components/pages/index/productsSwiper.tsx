@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import { CardProduct } from "../../common/cardProduct";
-import { blue } from "@mui/material/colors";
+import { blueGrey } from "@mui/material/colors";
 import Box from "@mui/material/Box";
 import { IsProduct } from "@/data/categories";
 import { FC } from "react";
@@ -12,7 +12,7 @@ export const ProductsSwiper: FC<{ products:IsProduct[] }> = ({ products }) => {
   return (
     <Box
       sx={{
-        backgroundColor: blue[50],
+        backgroundColor: blueGrey[50],
         py: 4,
         "& .swiper-wrapper": { px: 4, alignItems: "center" },
       }}
