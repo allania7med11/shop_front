@@ -34,7 +34,7 @@ export const ProductsSwiper: FC<{ products:IsProduct[] }> = ({ products }) => {
           },
         }}
       >
-        {products.map((product, key) => (
+        {products && products.map((product, key) => (
           <SwiperSlide key={key}>
             <CardProduct product={product} />
           </SwiperSlide>
