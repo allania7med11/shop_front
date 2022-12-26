@@ -1,13 +1,12 @@
 import AppBar from "@mui/material/AppBar";
-import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { ProductsSwiper } from "components/pages/index/productsSwiper";
-import Link from "next/link";
 import { blueGrey } from '@mui/material/colors';
 import { FC } from "react";
 import { IsCategory } from "@/data/categories";
+import { CustomLink } from "@/components/common/customLink";
 
 const linkSX = {
   textDecoration: "underline", textTransform: "none", color: "white",
@@ -16,6 +15,7 @@ const linkSX = {
   }
 }
 
+ 
 export const Category: FC<{ category: IsCategory }> = ({ category }) => {
   let products = category? category.products: []
   return (
@@ -25,13 +25,9 @@ export const Category: FC<{ category: IsCategory }> = ({ category }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {category.name}
           </Typography>
-          <Link href={`/categories/${category.slug}/`} passHref>
-            <Button
-              sx={linkSX}
-            >
+          <CustomLink href={`/categories/${category.slug}/`} sx={linkSX}>
               See More
-            </Button>
-          </Link>
+          </CustomLink>
         </Toolbar>
       </AppBar>
       <ProductsSwiper products={products} />
