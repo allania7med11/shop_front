@@ -8,10 +8,10 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { CategoriesList } from 'components/layouts/categoriesList';
-import { DrawerHeader } from 'components/layouts/drawer.styled.js';
-import Logo from "components/layouts/logo.js"
-import { drawerWidth } from "constants/drawerWidth"
+import { CategoriesList } from '@/components/layouts/categoriesList';
+import { DrawerHeader } from '@/components/layouts/drawer.styled';
+import Logo from "@/components/layouts/logo"
+import { drawerWidth } from "@/constants/drawerWidth"
 
 
 export default function MiniDrawer({ open, handleDrawerClose }) {

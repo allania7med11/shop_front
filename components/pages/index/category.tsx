@@ -18,6 +18,7 @@ const linkSX = {
 
 export const Category: FC<{ category: IsCategory }> = ({ category }) => {
   let products = category? category.products: []
+  debugger;
   return (
     <Paper elevation={3}>
       <AppBar position="static">

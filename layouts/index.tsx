@@ -1,7 +1,7 @@
 import * as React from 'react';
-import Navbar from 'components/layouts/navBar'
-import Sidebar from 'components/layouts/sideBar'
-import { Main } from 'components/layouts/main.styled.js';
+import Navbar from '@/components/layouts/navBar'
+import Sidebar from '@/components/layouts/sideBar'
+import { Main } from '@/components/layouts/main.styled';
 
 
 export default function Layout({ children }) {

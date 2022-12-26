@@ -9,6 +9,7 @@ import { IsProduct } from "@/data/categories";
 import { FC } from "react";
 
 export const ProductsSwiper: FC<{ products:IsProduct[] }> = ({ products }) => {
+  console.log("products", products)
   return (
     <Box
       sx={{

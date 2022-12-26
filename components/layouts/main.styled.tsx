@@ -1,7 +1,12 @@
 import { styled } from '@mui/material/styles';
-import { drawerWidth } from "constants/drawerWidth"
+import { drawerWidth } from "@/constants/drawerWidth"
 
-export const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+
+interface IsMainProps {
+  open?: boolean;
+}
+
+export const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<IsMainProps>(
   ({ theme, open }) => ({
     flexGrow: 1,
     transition: theme.transitions.create('margin', {

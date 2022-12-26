@@ -2,10 +2,10 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Copyright from 'src/Copyright';
 import Box from '@mui/material/Box';
-import { PageTitle } from 'components/common/pageTitle';
+import { PageTitle } from '@/components/common/pageTitle';
 import { useRouter } from 'next/router'
-import { useCategoryRead } from 'hooks/api/categories';
-import { Category } from 'components/pages/index/category';
+import { useCategoryRead } from '@/hooks/api/categories';
+import { Category } from '@/components/pages/index/category';
 
 export default function Index() {
     const router = useRouter()
