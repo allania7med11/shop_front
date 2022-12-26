@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import { PageTitle } from "@/components/common/pageTitle";
 import { useRouter } from "next/router";
 import { useCategoryRead } from "@/hooks/api/categories";
-import { Category } from "@/components/pages/index/category";
+import { Category } from "@/components/pages/categories/category";
 
 export default function Index() {
   const router = useRouter();
