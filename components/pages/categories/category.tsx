@@ -3,16 +3,34 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { ProductsSwiper } from "components/pages/index/productsSwiper";
-import { blueGrey } from '@mui/material/colors';
+import { blueGrey } from "@mui/material/colors";
 import { FC } from "react";
 import { IsCategory } from "@/data/categories";
 import pluralize from "pluralize";
 import { QueryStatus } from "react-query/types/core";
+import {
+  createTheme,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  ThemeProvider,
+} from "@mui/material";
+import React from "react";
 
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
-export const Category: FC<{ category: IsCategory, status: QueryStatus }> = ({ category, status }) => {
+export const Category: FC<{ category: IsCategory; status: QueryStatus }> = ({
+  category,
+  status,
+}) => {
   if (status === "idle") {
-    return ;
+    return;
   }
   if (status === "loading") {
     return <p>Loading data...</p>;
@@ -20,20 +38,44 @@ export const Category: FC<{ category: IsCategory, status: QueryStatus }> = ({ ca
   if (status === "error") {
     return <p>Error fetching data</p>;
   }
-  let products = category? category.products: []
+  let products = category ? category.products : [];
+  const [order, setOrder] = React.useState("");
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setOrder(event.target.value as string);
+  };
   return (
     <Paper elevation={3}>
       <AppBar position="static">
-        <Toolbar variant="dense" sx={{ backgroundColor: blueGrey[600] }}>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {category.name}
-          </Typography>
+      <ThemeProvider theme={darkTheme}>
+        <Toolbar variant="dense" sx={{ backgroundColor: blueGrey[600], display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <Typography variant="h6" component="div">
+              {category.name}
+            </Typography>
+            <FormControl  sx={{  minWidth: "180px", my: "16px" }} size="small">
+              <InputLabel id="order-select-label">Order by</InputLabel>
+              <Select
+                labelId="order-select-label"
+                id="order-select"
+                value={order}
+                label="Age"
+                onChange={handleChange}
+              >
+                <MenuItem value="">----</MenuItem>
+                <MenuItem value="price">Price: Low to High</MenuItem>
+                <MenuItem value="-price">Price: High to Low</MenuItem>
+                <MenuItem value="name">Name: A to Z</MenuItem>
+                <MenuItem value="-name">Name: Z to A</MenuItem>
+              </Select>
+            </FormControl>
           <Typography variant="subtitle1" component="div">
             {products.length} {pluralize("Result", products.length)}
           </Typography>
         </Toolbar>
+        </ThemeProvider>
       </AppBar>
       <ProductsSwiper products={products} />
     </Paper>
   );
 };
+
