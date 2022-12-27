@@ -12,20 +12,11 @@ export default function Index() {
   const { slug } = router.query;
   const { status, data } = useCategoryRead(slug, router.isReady);
   const category = data;
-  if (status === "idle") {
-    return ;
-  }
-  if (status === "loading") {
-    return <p>Loading data...</p>;
-  }
-  if (status === "error") {
-    return <p>Error fetching data</p>;
-  }
   return (
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
         <PageTitle sx={{ py: 7 }}>category page</PageTitle>
-        {category && <Category category={category} />}
+        {category && <Category category={category} status={status} />}
         <Copyright sx={{ py: 7 }} />
       </Box>
     </Container>

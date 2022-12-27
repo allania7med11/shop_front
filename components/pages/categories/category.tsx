@@ -7,9 +7,19 @@ import { blueGrey } from '@mui/material/colors';
 import { FC } from "react";
 import { IsCategory } from "@/data/categories";
 import pluralize from "pluralize";
+import { QueryStatus } from "react-query/types/core";
 
 
-export const Category: FC<{ category: IsCategory }> = ({ category }) => {
+export const Category: FC<{ category: IsCategory, status: QueryStatus }> = ({ category, status }) => {
+  if (status === "idle") {
+    return ;
+  }
+  if (status === "loading") {
+    return <p>Loading data...</p>;
+  }
+  if (status === "error") {
+    return <p>Error fetching data</p>;
+  }
   let products = category? category.products: []
   return (
     <Paper elevation={3}>
