@@ -6,7 +6,7 @@ import { ProductsSwiper } from "components/pages/index/productsSwiper";
 import { blueGrey } from '@mui/material/colors';
 import { FC } from "react";
 import { IsCategory } from "@/data/categories";
-import { CustomLink } from "@/components/common/customLink";
+import { Link } from "@/components/common/Link";
 
 const linkSX = {
   textDecoration: "underline", textTransform: "none", color: "white",
@@ -25,9 +25,9 @@ export const Category: FC<{ category: IsCategory }> = ({ category }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {category.name}
           </Typography>
-          <CustomLink href={`/categories/${category.slug}/`} sx={linkSX}>
+          <Link href={`/categories/${category.slug}/`} sx={linkSX}>
               See More
-          </CustomLink>
+          </Link>
         </Toolbar>
       </AppBar>
       <ProductsSwiper products={products} />

@@ -1,26 +1,39 @@
 import * as React from "react";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { FC } from "react";
-import { Link, SxProps, Theme } from "@mui/material";
+import { Breadcrumbs, SxProps, Theme } from "@mui/material";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { IsCategory } from "@/data/categories";
-import { CustomLink } from "@/components/common/customLink";
+import { Link } from "@/components/common/Link";
+import { grey } from "@mui/material/colors";
+
+
+
+const linkSX = {
+  "& a": {
+    color: grey[800],
+    "&:-webkit-any-link": {
+      textDecoration: "none",
+    },
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+};
 
 export const CategoryBreadcrumbs: FC<{
   sx?: SxProps<Theme>;
   category: IsCategory;
 }> = ({ sx, category }) => {
-  const breadcrumbs = [<CustomLink href={`/`}>See More</CustomLink>];
+  const breadcrumbs = [<Link key="1" href={`/`} sx={linkSX}>Home</Link>];
   if (category) {
     breadcrumbs.push(
-      <CustomLink
+      <Link
         href={`/categories/${category.slug}/`}
-        underline="hover"
         key="2"
-        color="inherit"
+        sx={linkSX}
       >
         {category.name}
-      </CustomLink>
+      </Link>
     );
   }
 
