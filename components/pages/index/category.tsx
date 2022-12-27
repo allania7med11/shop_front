@@ -8,12 +8,18 @@ import { FC } from "react";
 import { IsCategory } from "@/data/categories";
 import { Link } from "@/components/common/Link";
 
+
 const linkSX = {
-  textDecoration: "underline", textTransform: "none", color: "white",
-  "&:hover": {
-    textDecoration: "underline"
-  }
-}
+  "& a": {
+    color: "white",
+    "&:-webkit-any-link": {
+      textDecoration: "underline",
+    },
+    "&:hover": {
+      textDecoration: "underline",
+    },
+  },
+};
 
  
 export const Category: FC<{ category: IsCategory }> = ({ category }) => {
