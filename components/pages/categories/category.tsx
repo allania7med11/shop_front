@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { Products } from "./products";
 import { CategoryHeader } from "./categoryHeader";
+import { blueGrey } from "@mui/material/colors";
 
 
 
@@ -25,9 +26,9 @@ export const Category: FC<{
   if (status === "error") {
     return <p>Error fetching data</p>;
   }
-  let products = category ? category.products : [];
+  let products = category ? category.products  : [];
   return (
-    <Paper elevation={3} sx={sx}>
+    <Paper elevation={3} sx={{ backgroundColor: blueGrey[50], ...sx }}>
       <CategoryHeader category={category} />
       <Products products={products} />
     </Paper>

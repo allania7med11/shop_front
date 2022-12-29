@@ -30,6 +30,7 @@ const sxToolbar: SxProps = {
   flexWrap: "wrap",
   gap: "12px 6px",
   py: "12px",
+  minHeight: "64px"
 };
 
 export const CategoryHeader: FC<{

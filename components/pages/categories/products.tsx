@@ -8,12 +8,7 @@ import { CardProduct } from "@/components/common/cardProduct";
 
 export const Products: FC<{ products: IsProduct[] }> = ({ products }) => {
   return (
-    <Box
-      sx={{
-        backgroundColor: blueGrey[50],
-        p: "24px",
-      }}
-    >
+    <Box sx={{ p: "24px" }}>
       {products &&
         products.map((product, key) => (
           <CardProduct key={key} product={product} />
