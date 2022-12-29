@@ -18,8 +18,8 @@ export default function Index() {
       <Box sx={{ my: 4 }}>
         <CategoryBreadcrumbs sx={{ py: 7 }} category={category} />
         <Box sx={{ display: "flex", gap: "24px" }}>
-          <Filters sx={{ width: "125px", flexGrow: 1 }} />
-          <Category category={category} status={status} sx={{ flexGrow: 5, maxWidth: "70vw" }} />
+          <Filters sx={{ width: "150px", flexGrow: 1 }} />
+          <Category category={category} status={status} sx={{ flexGrow: 10, maxWidth: "70vw" }} />
         </Box>
         <Copyright sx={{ py: 7 }} />
       </Box>
