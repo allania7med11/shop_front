@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useCategoryRead } from "@/hooks/api/categories";
 import { Category } from "@/components/pages/categories/category";
 import { CategoryBreadcrumbs } from "@/components/pages/categories/categoyBreadcrumb";
+import { Filters } from "@/components/pages/categories/filters";
 
 export default function Index() {
   const router = useRouter();
@@ -16,7 +17,10 @@ export default function Index() {
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
         <CategoryBreadcrumbs sx={{ py: 7 }} category={category} />
-        {category && <Category category={category} status={status} />}
+        <Box sx={{ display: "flex" }}>
+          <Filters sx={{ width: "125px", flexGrow: 1 }} />
+          <Category category={category} status={status} sx={{ flexGrow: 5, maxWidth: "70vw" }} />
+        </Box>
         <Copyright sx={{ py: 7 }} />
       </Box>
     </Container>

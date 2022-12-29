@@ -15,20 +15,32 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  SxProps,
   ThemeProvider,
 } from "@mui/material";
 import React from "react";
 
 const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
   },
 });
 
-export const Category: FC<{ category: IsCategory; status: QueryStatus }> = ({
-  category,
-  status,
-}) => {
+const sxToolbar: SxProps = {
+  backgroundColor: blueGrey[600],
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  flexWrap: "wrap",
+  gap: "12px 6px",
+  py: "12px"
+};
+
+export const Category: FC<{
+  category: IsCategory;
+  status: QueryStatus;
+  sx: SxProps;
+}> = ({ category, status, sx }) => {
   if (status === "idle") {
     return;
   }
@@ -45,14 +57,14 @@ export const Category: FC<{ category: IsCategory; status: QueryStatus }> = ({
     setOrder(event.target.value as string);
   };
   return (
-    <Paper elevation={3}>
+    <Paper elevation={3} sx={sx}>
       <AppBar position="static">
-      <ThemeProvider theme={darkTheme}>
-        <Toolbar variant="dense" sx={{ backgroundColor: blueGrey[600], display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <ThemeProvider theme={darkTheme}>
+          <Toolbar variant="dense" sx={sxToolbar}>
             <Typography variant="h6" component="div">
               {category.name}
             </Typography>
-            <FormControl  sx={{  minWidth: "180px", my: "16px" }} size="small">
+            <FormControl sx={{ minWidth: "180px" }} size="small">
               <InputLabel id="order-select-label">Order by</InputLabel>
               <Select
                 labelId="order-select-label"
@@ -68,14 +80,13 @@ export const Category: FC<{ category: IsCategory; status: QueryStatus }> = ({
                 <MenuItem value="-name">Name: Z to A</MenuItem>
               </Select>
             </FormControl>
-          <Typography variant="subtitle1" component="div">
-            {products.length} {pluralize("Result", products.length)}
-          </Typography>
-        </Toolbar>
+            <Typography variant="subtitle1" component="div">
+              {products.length} {pluralize("Result", products.length)}
+            </Typography>
+          </Toolbar>
         </ThemeProvider>
       </AppBar>
       <ProductsSwiper products={products} />
     </Paper>
   );
 };
-
