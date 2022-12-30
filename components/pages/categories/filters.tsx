@@ -1,3 +1,4 @@
+import { IsCategory } from "@/data/categories";
 import {
   AppBar,
   Box,
@@ -7,9 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import { blueGrey } from "@mui/material/colors";
+import React from "react";
 import { FC } from "react";
+import { Search } from "./filters/search";
 
-export const Filters: FC<{ sx: SxProps }> = ({ sx }) => {
+export const Filters: FC<{ category: IsCategory; sx: SxProps }> = ({
+  category,
+  sx,
+}) => {
+  let products = category ? category.products : [];
   return (
     <Paper elevation={3} sx={{ backgroundColor: blueGrey[50], ...sx }}>
       <AppBar position="static">
@@ -22,6 +29,9 @@ export const Filters: FC<{ sx: SxProps }> = ({ sx }) => {
           </Typography>
         </Toolbar>
       </AppBar>
+      <Box sx={{ py: "24px", px: "8px" }}>
+        <Search products = {products} />
+      </Box>
     </Paper>
   );
 };
