@@ -17,9 +17,22 @@ export default function Index() {
     <Container maxWidth="lg">
       <Box sx={{ my: 4 }}>
         <CategoryBreadcrumbs sx={{ py: 7 }} category={category} />
-        <Box sx={{ display: "flex", gap: "24px" }}>
-          <Filters category={category} sx={{ width: "225px", flexGrow: 1 }} />
-          <Category category={category} status={status} sx={{ flexGrow: 10, maxWidth: "70vw" }} />
+        <Box
+          sx={{
+            display: "flex",
+            gap: "24px",
+            flexWrap: { xs: "wrap", b550: "nowrap" },
+          }}
+        >
+          <Filters
+            category={category}
+            sx={{ minWidth: "225px", flexGrow: 1 }}
+          />
+          <Category
+            category={category}
+            status={status}
+            sx={{ minWidth: "275px", flexGrow: 10, maxWidth: "100vw" }}
+          />
         </Box>
         <Copyright sx={{ py: 7 }} />
       </Box>
