@@ -10,6 +10,7 @@ import {
 import { blueGrey } from "@mui/material/colors";
 import React from "react";
 import { FC } from "react";
+import { Discount } from "./filters/discount";
 import { Price } from "./filters/price";
 import { Search } from "./filters/search";
 
@@ -33,6 +34,7 @@ export const Filters: FC<{ category: IsCategory; sx: SxProps }> = ({
       <Box sx={{ py: "24px", px: "8px", display: "flex", flexDirection: "column", gap : "24px" }}>
         <Search products = {products} />
         <Price />
+        <Discount />
       </Box>
     </Paper>
   );
