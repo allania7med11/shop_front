@@ -1,5 +1,5 @@
 import { Roboto } from "@next/font/google";
-import { createTheme, Theme, ThemeOptions } from "@mui/material/styles";
+import { createTheme, ThemeOptions } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 
 declare module "@mui/material/styles" {
