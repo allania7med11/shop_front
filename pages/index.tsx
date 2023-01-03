@@ -16,7 +16,7 @@ export default function Index() {
     return <p>Error fetching data</p>;
   }
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth={false} sx={{ maxWidth: "1400px" }}>
       <Box sx={{ my: 4 }}>
         <PageTitle sx={{ py: 7 }}>
           Discover Our Products and Categories

@@ -14,7 +14,7 @@ export default function Index() {
   const { status, data } = useCategoryRead(slug, router.isReady);
   const category = data;
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth={false} sx={{ maxWidth: "1400px" }}>
       <Box sx={{ my: 4 }}>
         <CategoryBreadcrumbs sx={{ py: 7 }} category={category} />
         <Box
