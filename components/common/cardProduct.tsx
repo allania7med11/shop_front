@@ -12,7 +12,7 @@ export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
   const imageUrl = files.length > 0 ? files[0].url : "";
   return (
     <Card
-      sx={{ width: 220, display: "flex", flexDirection: "column", px: 1 }}
+      sx={{ width: 230, display: "flex", flexDirection: "column", px: 1 }}
     >
       <CardMedia
         component="img"
