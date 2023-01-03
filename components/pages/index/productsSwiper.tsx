@@ -2,15 +2,17 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper";
-import { CardProduct } from "../cardProduct";
-import { blue } from "@mui/material/colors";
+import { CardProduct } from "../../common/cardProduct";
+import { blueGrey } from "@mui/material/colors";
 import Box from "@mui/material/Box";
+import { IsProduct } from "@/data/categories";
+import { FC } from "react";
 
-export function ProductsSwiper({ products }) {
+export const ProductsSwiper: FC<{ products:IsProduct[] }> = ({ products }) => {
   return (
     <Box
       sx={{
-        backgroundColor: blue[50],
+        backgroundColor: blueGrey[50],
         py: 4,
         "& .swiper-wrapper": { px: 4, alignItems: "center" },
       }}
@@ -31,7 +33,7 @@ export function ProductsSwiper({ products }) {
           },
         }}
       >
-        {products.map((product, key) => (
+        {products && products.map((product, key) => (
           <SwiperSlide key={key}>
             <CardProduct product={product} />
           </SwiperSlide>

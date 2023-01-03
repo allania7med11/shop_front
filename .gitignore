@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/data
+/notes
 
 # misc
 .DS_Store
