@@ -8,19 +8,26 @@ export interface IsDiscount {
   active: boolean;
 }
 
+
+export interface IsCategoryNoProducts {
+  id: number;
+  name: string;
+  slug: string;
+}
 export interface IsProduct {
+  url: string;
+  slug: string;
   id: number;
   name: string;
   price: string;
   price_currency: string;
-  category: number;
+  category: IsCategoryNoProducts;
   files: IsFile[];
   discount: IsDiscount;
 }
 
-export interface IsCategory {
-  id: number;
-  name: string;
-  slug: string;
+
+
+export interface IsCategory extends IsCategoryNoProducts {
   products: IsProduct[];
 }
