@@ -4,8 +4,9 @@ import Copyright from "src/Copyright";
 import Box from "@mui/material/Box";
 import { useRouter } from "next/router";
 import { useProductRead } from "@/hooks/api/categories";
-import { ProductBreadcrumbs } from "@/components/pages/products/ProductBreadcrumbs";
+import { ProductBreadcrumbs } from "@/components/pages/products/productBreadcrumbs";
 import { CardProduct } from "@/components/common/cardProduct";
+import { ProductInfos } from "@/components/pages/products/productInfos";
 
 export default function Index() {
   const router = useRouter();
@@ -23,7 +24,7 @@ export default function Index() {
             flexWrap: { xs: "wrap", b550: "nowrap" },
           }}
         >
-          {isSuccess && <CardProduct product={product} />}
+          {isSuccess && <ProductInfos product={product} />}
         </Box>
         <Copyright sx={{ py: 7 }} />
       </Box>

@@ -31,11 +31,7 @@ export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
             {name}
           </Typography>
         </Tooltip>
-        <ProductPrice
-          price={price}
-          price_currency={price_currency}
-          discount={discount}
-        />
+        <ProductPrice priceInfos={{ price, price_currency, discount }} />
       </CardContent>
     </Card>
   );
