@@ -24,6 +24,7 @@ export interface IsProduct {
   category: IsCategoryNoProducts;
   files: IsFile[];
   discount: IsDiscount;
+  description_html: string;
 }
 
 
