@@ -5,8 +5,8 @@ import Box from "@mui/material/Box";
 import { useRouter } from "next/router";
 import { useProductRead } from "@/hooks/api/categories";
 import { ProductBreadcrumbs } from "@/components/pages/products/productBreadcrumbs";
-import { CardProduct } from "@/components/common/cardProduct";
 import { ProductInfos } from "@/components/pages/products/productInfos";
+import { ProductImages } from "@/components/pages/products/productImages";
 
 export default function Index() {
   const router = useRouter();
@@ -21,10 +21,20 @@ export default function Index() {
           sx={{
             display: "flex",
             gap: "24px",
-            flexWrap: { xs: "wrap", b550: "nowrap" },
+            flexWrap: "nowrap",
+            justifyContent: "space-between",
           }}
         >
-          {isSuccess && <ProductInfos product={product} />}
+          {isSuccess && (
+            <Box sx={{ width: "40%"}}>
+              <ProductImages files={product.files} />
+            </Box>
+          )}
+          {isSuccess && (
+            <Box sx={{ width: "60%"}}>
+              <ProductInfos product={product} />
+            </Box>
+          )}
         </Box>
         <Copyright sx={{ py: 7 }} />
       </Box>
