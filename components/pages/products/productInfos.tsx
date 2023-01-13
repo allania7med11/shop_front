@@ -1,10 +1,18 @@
 import * as React from "react";
 import { FC } from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, SxProps, Typography } from "@mui/material";
 import { IsProduct } from "@/data/categories";
 import { ProductPrice } from "@/components/common/productPrice";
 import { HtmlRender } from "@/components/common/htmlRender";
 import { grey } from "@mui/material/colors";
+
+const sxPaper: SxProps = {
+  p: "24px",
+  display: "flex",
+  flexDirection: "column",
+  gap: "32px",
+  height: "100%",
+};
 
 export const ProductInfos: FC<{
   product: IsProduct;
@@ -12,16 +20,27 @@ export const ProductInfos: FC<{
   const { name, price, price_currency, discount, description_html } = product;
 
   return (
-    <Paper elevation={3} sx={{ p: "24px", display: "flex", flexDirection: "column", gap: "32px" }}>
+    <Paper
+      elevation={3}
+      sx={sxPaper}
+    >
       <Typography gutterBottom variant="h5" component="div">
         {name}
       </Typography>
-      <ProductPrice priceInfos={{ price, price_currency, discount }} size="medium" />
+      <ProductPrice
+        priceInfos={{ price, price_currency, discount }}
+        size="medium"
+      />
       <Box>
         <Typography gutterBottom variant="h6" component="div">
           About this product
         </Typography>
-        <Typography gutterBottom variant="body1" component="div" sx={{color: grey[800]}}>
+        <Typography
+          gutterBottom
+          variant="body1"
+          component="div"
+          sx={{ color: grey[800] }}
+        >
           <HtmlRender rawHTML={description_html} />
         </Typography>
       </Box>

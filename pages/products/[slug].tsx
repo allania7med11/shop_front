@@ -23,6 +23,7 @@ export default function Index() {
             gap: "24px",
             flexWrap: "nowrap",
             justifyContent: "space-between",
+            alignItems: "stretch"
           }}
         >
           {isSuccess && (
