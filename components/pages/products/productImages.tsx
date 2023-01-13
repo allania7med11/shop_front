@@ -11,21 +11,26 @@ import { ProductImageBig } from "./productImageBig";
 export const ProductImages: FC<{
   files: IsFile[];
 }> = ({ files }) => {
+  const [swiper, setSwiper] = useState(null);
   const [activeFileIndex, setActiveFileIndex] = useState(0);
+  const updateActiveFileIndex: (index: number) => any = (index) => {
+    swiper.slideTo(index)
+    setActiveFileIndex(index)
+  };
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "24px" }}>
       <ProductImageBig file={files[activeFileIndex]} />
       <Box sx={{ "& .swiper-slide": { width: "100%" } }}>
         <Swiper
+          onSwiper={setSwiper}
           navigation={true}
           modules={[Navigation]}
           slidesPerView={3}
           onSlideChange={({ activeIndex }) => setActiveFileIndex(activeIndex)}
-          onSwiper={(swiper) => console.log(swiper)}
         >
           {files.map((file, key) => (
-            <SwiperSlide>
-              <ProductImageSmall key={key} index={key} file={file} activeFileIndex={activeFileIndex} />
+            <SwiperSlide key={key}>
+              <ProductImageSmall  index={key} file={file} activeFileIndex={activeFileIndex} updateActiveFileIndex={updateActiveFileIndex} />
             </SwiperSlide>
           ))}
         </Swiper>

@@ -20,14 +20,15 @@ export const ProductImageSmall: FC<{
   file: IsFile;
   index: number;
   activeFileIndex: number;
-}> = ({ file, index, activeFileIndex }) => {
+  updateActiveFileIndex:(index: number) => any
+}> = ({ file, index, activeFileIndex, updateActiveFileIndex }) => {
   const sxPaper =
     activeFileIndex == index
       ? { ...sxPaperDefault, ...sxPaperActive }
       : sxPaperDefault;
   return (
     <Box sx={{ display: "flex", justifyContent: "center", padding: "8px" }}>
-      <Paper elevation={3} sx={sxPaper}>
+      <Paper elevation={3} sx={sxPaper} onClick={() => updateActiveFileIndex(index)}>
         <CardMedia
           component="img"
           alt="product img"
