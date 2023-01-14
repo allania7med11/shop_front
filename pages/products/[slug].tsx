@@ -21,18 +21,25 @@ export default function Index() {
           sx={{
             display: "flex",
             gap: "24px",
-            flexWrap: "nowrap",
-            justifyContent: "space-between",
-            alignItems: "stretch"
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "stretch",
           }}
         >
           {isSuccess && (
-            <Box sx={{ width: "40%"}}>
+            <Box
+              sx={{
+                flexBasis: "300px",
+                minWidth: "300px",
+                maxWidth: "500px",
+                flexGrow: 1,
+              }}
+            >
               <ProductImages files={product.files} />
             </Box>
           )}
           {isSuccess && (
-            <Box sx={{ width: "60%"}}>
+            <Box sx={{ flexBasis: "350px", minWidth: "350px", flexGrow: 5 }}>
               <ProductInfos product={product} />
             </Box>
           )}

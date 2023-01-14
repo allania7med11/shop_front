@@ -23,8 +23,10 @@ export const ProductImages: FC<{
     setActiveFileIndex(index);
   };
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-      <ProductImageBig file={files[activeFileIndex]} />
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "24px", justifyContent:"center" }}>
+      <Box>
+        <ProductImageBig file={files[activeFileIndex]} />
+      </Box>
       <Box sx={sxSwiper}>
         <Swiper
           onSwiper={setSwiper}

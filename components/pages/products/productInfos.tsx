@@ -10,7 +10,7 @@ const sxPaper: SxProps = {
   p: "24px",
   display: "flex",
   flexDirection: "column",
-  gap: "32px",
+  gap: "16px",
   height: "100%",
 };
 
@@ -20,10 +20,7 @@ export const ProductInfos: FC<{
   const { name, price, price_currency, discount, description_html } = product;
 
   return (
-    <Paper
-      elevation={3}
-      sx={sxPaper}
-    >
+    <Paper elevation={3} sx={sxPaper}>
       <Typography gutterBottom variant="h5" component="div">
         {name}
       </Typography>
@@ -39,7 +36,7 @@ export const ProductInfos: FC<{
           gutterBottom
           variant="body1"
           component="div"
-          sx={{ color: grey[800] }}
+          sx={{ color: grey[800], wordBreak: "break-all" }}
         >
           <HtmlRender rawHTML={description_html} />
         </Typography>
