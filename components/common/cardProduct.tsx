@@ -6,21 +6,23 @@ import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import { ProductPrice } from "@/components/common/productPrice";
 import { IsProduct } from "@/data/categories";
+import { Link } from "./Link";
 
 export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
   const { name, files, price, price_currency, discount } = product;
   const imageUrl = files.length > 0 ? files[0].url : "";
   return (
-    <Card
-      sx={{ width: 230, display: "flex", flexDirection: "column", px: 1 }}
-    >
-      <CardMedia
-        component="img"
-        alt="green iguana"
-        height="140"
-        image={imageUrl}
-        sx={{ objectFit: "contain", mt: 2 }}
-      />
+    <Card sx={{ width: 230, display: "flex", flexDirection: "column", px: 1 }}>
+      <Link href={`/products/${product.slug}/`}>
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          height="140"
+          image={imageUrl}
+          sx={{ objectFit: "contain", mt: 2 }}
+        />
+      </Link>
+
       <CardContent
         sx={{ display: "flex", flexDirection: "column", gap: 0.5, pt: 3 }}
       >
@@ -29,11 +31,7 @@ export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
             {name}
           </Typography>
         </Tooltip>
-        <ProductPrice
-          price={price}
-          price_currency={price_currency}
-          discount={discount}
-        />
+        <ProductPrice priceInfos={{ price, price_currency, discount }} />
       </CardContent>
     </Card>
   );
