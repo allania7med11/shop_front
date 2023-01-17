@@ -38,7 +38,7 @@ const renderInput = (params) => {
 export const Search: FC<{
   options: string[];
   value: string[];
-  setValue: (value: string[]) => void;
+  setValue: (value: string[]) => any;
 }> = ({ options, value, setValue }) => {
   return (
     <div>

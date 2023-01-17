@@ -1,4 +1,6 @@
 import { IsCategory } from "@/data/categories";
+import { RootState } from "@/store/reducer";
+import { updateSearch } from "@/store/reducer/filters";
 import {
   AppBar,
   Box,
@@ -10,6 +12,7 @@ import {
 import { blueGrey } from "@mui/material/colors";
 import React from "react";
 import { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Discount } from "./filters/discount";
 import { Price } from "./filters/price";
 import { Search } from "./filters/search";
@@ -18,8 +21,10 @@ export const Filters: FC<{ category: IsCategory; sx: SxProps }> = ({
   category,
   sx,
 }) => {
+  const dispatch = useDispatch();
+  const search = useSelector((state: RootState) => state.filters.search);
+  const setSearch = (value) => dispatch(updateSearch(value));
   let products = category ? category.products : [];
-  const [search, setSearch] = React.useState<(string)[]>([]);
   return (
     <Paper elevation={3} sx={{ backgroundColor: blueGrey[50], ...sx }}>
       <AppBar position="static">
