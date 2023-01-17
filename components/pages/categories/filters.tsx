@@ -19,6 +19,7 @@ export const Filters: FC<{ category: IsCategory; sx: SxProps }> = ({
   sx,
 }) => {
   let products = category ? category.products : [];
+  const [search, setSearch] = React.useState<(string)[]>([]);
   return (
     <Paper elevation={3} sx={{ backgroundColor: blueGrey[50], ...sx }}>
       <AppBar position="static">
@@ -32,7 +33,8 @@ export const Filters: FC<{ category: IsCategory; sx: SxProps }> = ({
         </Toolbar>
       </AppBar>
       <Box sx={{ py: "24px", px: "8px", display: "flex", flexDirection: "column", gap : "24px" }}>
-        <Search products = {products} />
+        <div>{`search: ${search}`}</div>
+        <Search options = {products.map(product => product.name)} value={search} setValue={setSearch} />
         <Price />
         <Discount />
       </Box>

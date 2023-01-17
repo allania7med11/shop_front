@@ -35,28 +35,37 @@ const renderInput = (params) => {
   );
 };
 
-export const Search: FC<{ products: IsProduct[] }> = ({ products }) => {
+export const Search: FC<{
+  options: string[];
+  value: string[];
+  setValue: (value: string[]) => void;
+}> = ({ options, value, setValue }) => {
   return (
-    <Autocomplete
-      PopperComponent={CustomPopper}
-      id="free-solo-demo"
-      freeSolo
-      options={products}
-      getOptionLabel={(option: IsProduct) => option.name}
-      renderInput={renderInput}
-      renderOption={(props, option: IsProduct) => (
-        <Box
-          component="li"
-          sx={{
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-          }}
-          {...props}
-        >
-          {option.name}
-        </Box>
-      )}
-    />
+    <div>
+      <Autocomplete
+        value={value}
+        onChange={(event: any, newValue: string[]) => {
+          setValue(newValue);
+        }}
+        PopperComponent={CustomPopper}
+        id="free-solo-demo"
+        freeSolo
+        options={options}
+        renderInput={renderInput}
+        renderOption={(props, option) => (
+          <Box
+            component="li"
+            sx={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+            {...props}
+          >
+            {option}
+          </Box>
+        )}
+      />
+    </div>
   );
 };
