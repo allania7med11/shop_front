@@ -10,13 +10,13 @@ export const productApi = createApi({
   }),
   endpoints: (builder) => ({
     categories: builder.query<IsCategory[], void>({
-      query: () => "/categories",
+      query: () => "/categories/",
     }),
     category: builder.query<IsCategory, string | string[]>({
-      query: (slug: string) => `/categories/${slug}`,
+      query: (slug: string) => `/categories/${slug}/`,
     }),
     product: builder.query<IsProduct, string | string[]>({
-      query: (slug: string) => `/products/${slug}`,
+      query: (slug: string) => `/products/${slug}/`,
     }),
   }),
 });
