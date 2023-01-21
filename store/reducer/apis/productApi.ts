@@ -15,10 +15,21 @@ export const productApi = createApi({
     category: builder.query<IsCategory, string | string[]>({
       query: (slug: string) => `/categories/${slug}/`,
     }),
+    products: builder.query<IsProduct[], string | string[]>({
+      query: (category: string) => ({
+        url: `/products/`,
+        params: { category },
+      }),
+    }),
     product: builder.query<IsProduct, string | string[]>({
       query: (slug: string) => `/products/${slug}/`,
     }),
   }),
 });
 
-export const { useCategoriesQuery, useCategoryQuery, useProductQuery } = productApi;
+export const {
+  useCategoriesQuery,
+  useCategoryQuery,
+  useProductsQuery,
+  useProductQuery,
+} = productApi;
