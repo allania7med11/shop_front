@@ -36,7 +36,9 @@ const sxToolbar: SxProps = {
 export const CategoryHeader = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const { data, error, isLoading } = useCategoryQuery(slug);
+  const { data } = useCategoryQuery(slug, {
+    skip: !router.isReady,
+  });
   const products = data && data.products;
   const [order, setOrder] = React.useState("");
 

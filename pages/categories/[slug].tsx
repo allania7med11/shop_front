@@ -7,12 +7,13 @@ import { Category } from "@/components/pages/categories/category";
 import { CategoryBreadcrumbs } from "@/components/pages/categories/categoyBreadcrumb";
 import { Filters } from "@/components/pages/categories/filters";
 import { useCategoryQuery } from "@/store/reducer/apis/productApi";
-import { FetchWrap } from "@/components/common/fetchWrap";
 
 export default function Index() {
   const router = useRouter();
   const { slug } = router.query;
-  const { data } = useCategoryQuery(slug);
+  const { data } = useCategoryQuery(slug, {
+    skip: !router.isReady,
+  });
   return (
     <Container maxWidth={false} sx={{ maxWidth: "1400px" }}>
       <Box sx={{ my: 4 }}>

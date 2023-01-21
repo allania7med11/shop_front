@@ -18,7 +18,9 @@ const sxProducts: SxProps = {
 export const Products = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const { data, error, isLoading } = useCategoryQuery(slug);
+  const { data, error, isLoading } = useCategoryQuery(slug, {
+    skip: !router.isReady,
+  });
   const products = data ? data.products : [];
   return (
     <FetchWrap isLoading={isLoading} error={error} data={data}>
