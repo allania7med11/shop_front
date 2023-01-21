@@ -6,6 +6,8 @@ import { SxProps } from "@mui/material";
 import { useProductsQuery } from "@/store/reducer/apis/productApi";
 import { useRouter } from "next/router";
 import { FetchWrap } from "@/components/common/fetchWrap";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/reducer";
 
 const sxProducts: SxProps = {
   p: "24px",
@@ -16,10 +18,12 @@ const sxProducts: SxProps = {
 };
 
 export const Products = () => {
-  const router = useRouter();
-  const { slug } = router.query;
-  const { data, error, isLoading } = useProductsQuery(slug, {
-    skip: !router.isReady,
+  const filters = useSelector((state: RootState) => ({
+    category: state.filters.categorySlug || "",
+    search: state.filters.search || [""]
+  }));
+  const { data, error, isLoading } = useProductsQuery(filters, {
+    skip: !filters.category,
   });
   const products = data ? data : [];
   return (

@@ -1,5 +1,5 @@
 // src/services/taskApi.js
-import { IsCategory, IsProduct } from "@/data/categories";
+import { IsCategory, IsProduct, IsProductFilters } from "@/data/categories";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "./utils";
 
@@ -15,10 +15,10 @@ export const productApi = createApi({
     category: builder.query<IsCategory, string | string[]>({
       query: (slug: string) => `/categories/${slug}/`,
     }),
-    products: builder.query<IsProduct[], string | string[]>({
-      query: (category: string) => ({
+    products: builder.query<IsProduct[], IsProductFilters>({
+      query: (filters) => ({
         url: `/products/`,
-        params: { category },
+        params: filters,
       }),
     }),
     product: builder.query<IsProduct, string | string[]>({

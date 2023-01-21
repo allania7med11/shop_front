@@ -27,6 +27,11 @@ export interface IsProduct {
   description_html: string;
 }
 
+export interface IsProductFilters {
+  category: string;
+  search: string[];
+}
+
 
 
 export interface IsCategory extends IsCategoryNoProducts {

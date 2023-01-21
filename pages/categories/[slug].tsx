@@ -7,10 +7,14 @@ import { Category } from "@/components/pages/categories/category";
 import { CategoryBreadcrumbs } from "@/components/pages/categories/categoyBreadcrumb";
 import { Filters } from "@/components/pages/categories/filters";
 import { useCategoryQuery } from "@/store/reducer/apis/productApi";
+import { updateCategorySlug } from "@/store/reducer/slices/filters";
+import { useDispatch } from "react-redux";
 
 export default function Index() {
   const router = useRouter();
-  const { slug } = router.query;
+  let { slug } = router.query as {slug: string};
+  const dispatch = useDispatch();
+  dispatch(updateCategorySlug(slug))
   const { data } = useCategoryQuery(slug, {
     skip: !router.isReady,
   });

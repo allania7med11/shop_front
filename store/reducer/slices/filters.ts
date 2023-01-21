@@ -1,14 +1,17 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const filtersSlice = createSlice({
-  name: 'filters',
-  initialState: { search: [""] },
+  name: "filters",
+  initialState: { categorySlug: "", search: [""] },
   reducers: {
+    updateCategorySlug: (state, action: PayloadAction<string>) => {
+      state.categorySlug = action.payload;
+    },
     updateSearch: (state, action: PayloadAction<string[]>) => {
       state.search = action.payload;
-    }
+    },
   },
 });
 
 export const filtersReducer = filtersSlice.reducer;
-export const { updateSearch } = filtersSlice.actions;
+export const { updateCategorySlug, updateSearch } = filtersSlice.actions;
