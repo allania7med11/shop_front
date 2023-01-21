@@ -1,6 +1,6 @@
 import { IsCategory } from "@/data/categories";
 import { RootState } from "@/store/reducer";
-import { updateSearch } from "@/store/reducer/filters";
+import { updateSearch } from "@/store/reducer/slices/filters";
 import {
   AppBar,
   Box,
