@@ -1,6 +1,5 @@
 import Paper from "@mui/material/Paper";
 import { FC } from "react";
-import { IsCategory } from "@/data/categories";
 import { SxProps } from "@mui/material";
 import React from "react";
 import { Products } from "./products";

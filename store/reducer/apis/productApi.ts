@@ -15,7 +15,7 @@ export const productApi = createApi({
     category: builder.query<IsCategory, string | string[]>({
       query: (slug: string) => `/categories/${slug}`,
     }),
-    product: builder.query<IsProduct, string>({
+    product: builder.query<IsProduct, string | string[]>({
       query: (slug: string) => `/products/${slug}`,
     }),
   }),
