@@ -12,7 +12,7 @@ export const productApi = createApi({
     categories: builder.query<IsCategory[], void>({
       query: () => "/categories",
     }),
-    category: builder.query<IsCategory, string>({
+    category: builder.query<IsCategory, string | string[]>({
       query: (slug: string) => `/categories/${slug}`,
     }),
     product: builder.query<IsProduct, string>({
