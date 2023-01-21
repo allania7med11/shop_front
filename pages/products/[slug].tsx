@@ -3,7 +3,6 @@ import Container from "@mui/material/Container";
 import Copyright from "src/Copyright";
 import Box from "@mui/material/Box";
 import { useRouter } from "next/router";
-import { useProductRead } from "@/hooks/api/categories";
 import { ProductBreadcrumbs } from "@/components/pages/products/productBreadcrumbs";
 import { ProductInfos } from "@/components/pages/products/productInfos";
 import { ProductImages } from "@/components/pages/products/productImages";
