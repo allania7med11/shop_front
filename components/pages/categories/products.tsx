@@ -20,7 +20,9 @@ const sxProducts: SxProps = {
 export const Products = () => {
   const filters = useSelector((state: RootState) => ({
     category: state.filters.categorySlug || "",
-    search: state.filters.search || [""]
+    search: state.filters.search || [""],
+    current_price_min: state.filters.current_price_min || "",
+    current_price_max: state.filters.current_price_max || ""
   }));
   const { data, error, isLoading } = useProductsQuery(filters, {
     skip: !filters.category,
