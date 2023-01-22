@@ -21,6 +21,7 @@ export interface IsProduct {
   name: string;
   price: string;
   price_currency: string;
+  current_price: number;
   category: IsCategoryNoProducts;
   files: IsFile[];
   discount: IsDiscount;

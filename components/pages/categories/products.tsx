@@ -13,7 +13,7 @@ const sxProducts: SxProps = {
   p: "24px",
   display: "grid",
   gap: "24px",
-  gridTemplateColumns: "repeat(auto-fill, minmax(min(230px, 100%), 1fr))",
+  gridTemplateColumns: "repeat(auto-fill, minmax(min(260px, 100%), 1fr))",
   justifyItems: "center",
 };
 
