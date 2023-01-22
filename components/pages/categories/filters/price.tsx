@@ -1,3 +1,8 @@
+import { RootState } from "@/store/reducer";
+import {
+  updateCurrentPriceMax,
+  updateCurrentPriceMin,
+} from "@/store/reducer/slices/filters";
 import {
   Paper,
   Typography,
@@ -7,8 +12,16 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Price = () => {
+  const dispatch = useDispatch();
+  const [min, max] = useSelector((state: RootState) => [
+    state.filters.current_price_min,
+    state.filters.current_price_max,
+  ]);
+  const setMin = (value) => dispatch(updateCurrentPriceMin(value));
+  const setMax = (value) => dispatch(updateCurrentPriceMax(value));
   return (
     <Paper
       elevation={3}
@@ -31,6 +44,14 @@ export const Price = () => {
             id="price-min"
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
             label="Min"
+            type="number"
+            onBlur={(event) => {
+              setMin(event.target.value);
+            }}
+            onKeyPress={(event) => {
+              var target = event.target as unknown as { value: string };
+              event.key === "Enter" && setMin(target.value);
+            }}
           />
         </FormControl>
         <FormControl fullWidth>
@@ -39,6 +60,14 @@ export const Price = () => {
             id="price-max"
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
             label="Max"
+            type="number"
+            onBlur={(event) => {
+              setMax(event.target.value);
+            }}
+            onKeyPress={(event) => {
+              var target = event.target as unknown as { value: string };
+              event.key === "Enter" && setMax(target.value);
+            }}
           />
         </FormControl>
       </Box>

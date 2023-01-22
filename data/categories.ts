@@ -31,6 +31,8 @@ export interface IsProduct {
 export interface IsProductFilters {
   category: string;
   search: string[];
+  current_price_min: number;
+  current_price_max: number;
 }
 
 
