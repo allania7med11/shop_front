@@ -13,14 +13,16 @@ const sxProducts: SxProps = {
   p: "24px",
   display: "grid",
   gap: "24px",
-  gridTemplateColumns: "repeat(auto-fill, minmax(min(230px, 100%), 1fr))",
+  gridTemplateColumns: "repeat(auto-fill, minmax(min(260px, 100%), 1fr))",
   justifyItems: "center",
 };
 
 export const Products = () => {
   const filters = useSelector((state: RootState) => ({
     category: state.filters.categorySlug || "",
-    search: state.filters.search || [""]
+    search: state.filters.search || [""],
+    current_price_min: state.filters.current_price_min || "",
+    current_price_max: state.filters.current_price_max || ""
   }));
   const { data, error, isLoading } = useProductsQuery(filters, {
     skip: !filters.category,

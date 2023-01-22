@@ -9,10 +9,10 @@ import { IsProduct } from "@/data/categories";
 import { Link } from "./Link";
 
 export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
-  const { name, files, price, price_currency, discount } = product;
+  const { name, files, price, price_currency, discount, current_price } = product;
   const imageUrl = files.length > 0 ? files[0].url : "";
   return (
-    <Card sx={{ width: 230, display: "flex", flexDirection: "column", px: 1 }}>
+    <Card sx={{ width: 260, display: "flex", flexDirection: "column", px: 1 }}>
       <Link href={`/products/${product.slug}/`}>
         <CardMedia
           component="img"
@@ -31,7 +31,7 @@ export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
             {name}
           </Typography>
         </Tooltip>
-        <ProductPrice priceInfos={{ price, price_currency, discount }} />
+        <ProductPrice priceInfos={{ price, price_currency, discount, current_price }} />
       </CardContent>
     </Card>
   );

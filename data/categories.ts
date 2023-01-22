@@ -21,6 +21,7 @@ export interface IsProduct {
   name: string;
   price: string;
   price_currency: string;
+  current_price: number;
   category: IsCategoryNoProducts;
   files: IsFile[];
   discount: IsDiscount;
@@ -30,6 +31,8 @@ export interface IsProduct {
 export interface IsProductFilters {
   category: string;
   search: string[];
+  current_price_min: string;
+  current_price_max: string;
 }
 
 

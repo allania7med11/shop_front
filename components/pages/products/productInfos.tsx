@@ -17,7 +17,14 @@ const sxPaper: SxProps = {
 export const ProductInfos: FC<{
   product: IsProduct;
 }> = ({ product }) => {
-  const { name, price, price_currency, discount, description_html } = product;
+  const {
+    name,
+    price,
+    price_currency,
+    discount,
+    current_price,
+    description_html,
+  } = product;
 
   return (
     <Paper elevation={3} sx={sxPaper}>
@@ -25,7 +32,7 @@ export const ProductInfos: FC<{
         {name}
       </Typography>
       <ProductPrice
-        priceInfos={{ price, price_currency, discount }}
+        priceInfos={{ price, price_currency, discount, current_price }}
         size="medium"
       />
       <Box>

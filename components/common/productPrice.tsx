@@ -7,25 +7,23 @@ export interface IsPriceInfos {
   price: string;
   price_currency: string;
   discount: IsDiscount;
+  current_price: number;
 }
 type IsSize = "medium" | "small";
 
-const getPrices = ({ price, price_currency, discount }: IsPriceInfos) => {
-  const priceValue = parseFloat(price);
-  const percentValue = parseFloat(discount.percent);
+const getPrices = ({ price, price_currency, discount, current_price }: IsPriceInfos) => {
   const symbol = getSymbolFromCurrency(price_currency);
   if (!discount || !discount.active) {
     return {
-      priceAfterDiscount: `${symbol}${Math.round(priceValue * 100) / 100}`,
+      priceAfterDiscount: `${symbol}${current_price}`,
     };
   }
-  const discountValue = (Number(price) * Number(discount.percent)) / 100;
-  const priceAfterDiscountValue =
-    Math.round((Number(price) - discountValue) * 100) / 100;
+  const priceValue = parseFloat(price);
+  const percentValue = parseFloat(discount.percent);
   return {
     oldPrice: `${symbol}${Math.round(priceValue * 100) / 100}`,
     discount_text: `${Math.round(percentValue)}% OFF`,
-    priceAfterDiscount: `${symbol}${priceAfterDiscountValue}`,
+    priceAfterDiscount: `${symbol}${current_price}`,
   };
 };
 
@@ -34,10 +32,10 @@ export const ProductPrice: React.FC<{
   size?: IsSize;
 }> = ({ priceInfos, size = "small" }) => {
   let variant: "body2" | "h4" = size == "small" ? "body2" : "h4";
-  if (!priceInfos.discount) {
-    return <Typography variant={variant}>{priceInfos.price}</Typography>;
-  }
   const { priceAfterDiscount, oldPrice, discount_text } = getPrices(priceInfos);
+  if (!discount_text) {
+    return <Typography variant={variant}>{priceAfterDiscount}</Typography>;
+  }
   return (
     <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
       <Typography variant={variant}>{priceAfterDiscount}</Typography>
