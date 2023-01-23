@@ -5,13 +5,17 @@ interface filtersState {
   search: string[];
   current_price_min: string;
   current_price_max: string;
+  discount_min: string;
+  discount_max: string;
 }
 
 const initialState = {
   categorySlug: "",
   search: [""],
   current_price_min: "",
-  current_price_max: ""
+  current_price_max: "",
+  discount_min: "",
+  discount_max: ""
 } as filtersState;
 
 const filtersSlice = createSlice({
@@ -30,6 +34,10 @@ const filtersSlice = createSlice({
     updateCurrentPriceMax: (state, action: PayloadAction<string>) => {
       state.current_price_max = action.payload;
     },
+    updateDiscount: (state, action: PayloadAction<[string,string]>) => {
+      state.discount_min = action.payload[0];
+      state.discount_max = action.payload[1];
+    },
   },
 });
 
@@ -39,4 +47,5 @@ export const {
   updateSearch,
   updateCurrentPriceMin,
   updateCurrentPriceMax,
+  updateDiscount
 } = filtersSlice.actions;
