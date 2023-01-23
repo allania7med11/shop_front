@@ -16,10 +16,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const Price = () => {
   const dispatch = useDispatch();
-  const [min, max] = useSelector((state: RootState) => [
-    state.filters.current_price_min,
-    state.filters.current_price_max,
-  ]);
   const setMin = (value) => dispatch(updateCurrentPriceMin(value));
   const setMax = (value) => dispatch(updateCurrentPriceMax(value));
   return (

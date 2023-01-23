@@ -22,7 +22,9 @@ export const Products = () => {
     category: state.filters.categorySlug || "",
     search: state.filters.search || [""],
     current_price_min: state.filters.current_price_min || "",
-    current_price_max: state.filters.current_price_max || ""
+    current_price_max: state.filters.current_price_max || "",
+    discount_min: state.filters.discount_min || "",
+    discount_max: state.filters.discount_max || ""
   }));
   const { data, error, isLoading } = useProductsQuery(filters, {
     skip: !filters.category,
