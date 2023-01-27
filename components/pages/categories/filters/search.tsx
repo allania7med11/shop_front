@@ -1,4 +1,3 @@
-import { IsProduct } from "@/data/categories";
 import {
   Autocomplete,
   Box,
