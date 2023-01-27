@@ -16,6 +16,9 @@ import {
 import React from "react";
 import { useRouter } from "next/router";
 import { useCategoryQuery } from "@/store/reducer/apis/productApi";
+import { useDispatch } from "react-redux";
+import { updateOrdering } from "@/store/reducer/slices/filters";
+import { IsProductOrder } from "@/data/categories";
 
 const darkTheme = createTheme({
   palette: {
@@ -40,10 +43,11 @@ export const CategoryHeader = () => {
     skip: !router.isReady,
   });
   const products = data && data.products;
-  const [order, setOrder] = React.useState("");
+  const dispatch = useDispatch();
+  const setOrder = (value) => dispatch(updateOrdering(value));
 
   const handleChange = (event: SelectChangeEvent) => {
-    setOrder(event.target.value as string);
+    setOrder(event.target.value as IsProductOrder);
   };
   return (
     <ThemeProvider theme={darkTheme}>
@@ -57,13 +61,12 @@ export const CategoryHeader = () => {
             <Select
               labelId="order-select-label"
               id="order-select"
-              value={order}
               label="Age"
               onChange={handleChange}
             >
               <MenuItem value="">----</MenuItem>
-              <MenuItem value="price">Price: Low to High</MenuItem>
-              <MenuItem value="-price">Price: High to Low</MenuItem>
+              <MenuItem value="current_price">Price: Low to High</MenuItem>
+              <MenuItem value="-current_price">Price: High to Low</MenuItem>
               <MenuItem value="name">Name: A to Z</MenuItem>
               <MenuItem value="-name">Name: Z to A</MenuItem>
             </Select>

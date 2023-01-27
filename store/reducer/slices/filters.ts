@@ -1,3 +1,4 @@
+import { IsProductOrder } from "@/data/categories";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface filtersState {
@@ -7,6 +8,7 @@ interface filtersState {
   current_price_max: string;
   discount_min: string;
   discount_max: string;
+  ordering: IsProductOrder;
 }
 
 const initialState = {
@@ -15,7 +17,8 @@ const initialState = {
   current_price_min: "",
   current_price_max: "",
   discount_min: "",
-  discount_max: ""
+  discount_max: "",
+  ordering: ""
 } as filtersState;
 
 const filtersSlice = createSlice({
@@ -38,6 +41,9 @@ const filtersSlice = createSlice({
       state.discount_min = action.payload[0];
       state.discount_max = action.payload[1];
     },
+    updateOrdering: (state, action: PayloadAction<IsProductOrder>) => {
+      state.ordering = action.payload;
+    },
   },
 });
 
@@ -47,5 +53,6 @@ export const {
   updateSearch,
   updateCurrentPriceMin,
   updateCurrentPriceMax,
-  updateDiscount
+  updateDiscount,
+  updateOrdering
 } = filtersSlice.actions;

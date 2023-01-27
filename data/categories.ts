@@ -28,14 +28,17 @@ export interface IsProduct {
   description_html: string;
 }
 
+export type IsProductOrder = "current_price" | "-current_price" | "name" | "-name"| "";
+
 export interface IsProductFilters {
   category: string;
   search: string[];
   current_price_min: string;
   current_price_max: string;
+  discount_min: string;
+  discount_max: string;
+  ordering: IsProductOrder;
 }
-
-
 
 export interface IsCategory extends IsCategoryNoProducts {
   products: IsProduct[];
