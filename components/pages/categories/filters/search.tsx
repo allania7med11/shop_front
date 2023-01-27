@@ -49,6 +49,7 @@ export const Search: FC<{
         PopperComponent={CustomPopper}
         id="free-solo-demo"
         freeSolo
+        getOptionLabel={(option) => option.toString()}
         options={options}
         renderInput={renderInput}
         renderOption={(props, option) => (
