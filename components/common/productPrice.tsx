@@ -11,7 +11,12 @@ export interface IsPriceInfos {
 }
 type IsSize = "medium" | "small";
 
-const getPrices = ({ price, price_currency, discount, current_price }: IsPriceInfos) => {
+const getPrices = ({
+  price,
+  price_currency,
+  discount,
+  current_price,
+}: IsPriceInfos) => {
   const symbol = getSymbolFromCurrency(price_currency);
   if (!discount || !discount.active) {
     return {
@@ -23,7 +28,7 @@ const getPrices = ({ price, price_currency, discount, current_price }: IsPriceIn
   return {
     oldPrice: `${symbol}${Math.round(priceValue * 100) / 100}`,
     discount_text: `${Math.round(percentValue)}% OFF`,
-    priceAfterDiscount: `${symbol}${current_price}`,
+    priceAfterDiscount: `${symbol}${Math.round(current_price * 100) / 100}`,
   };
 };
 
@@ -40,7 +45,11 @@ export const ProductPrice: React.FC<{
     <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
       <Typography variant={variant}>{priceAfterDiscount}</Typography>
       {discount_text && (
-        <ProductDiscount oldPrice={oldPrice} discount_text={discount_text} size={size} />
+        <ProductDiscount
+          oldPrice={oldPrice}
+          discount_text={discount_text}
+          size={size}
+        />
       )}
     </Box>
   );
@@ -48,24 +57,28 @@ export const ProductPrice: React.FC<{
 
 const ProductDiscount = ({ oldPrice, discount_text, size }) => {
   return (
-  <>
-    <Typography
-      variant={size == "small" ? "body2" : "h5"}
-      color="text.secondary"
-      sx={{ textDecoration: "line-through", marginLeft: size == "small" ? "8px" : "24px", }}
-    >
-      {oldPrice}
-    </Typography>
-    <Chip
-      label={discount_text}
-      sx={{
-        color: green[400],
-        fontWeight: "Bold",
-        backgroundColor: green[50],
-        borderRadius: 100,
-        height: size == "small" ? 28 : 40,
-        fontSize: size == "small" ? "16px" : "24px",
-      }}
-    />
-  </>
-)};
+    <>
+      <Typography
+        variant={size == "small" ? "body2" : "h5"}
+        color="text.secondary"
+        sx={{
+          textDecoration: "line-through",
+          marginLeft: size == "small" ? "8px" : "24px",
+        }}
+      >
+        {oldPrice}
+      </Typography>
+      <Chip
+        label={discount_text}
+        sx={{
+          color: green[400],
+          fontWeight: "Bold",
+          backgroundColor: green[50],
+          borderRadius: 100,
+          height: size == "small" ? 28 : 40,
+          fontSize: size == "small" ? "16px" : "24px",
+        }}
+      />
+    </>
+  );
+};
