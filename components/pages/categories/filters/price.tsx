@@ -12,12 +12,25 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Price = () => {
+  const { store_min, store_max } = useSelector((state: RootState) => ({
+    store_min: state.filters.current_price_min || "",
+    store_max: state.filters.current_price_max || "",
+  }));
+  const [min, setMin] = useState("");
+  const [max, setMax] = useState("");
+  useEffect(() => {
+    setMin(store_min);
+  }, [store_min]);
+  useEffect(() => {
+    setMax(store_max);
+  }, [store_max]);
   const dispatch = useDispatch();
-  const setMin = (value) => dispatch(updateCurrentPriceMin(value));
-  const setMax = (value) => dispatch(updateCurrentPriceMax(value));
+  const setStoreMin = (value) => dispatch(updateCurrentPriceMin(value));
+  const setStoreMax = (value) => dispatch(updateCurrentPriceMax(value));
   return (
     <Paper
       elevation={3}
@@ -41,12 +54,14 @@ export const Price = () => {
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
             label="Min"
             type="number"
+            value={min}
+            onChange={(event) => setMin(event.target.value)}
             onBlur={(event) => {
-              setMin(event.target.value);
+              setStoreMin(event.target.value);
             }}
             onKeyPress={(event) => {
               var target = event.target as unknown as { value: string };
-              event.key === "Enter" && setMin(target.value);
+              event.key === "Enter" && setStoreMin(target.value);
             }}
           />
         </FormControl>
@@ -57,12 +72,14 @@ export const Price = () => {
             startAdornment={<InputAdornment position="start">$</InputAdornment>}
             label="Max"
             type="number"
+            value={max}
+            onChange={(event) => setMax(event.target.value)}
             onBlur={(event) => {
-              setMax(event.target.value);
+              setStoreMax(event.target.value);
             }}
             onKeyPress={(event) => {
               var target = event.target as unknown as { value: string };
-              event.key === "Enter" && setMax(target.value);
+              event.key === "Enter" && setStoreMax(target.value);
             }}
           />
         </FormControl>
