@@ -8,14 +8,18 @@ import {
   SelectChangeEvent,
   MenuItem,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 export const Discount = () => {
+  const [discount, setDiscount] = useState("-");
   const dispatch = useDispatch();
-  const setDiscount = (value) => dispatch(updateDiscount(value));
+  useEffect(() => {
+    const discountRange = discount.split("-") as [string, string];
+    dispatch(updateDiscount(discountRange));
+  }, [discount]);
   const handleChange = (event: SelectChangeEvent) => {
-    setDiscount(event.target.value.split("-") as [string, string]);
+    setDiscount(event.target.value);
   };
   return (
     <Paper
@@ -31,6 +35,7 @@ export const Discount = () => {
           labelId="discount"
           id="discount"
           label="Discount by"
+          value={discount}
           onChange={handleChange}
         >
           <MenuItem value="-">----</MenuItem>
