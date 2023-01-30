@@ -12,7 +12,7 @@ import {
   InputLabel,
   OutlinedInput,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export const Price = () => {
   const dispatch = useDispatch();

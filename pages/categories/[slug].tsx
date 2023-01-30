@@ -14,7 +14,9 @@ export default function Index() {
   const router = useRouter();
   let { slug } = router.query as {slug: string};
   const dispatch = useDispatch();
-  dispatch(updateCategorySlug(slug))
+  React.useEffect(() => {
+    dispatch(updateCategorySlug(slug))
+  }, [slug]);
   const { data } = useCategoryQuery(slug, {
     skip: !router.isReady,
   });
