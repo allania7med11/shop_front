@@ -26,6 +26,9 @@ const filtersSlice = createSlice({
   initialState: initialState,
   reducers: {
     updateCategorySlug: (state, action: PayloadAction<string>) => {
+      for (let key in initialState){
+        state[key] = initialState[key]
+      }
       state.categorySlug = action.payload;
     },
     updateSearch: (state, action: PayloadAction<string[]>) => {

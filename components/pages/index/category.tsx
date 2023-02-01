@@ -23,6 +23,9 @@ const sxLink: SxProps = {
 
 export const Category: FC<{ category: IsCategory }> = ({ category }) => {
   let products = category ? category.products : [];
+  if (products.length == 0) {
+    return <></>
+  }
   return (
     <Paper elevation={3}>
       <AppBar position="static">

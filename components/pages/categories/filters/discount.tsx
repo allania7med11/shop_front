@@ -1,3 +1,4 @@
+import { RootState } from "@/store/reducer";
 import { updateDiscount } from "@/store/reducer/slices/filters";
 import {
   Paper,
@@ -9,17 +10,20 @@ import {
   MenuItem,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Discount = () => {
-  const [discount, setDiscount] = useState("-");
+  const { discount } = useSelector((state: RootState) => ({
+    discount: `${state.filters.discount_min}-${state.filters.discount_max}`,
+  }));
   const dispatch = useDispatch();
   useEffect(() => {
     const discountRange = discount.split("-") as [string, string];
     dispatch(updateDiscount(discountRange));
   }, [discount]);
   const handleChange = (event: SelectChangeEvent) => {
-    setDiscount(event.target.value);
+    const discountRange = event.target.value.split("-") as [string, string];
+    dispatch(updateDiscount(discountRange));
   };
   return (
     <Paper
