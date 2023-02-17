@@ -13,8 +13,8 @@ export const ProductBreadcrumbs: FC<{
     const category = product.category;
     urls.push(
       ...[
-        { name: category.name, href: `/categories/${category.slug}/` },
-        { name: product.name, href: `/products/${product.slug}/` },
+        { name: category.name, href: `/categories?slug=${category.slug}` },
+        { name: product.name, href: `/products?slug=${product.slug}` },
       ]
     );
   }

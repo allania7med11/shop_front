@@ -13,8 +13,9 @@ export default function Index() {
   const router = useRouter();
   const { slug } = router.query;
   const { data, error, isLoading } = useProductQuery(slug, {
-    skip: !router.isReady,
+    skip: !slug,
   });
+  debugger
   return (
     <Container maxWidth={false} sx={{ maxWidth: "1400px" }}>
       <Box sx={{ my: 4 }}>

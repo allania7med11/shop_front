@@ -11,7 +11,7 @@ export const CategoryBreadcrumbs: FC<{
 }> = ({ sx, category }) => {
   const urls: IsUrl[] = [{ name: "Home", href: `/` }];
   if (category) {
-    urls.push({ name: category.name, href: `/categories/${category.slug}/` });
+    urls.push({ name: category.name, href: `/categories?slug=${category.slug}` });
   }
 
   return <CustomBreadcrumbs sx={sx} urls={urls} />;

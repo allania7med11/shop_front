@@ -13,7 +13,7 @@ export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
   const imageUrl = files.length > 0 ? files[0].url : "";
   return (
     <Card sx={{ width: 260, display: "flex", flexDirection: "column", px: 1 }}>
-      <Link href={`/products/${product.slug}/`}>
+      <Link href={`/products?slug=${product.slug}`}>
         <CardMedia
           component="img"
           alt="green iguana"
