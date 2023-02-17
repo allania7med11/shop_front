@@ -36,9 +36,11 @@ export const ProductInfos: FC<{
         size="medium"
       />
       <Box>
-        <Typography gutterBottom variant="h6" component="div">
-          About this product
-        </Typography>
+        {description_html && (
+          <Typography gutterBottom variant="h6" component="div">
+            About this product
+          </Typography>
+        )}
         <Typography
           gutterBottom
           variant="body1"
