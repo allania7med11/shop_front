@@ -33,7 +33,7 @@ export const Category: FC<{ category: IsCategory }> = ({ category }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {category.name}
           </Typography>
-          <Link href={`/categories/${category.slug}/`} sx={sxLink}>
+          <Link href={`/categories?slug=${category.slug}`} sx={sxLink}>
             See More
           </Link>
         </Toolbar>
