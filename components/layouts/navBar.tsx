@@ -4,6 +4,7 @@ import { Button, IconButton, Toolbar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Logo from "@/components/layouts/logo"
 import { AppBar } from '@/components/layouts/appBar.styled';
+import { Link } from "@/components/common/Link";
 
 
 
@@ -24,9 +25,11 @@ export default function NavBar({ open, handleDrawerOpen }) {
         >
           <MenuIcon />
         </IconButton>
-        <Button variant="text">
-          <Logo />
-        </Button>
+        <Link href="/">
+          <Button variant="text">
+            <Logo />
+          </Button>
+        </Link>
       </Toolbar>
     </AppBar>
   );
