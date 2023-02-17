@@ -45,7 +45,7 @@ export const CategoriesList = () => {
           {data &&
             data.map((category) => (
               <ListItem key={`item-category-${category.name}`} sx={sxItem}>
-                <Link href={`/categories/${category.slug}/`} >
+                <Link href={`/categories?slug=${category.slug}`} >
                   <ListItemText sx={{  pl: 4 }} primary={`${category.name}`} />
                 </Link>
               </ListItem>
