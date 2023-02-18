@@ -15,7 +15,6 @@ export default function Index() {
   const { data, error, isLoading } = useProductQuery(slug, {
     skip: !slug,
   });
-  debugger
   return (
     <Container maxWidth={false} sx={{ maxWidth: "1400px" }}>
       <Box sx={{ my: 4 }}>

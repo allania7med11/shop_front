@@ -22,13 +22,13 @@ export const ProductsSwiper: FC<{ products:IsProduct[] }> = ({ products }) => {
         modules={[Navigation]}
         spaceBetween={20}
         breakpoints={{
-          600: {
+          620: {
             slidesPerView: 2,
           },
-          750: {
+          900: {
             slidesPerView: 3,
           },
-          1050: {
+          1200: {
             slidesPerView: 4,
           },
         }}

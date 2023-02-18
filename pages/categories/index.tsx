@@ -13,7 +13,6 @@ import { useDispatch } from "react-redux";
 export default function Index() {
   const router = useRouter();
   let { slug } = router.query as { slug: string };
-  debugger
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(updateCategorySlug(slug));
