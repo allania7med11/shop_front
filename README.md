@@ -1,11 +1,14 @@
-# Shoppingify Application
+# The Front end for Shoppingify Webite
 
+## Contributors
+- Allani Ahmed <allania7med11@gmail.com>
 
-# Backend Repo
+---
+## License & copyright
+© Allani Ahmed, Full Stack Web Developer
 
-- https://github.com/allania7med11/shop_back
+## Back end Link
+https://github.com/allania7med11/shop_back/
 
-
-# Environment Variables
-
-- `SHOP_BACKEND_URL`
+## Deployment Link
+https://shop.effectivewebapp.com/
