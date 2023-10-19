@@ -32,8 +32,8 @@ To run the project using Docker Compose, follow these steps:
 1. **Clone the Repository**: If you haven't already, clone the project repository to your local machine:
 
     ```shell
-    git clone https://github.com/allania7med11/shop_back/
-    cd shop_back
+    git clone https://github.com/allania7med11/shop_front/
+    cd shop_front
     ```
 
 2. **Environment Configuration**: Create a `.env` file with the necessary environment variables. You can use the provided `.env.example` as a template. Make sure to update the values to match your specific environment configuration.
