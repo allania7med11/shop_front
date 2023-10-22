@@ -35,10 +35,6 @@ export const ProductQuantity: React.FC<{
   } = useCartItemsQuery();
 
   const item = items.find((elm) => elm.product == product_id);
-  if (!isLoadingGet) {
-    debugger
-    console.log(items)
-  }
   const quantity = item ? item.quantity : 0;
   const [addItem, { error: errorCreate, isLoading: isLoadingCreate }] =
     useCreateCartItemMutation();
