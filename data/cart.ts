@@ -1,5 +1,5 @@
 export interface IsCartItem {
     id: number;
-    product: string;
-    quantity: string;
+    product: number;
+    quantity: number;
 }

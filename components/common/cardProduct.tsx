@@ -5,6 +5,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Tooltip from "@mui/material/Tooltip";
 import { ProductPrice } from "@/components/common/productPrice";
+import { ProductQuantity } from "@/components/common/productQuantity";
 import { IsProduct } from "@/data/categories";
 import { Link } from "./Link";
 
@@ -32,6 +33,7 @@ export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
           </Typography>
         </Tooltip>
         <ProductPrice priceInfos={{ price, price_currency, discount, current_price }} />
+        <ProductQuantity product_id={product.id} />
       </CardContent>
     </Card>
   );
