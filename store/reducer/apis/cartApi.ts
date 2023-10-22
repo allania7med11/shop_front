@@ -6,7 +6,9 @@ export const cartApi = createApi({
   reducerPath: "cartApi",
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
+    credentials: "include"
   }),
+  tagTypes: ["Cart"],
   endpoints: (builder) => ({
     cartItems: builder.query<IsCartItem[], void>({
       query: () => "/cart_items/",
@@ -20,6 +22,7 @@ export const cartApi = createApi({
         method: "POST",
         body: newCartItem,
       }),
+      invalidatesTags: ["Cart"],
     }),
     updateCartItem: builder.mutation<IsCartItem, { id: string; data: Partial<IsCartItem> }>({
       query: ({ id, data }) => ({
