@@ -1,4 +1,7 @@
 import {
+  OutlinedInput
+} from "@mui/material";
+import {
   useCartItemsQuery,
   useCreateCartItemMutation,
 } from "@/store/reducer/apis/cartApi";
@@ -6,22 +9,20 @@ import { useEffect, useState } from "react";
 import { FetchWrap } from "@/components/common/fetchWrap";
 
 function PositifIntegerInput({ number, setNumber }) {
-
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
 
     // Allow an empty string or positive integers
-    if (inputValue === '' || (Number.isInteger(parseFloat(inputValue)) && parseFloat(inputValue) >= 0)) {
+    if (
+      inputValue === "" ||
+      (Number.isInteger(parseFloat(inputValue)) && parseFloat(inputValue) >= 0)
+    ) {
       setNumber(inputValue);
     }
   };
 
   return (
-    <input
-      type="number"
-      value={number}
-      onChange={handleInputChange}
-    />
+    <OutlinedInput type="number" value={number} onChange={handleInputChange} margin="dense" />
   );
 }
 
