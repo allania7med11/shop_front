@@ -1,5 +1,9 @@
 import {
-  OutlinedInput
+  Box,
+  Button,
+  OutlinedInput,
+  SxProps,
+  Theme
 } from "@mui/material";
 import {
   useCartItemsQuery,
@@ -28,7 +32,8 @@ function PositifIntegerInput({ number, setNumber }) {
 
 export const ProductQuantity: React.FC<{
   product_id: number;
-}> = ({ product_id }) => {
+  sx?: SxProps<Theme>
+}> = ({ product_id, sx }) => {
   const {
     data: items = [],
     error: errorGet,
@@ -68,7 +73,15 @@ export const ProductQuantity: React.FC<{
 
   return (
     <FetchWrap isLoading={isLoading} error={error} data={!isLoading}>
-      <PositifIntegerInput number={number} setNumber={setNumber} />
+      <Box sx={{ display: "flex", alignItems: "stretch", height: "38px", maxWidth: "160px", margin: "auto", ...sx }}>
+        <Button variant="contained" sx={{ width: "38px", minWidth: "38px" }} onClick={() => number > 0 && setNumber(number - 1)}>
+          -
+        </Button>
+        <PositifIntegerInput number={number} setNumber={setNumber} />
+        <Button variant="contained" sx={{ width: "38px", minWidth: "38px" }} onClick={() => setNumber(number + 1)}>
+          +
+        </Button>
+      </Box>
     </FetchWrap>
   );
 };
