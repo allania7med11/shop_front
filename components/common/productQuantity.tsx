@@ -1,10 +1,4 @@
-import {
-  Box,
-  Button,
-  OutlinedInput,
-  SxProps,
-  Theme
-} from "@mui/material";
+import { Box, Button, OutlinedInput, SxProps, Theme } from "@mui/material";
 import {
   useCartItemsQuery,
   useCreateCartItemMutation,
@@ -12,7 +6,10 @@ import {
 import { useEffect, useState } from "react";
 import { FetchWrap } from "@/components/common/fetchWrap";
 
-function PositifIntegerInput({ number, setNumber }) {
+const PositifIntegerInput: React.FC<{
+  number: number;
+  setNumber: (value: number) => void;
+}> = ({ number, setNumber }) => {
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
 
@@ -26,13 +23,21 @@ function PositifIntegerInput({ number, setNumber }) {
   };
 
   return (
-    <OutlinedInput type="number" value={number} onChange={handleInputChange} margin="dense" />
+    <OutlinedInput
+      type="number"
+      value={number}
+      onChange={handleInputChange}
+      margin="dense"
+    />
   );
-}
+};
+
+// Define increment and decrement styles
+const sxButton: SxProps = { width: "38px", minWidth: "38px", fontSize: "24px" };
 
 export const ProductQuantity: React.FC<{
   product_id: number;
-  sx?: SxProps<Theme>
+  sx?: SxProps<Theme>;
 }> = ({ product_id, sx }) => {
   const {
     data: items = [],
@@ -73,12 +78,29 @@ export const ProductQuantity: React.FC<{
 
   return (
     <FetchWrap isLoading={isLoading} error={error} data={!isLoading}>
-      <Box sx={{ display: "flex", alignItems: "stretch", height: "38px", maxWidth: "160px", margin: "auto", ...sx }}>
-        <Button variant="contained" sx={{ width: "38px", minWidth: "38px" }} onClick={() => number > 0 && setNumber(number - 1)}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "stretch",
+          height: "38px",
+          maxWidth: "160px",
+          margin: "auto",
+          ...sx,
+        }}
+      >
+        <Button
+          variant="contained"
+          sx={sxButton}
+          onClick={() => number > 0 && setNumber(number - 1)}
+        >
           -
         </Button>
         <PositifIntegerInput number={number} setNumber={setNumber} />
-        <Button variant="contained" sx={{ width: "38px", minWidth: "38px" }} onClick={() => setNumber(number + 1)}>
+        <Button
+          variant="contained"
+          sx={sxButton}
+          onClick={() => setNumber(number + 1)}
+        >
           +
         </Button>
       </Box>
