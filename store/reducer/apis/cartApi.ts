@@ -13,8 +13,8 @@ export const cartApi = createApi({
     cartItems: builder.query<IsCartItem[], void>({
       query: () => "/cart_items/",
     }),
-    cartItem: builder.query<IsCartItem, string | string[]>({
-      query: (id: string) => `/cart_items/${id}/`,
+    cartItem: builder.query<IsCartItem, number | number[]>({
+      query: (id: number) => `/cart_items/${id}/`,
     }),
     createCartItem: builder.mutation<IsCartItem, Partial<IsCartItem>>({
       query: (newCartItem) => ({
@@ -24,14 +24,14 @@ export const cartApi = createApi({
       }),
       invalidatesTags: ["Cart"],
     }),
-    updateCartItem: builder.mutation<IsCartItem, { id: string; data: Partial<IsCartItem> }>({
+    updateCartItem: builder.mutation<IsCartItem, { id: number; data: Partial<IsCartItem> }>({
       query: ({ id, data }) => ({
         url: `/cart_items/${id}/`,
         method: "PUT",
         body: data,
       }),
     }),
-    deleteCartItem: builder.mutation<void, string>({
+    deleteCartItem: builder.mutation<void, number>({
       query: (id) => ({
         url: `/cart_items/${id}/`,
         method: "DELETE",

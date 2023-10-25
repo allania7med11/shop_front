@@ -2,6 +2,7 @@ import { Box, Button, OutlinedInput, SxProps, Theme } from "@mui/material";
 import {
   useCartItemsQuery,
   useCreateCartItemMutation,
+  useDeleteCartItemMutation,
 } from "@/store/reducer/apis/cartApi";
 import { useEffect, useState } from "react";
 import { FetchWrap } from "@/components/common/fetchWrap";
@@ -49,25 +50,35 @@ export const ProductQuantity: React.FC<{
   const quantity = item ? item.quantity : 0;
   const [addItem, { error: errorCreate, isLoading: isLoadingCreate }] =
     useCreateCartItemMutation();
-  const isLoading = isLoadingGet && isLoadingCreate;
-  const error = errorGet && errorCreate;
+  const [deleteItem, { error: errorDelete, isLoading: isLoadingDelete }] =
+    useDeleteCartItemMutation();
+  const isLoading = isLoadingGet && isLoadingCreate && isLoadingDelete;
+  const error = errorGet && errorCreate && errorDelete;
   const [number, setNumber] = useState(quantity);
   const createCartItem = async () => {
-    if (number && number > 0) {
+    if (number!=quantity && number > 0) {
       try {
         const data = {
           product: product_id,
           quantity: number,
         };
-        const result = await addItem(data).unwrap();
-
-        // Handle success
-        console.log("Cart item created:", result);
+        await addItem(data).unwrap();
+        console.log("Update cart item:", product_id);
       } catch (error) {
         // Handle error
         console.error("Error creating cart item:", error);
       }
     }
+    if (item && number == 0) {
+      try {
+        await deleteItem(item.id).unwrap();
+        console.log("Delete cart item:", product_id);
+      } catch (error) {
+        // Handle error
+        console.error("Error deleting cart item:", error);
+      }
+    }
+    
   };
   useEffect(() => {
     createCartItem();
