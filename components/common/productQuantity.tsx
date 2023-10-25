@@ -88,21 +88,30 @@ export const ProductQuantity: React.FC<{
           ...sx,
         }}
       >
-        <Button
-          variant="contained"
-          sx={sxButton}
-          onClick={() => number > 0 && setNumber(number - 1)}
-        >
-          -
-        </Button>
-        <PositifIntegerInput number={number} setNumber={setNumber} />
-        <Button
-          variant="contained"
-          sx={sxButton}
-          onClick={() => setNumber(number + 1)}
-        >
-          +
-        </Button>
+        {number == 0 && (
+          <Button variant="contained" onClick={() => setNumber(1)}>
+            Add To Cart
+          </Button>
+        )}
+        {number > 0 && (
+          <>
+            <Button
+              variant="contained"
+              sx={sxButton}
+              onClick={() => number > 0 && setNumber(number - 1)}
+            >
+              -
+            </Button>
+            <PositifIntegerInput number={number} setNumber={setNumber} />
+            <Button
+              variant="contained"
+              sx={sxButton}
+              onClick={() => setNumber(number + 1)}
+            >
+              +
+            </Button>
+          </>
+        )}
       </Box>
     </FetchWrap>
   );
