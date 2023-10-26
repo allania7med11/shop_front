@@ -45,7 +45,6 @@ export const ProductQuantity: React.FC<{
     error: errorGet,
     isLoading: isLoadingGet,
   } = useCartItemsQuery();
-
   const item = items.find((elm) => elm.product == product_id);
   const quantity = item ? item.quantity : 0;
   const [addItem, { error: errorCreate, isLoading: isLoadingCreate }] =
@@ -55,34 +54,36 @@ export const ProductQuantity: React.FC<{
   const isLoading = isLoadingGet && isLoadingCreate && isLoadingDelete;
   const error = errorGet && errorCreate && errorDelete;
   const [number, setNumber] = useState(quantity);
-  const createCartItem = async () => {
-    if (number!=quantity && number > 0) {
-      try {
-        const data = {
-          product: product_id,
-          quantity: number,
-        };
-        await addItem(data).unwrap();
-        console.log("Update cart item:", product_id);
-      } catch (error) {
-        // Handle error
-        console.error("Error creating cart item:", error);
+  const createCartItem = async (value) => {
+    if (!isLoading) {
+      if (value != quantity && value > 0) {
+        try {
+          const data = {
+            product: product_id,
+            quantity: value,
+          };
+          await addItem(data).unwrap();
+          console.log("Update cart item:", value, item);
+        } catch (error) {
+          // Handle error
+          console.error("Error creating cart item:", error);
+        }
+      }
+      if (item && value == 0) {
+        try {
+          await deleteItem(item.id).unwrap();
+          console.log("Delete cart item:", value,item);
+        } catch (error) {
+          // Handle error
+          console.error("Error deleting cart item:", error);
+        }
       }
     }
-    if (item && number == 0) {
-      try {
-        await deleteItem(item.id).unwrap();
-        console.log("Delete cart item:", product_id);
-      } catch (error) {
-        // Handle error
-        console.error("Error deleting cart item:", error);
-      }
-    }
-    
   };
-  useEffect(() => {
-    createCartItem();
-  }, [number]);
+  const setNumberAndcreateCartItem = (value) => {
+    setNumber(value)
+    createCartItem(value)
+  }
   useEffect(() => {
     setNumber(quantity);
   }, [quantity]);
@@ -100,7 +101,11 @@ export const ProductQuantity: React.FC<{
         }}
       >
         {number == 0 && (
-          <Button variant="contained" onClick={() => setNumber(1)}>
+          <Button
+            variant="contained"
+            sx={{ width: "150px" }}
+            onClick={() => setNumberAndcreateCartItem(1)}
+          >
             Add To Cart
           </Button>
         )}
@@ -109,15 +114,15 @@ export const ProductQuantity: React.FC<{
             <Button
               variant="contained"
               sx={sxButton}
-              onClick={() => number > 0 && setNumber(number - 1)}
+              onClick={() => number > 0 && setNumberAndcreateCartItem(number - 1)}
             >
               -
             </Button>
-            <PositifIntegerInput number={number} setNumber={setNumber} />
+            <PositifIntegerInput number={number} setNumber={setNumberAndcreateCartItem} />
             <Button
               variant="contained"
               sx={sxButton}
-              onClick={() => setNumber(number + 1)}
+              onClick={() => setNumberAndcreateCartItem(number + 1)}
             >
               +
             </Button>
