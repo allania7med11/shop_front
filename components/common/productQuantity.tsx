@@ -110,7 +110,7 @@ export const ProductQuantity: React.FC<{
           ...sx,
         }}
       >
-        {number == 0 && (
+        {quantity == 0 && (
           <Button
             variant="contained"
             sx={{ width: "150px" }}
@@ -119,7 +119,7 @@ export const ProductQuantity: React.FC<{
             Add To Cart
           </Button>
         )}
-        {number > 0 && (
+        {quantity > 0 && (
           <>
             <Button
               variant="contained"
