@@ -53,6 +53,7 @@ export const ProductQuantity: React.FC<{
   const [numberInput, setNumberInput] = useState(String(quantity));
   const number = parseInt(numberInput)
   const [debouncedNumber] = useDebounce(number, 500);
+  const displayAddCarte = numberInput === "0"
   const [changedNumberFromHere, setChangedNumberFromHere] = useState(true);
   const updateNumberFromHere = (value) => {
     setNumberInput(value)
@@ -92,7 +93,7 @@ export const ProductQuantity: React.FC<{
     }
   }, [debouncedNumber, changedNumberFromHere]);
   useEffect(() => {
-    updateNumberFromOutside(quantity);
+    updateNumberFromOutside(String(quantity));
   }, [quantity]);
 
   return (
@@ -107,7 +108,7 @@ export const ProductQuantity: React.FC<{
           ...sx,
         }}
       >
-        {quantity == 0 && (
+        {displayAddCarte && (
           <Button
             variant="contained"
             sx={{ width: "150px" }}
@@ -116,7 +117,7 @@ export const ProductQuantity: React.FC<{
             Add To Cart
           </Button>
         )}
-        {quantity > 0 && (
+        {!displayAddCarte && (
           <>
             <Button
               variant="contained"
