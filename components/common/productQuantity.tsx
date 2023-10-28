@@ -1,3 +1,4 @@
+import { useDebounce } from "use-debounce";
 import { Box, Button, OutlinedInput, SxProps, Theme } from "@mui/material";
 import {
   useCartItemsQuery,
@@ -8,25 +9,22 @@ import { useEffect, useState } from "react";
 import { FetchWrap } from "@/components/common/fetchWrap";
 
 const PositifIntegerInput: React.FC<{
-  number: number;
-  setNumber: (value: number) => void;
-}> = ({ number, setNumber }) => {
+  numberInput: string;
+  setNumberInput: (value: string) => void;
+}> = ({ numberInput, setNumberInput }) => {
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
 
     // Allow an empty string or positive integers
-    if (
-      inputValue === "" ||
-      (Number.isInteger(parseFloat(inputValue)) && parseFloat(inputValue) >= 0)
-    ) {
-      setNumber(inputValue);
+    if (/^\d*$/.test(inputValue)) {
+      setNumberInput(inputValue);
     }
   };
-
+  console.log(numberInput)
   return (
     <OutlinedInput
-      type="number"
-      value={number}
+      type="text"
+      value={numberInput}
       onChange={handleInputChange}
       margin="dense"
     />
@@ -53,8 +51,19 @@ export const ProductQuantity: React.FC<{
     useDeleteCartItemMutation();
   const isLoading = isLoadingGet && isLoadingCreate && isLoadingDelete;
   const error = errorGet && errorCreate && errorDelete;
-  const [number, setNumber] = useState(quantity);
-  const createCartItem = async (value) => {
+  const [numberInput, setNumberInput] = useState(String(quantity));
+  const number = parseInt(numberInput)
+  const [debouncedNumber] = useDebounce(number, 500);
+  const [changedNumberFromHere, setChangedNumberFromHere] = useState(true);
+  const updateNumberFromHere = (value) => {
+    setNumberInput(value)
+    setChangedNumberFromHere(true)
+  }
+  const updateNumberFromOutside = (value) => {
+    setNumberInput(value)
+    setChangedNumberFromHere(false)
+  }
+  const createCartItem = async (value: number) => {
     if (!isLoading) {
       if (value != quantity && value > 0) {
         try {
@@ -69,10 +78,10 @@ export const ProductQuantity: React.FC<{
           console.error("Error creating cart item:", error);
         }
       }
-      if (item && value == 0) {
+      if (item && value === 0) {
         try {
           await deleteItem(item.id).unwrap();
-          console.log("Delete cart item:", value,item);
+          console.log("Delete cart item:", value, item);
         } catch (error) {
           // Handle error
           console.error("Error deleting cart item:", error);
@@ -80,12 +89,13 @@ export const ProductQuantity: React.FC<{
       }
     }
   };
-  const setNumberAndcreateCartItem = (value) => {
-    setNumber(value)
-    createCartItem(value)
-  }
   useEffect(() => {
-    setNumber(quantity);
+    if (changedNumberFromHere && Number.isInteger(debouncedNumber)) {
+      createCartItem(debouncedNumber);
+    }
+  }, [debouncedNumber, changedNumberFromHere]);
+  useEffect(() => {
+    updateNumberFromOutside(quantity);
   }, [quantity]);
 
   return (
@@ -100,29 +110,34 @@ export const ProductQuantity: React.FC<{
           ...sx,
         }}
       >
-        {number == 0 && (
+        {quantity == 0 && (
           <Button
             variant="contained"
             sx={{ width: "150px" }}
-            onClick={() => setNumberAndcreateCartItem(1)}
+            onClick={() => updateNumberFromHere(1)}
           >
             Add To Cart
           </Button>
         )}
-        {number > 0 && (
+        {quantity > 0 && (
           <>
             <Button
               variant="contained"
               sx={sxButton}
-              onClick={() => number > 0 && setNumberAndcreateCartItem(number - 1)}
+              onClick={() =>
+                number > 0 && updateNumberFromHere(String(number - 1))
+              }
             >
               -
             </Button>
-            <PositifIntegerInput number={number} setNumber={setNumberAndcreateCartItem} />
+            <PositifIntegerInput
+              numberInput={numberInput}
+              setNumberInput={updateNumberFromHere}
+            />
             <Button
               variant="contained"
               sx={sxButton}
-              onClick={() => setNumberAndcreateCartItem(number + 1)}
+              onClick={() => updateNumberFromHere(String(number + 1))}
             >
               +
             </Button>
