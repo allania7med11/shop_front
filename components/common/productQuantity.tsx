@@ -20,7 +20,6 @@ const PositifIntegerInput: React.FC<{
       setNumberInput(inputValue);
     }
   };
-  console.log(numberInput)
   return (
     <OutlinedInput
       type="text"
@@ -72,7 +71,6 @@ export const ProductQuantity: React.FC<{
             quantity: value,
           };
           await addItem(data).unwrap();
-          console.log("Update cart item:", value, item);
         } catch (error) {
           // Handle error
           console.error("Error creating cart item:", error);
@@ -81,7 +79,6 @@ export const ProductQuantity: React.FC<{
       if (item && value === 0) {
         try {
           await deleteItem(item.id).unwrap();
-          console.log("Delete cart item:", value, item);
         } catch (error) {
           // Handle error
           console.error("Error deleting cart item:", error);
