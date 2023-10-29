@@ -19,13 +19,13 @@ export const ProductInfos: FC<{
   product: IsProduct;
 }> = ({ product }) => {
   const {
-    id,
     name,
     price,
     price_currency,
     discount,
     current_price,
     description_html,
+    cart_item
   } = product;
 
   return (
@@ -38,7 +38,7 @@ export const ProductInfos: FC<{
           priceInfos={{ price, price_currency, discount, current_price }}
           size="medium"
         />
-        <ProductQuantity product_id={id}  />
+        <ProductQuantity cart_item={cart_item}  />
       </Box>
       <Box>
         {description_html && (

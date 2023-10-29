@@ -7,6 +7,7 @@ import {
 } from "@/store/reducer/apis/cartApi";
 import { useEffect, useState } from "react";
 import { FetchWrap } from "@/components/common/fetchWrap";
+import { IsCartItem } from "@/data/cart";
 
 const PositifIntegerInput: React.FC<{
   numberInput: string;
@@ -34,41 +35,36 @@ const PositifIntegerInput: React.FC<{
 const sxButton: SxProps = { width: "38px", minWidth: "38px", fontSize: "24px" };
 
 export const ProductQuantity: React.FC<{
-  product_id: number;
+  cart_item: IsCartItem;
   sx?: SxProps<Theme>;
-}> = ({ product_id, sx }) => {
-  const {
-    data: items = [],
-    error: errorGet,
-    isLoading: isLoadingGet,
-  } = useCartItemsQuery();
-  const item = items.find((elm) => elm.product == product_id);
+}> = ({ cart_item, sx }) => {
+  const item = cart_item;
   const quantity = item ? item.quantity : 0;
   const [addItem, { error: errorCreate, isLoading: isLoadingCreate }] =
     useCreateCartItemMutation();
   const [deleteItem, { error: errorDelete, isLoading: isLoadingDelete }] =
     useDeleteCartItemMutation();
-  const isLoading = isLoadingGet && isLoadingCreate && isLoadingDelete;
-  const error = errorGet && errorCreate && errorDelete;
+  const isLoading = isLoadingCreate && isLoadingDelete;
+  const error = errorCreate && errorDelete;
   const [numberInput, setNumberInput] = useState(String(quantity));
-  const number = parseInt(numberInput)
+  const number = parseInt(numberInput);
   const [debouncedNumber] = useDebounce(number, 500);
-  const displayAddCarte = numberInput === "0"
+  const displayAddCarte = numberInput === "0";
   const [changedNumberFromHere, setChangedNumberFromHere] = useState(true);
   const updateNumberFromHere = (value) => {
-    setNumberInput(value)
-    setChangedNumberFromHere(true)
-  }
+    setNumberInput(value);
+    setChangedNumberFromHere(true);
+  };
   const updateNumberFromOutside = (value) => {
-    setNumberInput(value)
-    setChangedNumberFromHere(false)
-  }
+    setNumberInput(value);
+    setChangedNumberFromHere(false);
+  };
   const createCartItem = async (value: number) => {
     if (!isLoading) {
       if (value != quantity && value > 0) {
         try {
           const data = {
-            product: product_id,
+            product: item.id,
             quantity: value,
           };
           await addItem(data).unwrap();

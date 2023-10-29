@@ -21,7 +21,7 @@ export const CartTableRow: React.FC<{ product: IsProduct }> = ({ product }) => {
         <ProductTableCell product={product} />
       </TableCell>
       <TableCell>
-        <ProductQuantity product_id={product.id} sx={{ margin: "auto" }} />
+        <ProductQuantity cart_item={product.cart_item} />
       </TableCell>
       <TableCell>{product.current_price}</TableCell>
     </TableRow>

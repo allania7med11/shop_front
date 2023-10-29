@@ -11,7 +11,7 @@ import { Link } from "./Link";
 import { Box } from "@mui/material";
 
 export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
-  const { name, files, price, price_currency, discount, current_price } = product;
+  const { name, files, price, price_currency, discount, current_price, cart_item } = product;
   const imageUrl = files.length > 0 ? files[0].url : "";
   return (
     <Card sx={{ width: 260, display: "flex", flexDirection: "column", px: 1 }}>
@@ -36,7 +36,7 @@ export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
           </Tooltip>
           <ProductPrice priceInfos={{ price, price_currency, discount, current_price }} />
         </Box>
-        <ProductQuantity product_id={product.id} sx={{ margin: "auto" }}  />
+        <ProductQuantity cart_item={cart_item} sx={{ margin: "auto" }}  />
       </CardContent>
     </Card>
   );
