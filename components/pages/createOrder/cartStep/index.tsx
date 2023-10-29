@@ -1,12 +1,13 @@
-import { Button, Card, Typography } from "@mui/material";
+import { Box, Button, Card, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useRouter } from 'next/router'
+import { CartTable } from "./cartTable";
 
 
-export const Cart = () => {
+export const CartStep = () => {
   const router = useRouter()
   return (
-    <div>
+    <Box sx={{display: "flex", flexDirection: "column", gap: "32px"}}>
       <Card
         sx={{
           display: "flex",
@@ -24,6 +25,7 @@ export const Cart = () => {
           Continue Shopping
         </Button>
       </Card>
-    </div>
+      <CartTable />
+    </Box>
   );
 };

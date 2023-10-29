@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
-import { Cart } from "./cart";
 import Card from "@mui/material/Card";
+import { CartStep } from "./cartStep";
 
 const steps = ["Cart", "Login", "Address", "Review"];
 
@@ -25,7 +25,7 @@ export const CreateOrder = () => {
         </Stepper>
       </Card>
 
-      {activeStep == 0 && <Cart />}
+      {activeStep == 0 && <CartStep />}
     </Box>
   );
 };

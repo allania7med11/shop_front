@@ -2,8 +2,8 @@ import * as React from "react";
 import Container from "@mui/material/Container";
 import Copyright from "src/Copyright";
 import Box from "@mui/material/Box";
-import { CartBreadcrumbs } from "@/components/pages/cart/cartBreadcrumb";
-import { CreateOrder } from "@/components/pages/cart/createOrder";
+import { CreateOrder } from "@/components/pages/createOrder";
+import { CartBreadcrumbs } from "@/components/pages/createOrder/cartStep/cartBreadcrumb";
 
 export default function Index() {
   return (
