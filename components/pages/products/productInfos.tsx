@@ -38,7 +38,7 @@ export const ProductInfos: FC<{
           priceInfos={{ price, price_currency, discount, current_price }}
           size="medium"
         />
-        <ProductQuantity product_id={id} sx={{ margin: 0 }} />
+        <ProductQuantity product_id={id}  />
       </Box>
       <Box>
         {description_html && (

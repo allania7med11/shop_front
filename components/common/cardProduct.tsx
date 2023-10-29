@@ -36,7 +36,7 @@ export const CardProduct: React.FC<{ product: IsProduct }> = ({ product }) => {
           </Tooltip>
           <ProductPrice priceInfos={{ price, price_currency, discount, current_price }} />
         </Box>
-        <ProductQuantity product_id={product.id}  />
+        <ProductQuantity product_id={product.id} sx={{ margin: "auto" }}  />
       </CardContent>
     </Card>
   );

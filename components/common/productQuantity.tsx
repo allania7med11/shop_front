@@ -104,7 +104,6 @@ export const ProductQuantity: React.FC<{
           alignItems: "stretch",
           height: "38px",
           maxWidth: "160px",
-          margin: "auto",
           ...sx,
         }}
       >
