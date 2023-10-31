@@ -11,10 +11,9 @@ export const ProductTableCell: React.FC<{ product: IsProduct }> = ({
 }) => {
   const { name, files } = product;
   const imageUrl = files.length > 0 ? files[0].url : "";
-  const [deleteItem, {}] =
-    useDeleteCartItemMutation();
+  const [deleteItem, {}] = useDeleteCartItemMutation();
   return (
-    <Box sx={{ display: "flex", px: 1, alignItems: "start" }}>
+    <Box sx={{ display: "flex", px: 1, alignItems: "start", flexWrap: "wrap", gap: "16px" }}>
       <Link href={`/products?slug=${product.slug}`}>
         <Box
           component="img"
@@ -24,13 +23,24 @@ export const ProductTableCell: React.FC<{ product: IsProduct }> = ({
           sx={{ objectFit: "contain" }}
         ></Box>
       </Link>
-      <Box sx={{ padding: "0px 24px" }}>
+      <Box>
         <Tooltip title={name} arrow>
-          <Typography noWrap gutterBottom variant="h6" component="div" sx={{ mb: 0 }}>
+          <Typography
+            noWrap
+            gutterBottom
+            variant="h6"
+            component="div"
+            sx={{ mb: 0, whiteSpace: "wrap" }}
+          >
             {name}
           </Typography>
         </Tooltip>
-        <Button variant="text" color="error" sx={{ textTransform: "none" }} onClick={() => deleteItem(product.cart_item.id)}>
+        <Button
+          variant="text"
+          color="error"
+          sx={{ textTransform: "none" }}
+          onClick={() => deleteItem(product.cart_item.id)}
+        >
           Remove
         </Button>
       </Box>

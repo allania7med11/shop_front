@@ -13,7 +13,6 @@ import { useProductsQuery } from "@/store/reducer/apis/productApi";
 import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
 import { addItemsToProducts } from "@/utils/products";
 
-
 export const CartTableRow: React.FC<{ product: IsProduct }> = ({ product }) => {
   return (
     <TableRow>
@@ -42,7 +41,7 @@ export const CartTable = () => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table aria-label="simple table" sx={{ "& td": { padding: "12px 4px" } }}>
         <TableHead>
           <TableRow>
             {headers.map((header, key) => (

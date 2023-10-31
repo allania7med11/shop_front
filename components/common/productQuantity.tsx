@@ -27,12 +27,13 @@ const PositifIntegerInput: React.FC<{
       value={numberInput}
       onChange={handleInputChange}
       margin="dense"
+      sx={{ height: "38px" }}
     />
   );
 };
 
 // Define increment and decrement styles
-const sxButton: SxProps = { width: "38px", minWidth: "38px", fontSize: "24px" };
+const sxButton: SxProps = { width: "38px", minWidth: "38px", height: "38px", fontSize: "24px" };
 
 export const ProductQuantity: React.FC<{
   cart_item: IsCartItem;
@@ -97,8 +98,9 @@ export const ProductQuantity: React.FC<{
       <Box
         sx={{
           display: "flex",
+          flexWrap: "wrap",
           alignItems: "stretch",
-          height: "38px",
+          justifyContent: "center",
           maxWidth: "160px",
           ...sx,
         }}
@@ -114,26 +116,32 @@ export const ProductQuantity: React.FC<{
         )}
         {!displayAddCarte && (
           <>
-            <Button
-              variant="contained"
-              sx={sxButton}
-              onClick={() =>
-                number > 0 && updateNumberFromHere(String(number - 1))
-              }
-            >
-              -
-            </Button>
-            <PositifIntegerInput
-              numberInput={numberInput}
-              setNumberInput={updateNumberFromHere}
-            />
-            <Button
-              variant="contained"
-              sx={sxButton}
-              onClick={() => updateNumberFromHere(String(number + 1))}
-            >
-              +
-            </Button>
+            <Box sx={{ flex: "0 0 38px" }}>
+              <Button
+                variant="contained"
+                sx={sxButton}
+                onClick={() =>
+                  number > 0 && updateNumberFromHere(String(number - 1))
+                }
+              >
+                -
+              </Button>
+            </Box>
+            <Box sx={{ flex: "1 1 100%", maxWidth:"70px"  }}>
+              <PositifIntegerInput
+                numberInput={numberInput}
+                setNumberInput={updateNumberFromHere}
+              />
+            </Box>
+            <Box sx={{ flex: "0 0 38px" }}>
+              <Button
+                variant="contained"
+                sx={sxButton}
+                onClick={() => updateNumberFromHere(String(number + 1))}
+              >
+                +
+              </Button>
+            </Box>
           </>
         )}
       </Box>
