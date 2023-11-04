@@ -8,17 +8,21 @@ import { ProductInfos } from "@/components/pages/products/productInfos";
 import { ProductImages } from "@/components/pages/products/productImages";
 import { useProductQuery } from "@/store/reducer/apis/productApi";
 import { FetchWrap } from "@/components/common/fetchWrap";
+import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
+import { addItemsToProducts } from "@/utils/products";
 
 export default function Index() {
   const router = useRouter();
   const { slug } = router.query;
-  const { data, error, isLoading } = useProductQuery(slug, {
+  const { data: productApi = null, error, isLoading } = useProductQuery(slug, {
     skip: !slug,
   });
+  const { data: items = [] } = useCartItemsQuery();
+  const product = productApi && addItemsToProducts([productApi], items)[0];
   return (
     <Container maxWidth={false} sx={{ maxWidth: "1400px" }}>
       <Box sx={{ my: 4 }}>
-        <ProductBreadcrumbs sx={{ py: 7 }} product={data} />
+        <ProductBreadcrumbs sx={{ py: 7 }} product={product} />
         <Box
           sx={{
             display: "flex",
@@ -36,14 +40,14 @@ export default function Index() {
               flexGrow: 1,
             }}
           >
-            <FetchWrap isLoading={isLoading} error={error} data={data}>
-              <ProductImages files={data && data.files} />
+            <FetchWrap isLoading={isLoading} error={error} data={product}>
+              <ProductImages files={product && product.files} />
             </FetchWrap>
           </Box>
 
           <Box sx={{ flexBasis: "350px", minWidth: "350px", flexGrow: 5 }}>
-            <FetchWrap isLoading={isLoading} error={error} data={data}>
-              <ProductInfos product={data} />
+            <FetchWrap isLoading={isLoading} error={error} data={product}>
+              <ProductInfos product={product} />
             </FetchWrap>
           </Box>
         </Box>
