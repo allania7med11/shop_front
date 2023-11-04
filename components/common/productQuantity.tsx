@@ -33,14 +33,19 @@ const PositifIntegerInput: React.FC<{
 };
 
 // Define increment and decrement styles
-const sxButton: SxProps = { width: "38px", minWidth: "38px", height: "38px", fontSize: "24px" };
+const sxButton: SxProps = {
+  width: "38px",
+  minWidth: "38px",
+  height: "38px",
+  fontSize: "24px",
+};
 
 export const ProductQuantity: React.FC<{
   cart_item: IsCartItem;
   sx?: SxProps<Theme>;
 }> = ({ cart_item, sx }) => {
   const item = cart_item;
-  const quantity =  item.quantity 
+  const quantity =  item.quantity;
   const [addItem, { error: errorCreate, isLoading: isLoadingCreate }] =
     useCreateCartItemMutation();
   const [deleteItem, { error: errorDelete, isLoading: isLoadingDelete }] =
@@ -127,7 +132,7 @@ export const ProductQuantity: React.FC<{
                 -
               </Button>
             </Box>
-            <Box sx={{ flex: "1 1 100%", maxWidth:"70px"  }}>
+            <Box sx={{ flex: "1 1 100%", maxWidth: "70px" }}>
               <PositifIntegerInput
                 numberInput={numberInput}
                 setNumberInput={updateNumberFromHere}
