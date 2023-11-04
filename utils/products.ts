@@ -1,8 +1,8 @@
 import { IsCartItem } from "@/data/cart";
 import { IsProduct } from "@/data/categories";
 
-function getValue(obj, key) {
-  return obj.hasOwnProperty(key) ? obj[key] : null;
+function getValue(obj, key, dflt) {
+  return obj.hasOwnProperty(key) ? obj[key] : dflt;
 }
 
 export const addItemsToProducts = (
@@ -15,6 +15,10 @@ export const addItemsToProducts = (
   }, {});
   return products.map((product) => ({
     ...product,
-    cart_item: getValue(mapProductItem, product.id),
+    cart_item: getValue(mapProductItem, product.id, {
+      id: 0,
+      product: product.id,
+      quantity: 0,
+    }),
   }));
 };

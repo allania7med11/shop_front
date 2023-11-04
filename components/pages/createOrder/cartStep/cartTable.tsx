@@ -34,7 +34,7 @@ export const CartTable = () => {
   const { data: productsApi = [] } = useProductsQuery(
     { id_in: product_ids },
     {
-      skip: !product_ids,
+      skip: product_ids.length == 0,
     }
   );
   const products = addItemsToProducts(productsApi, items);
@@ -50,8 +50,8 @@ export const CartTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((product) => (
-            <CartTableRow product={product} />
+          {products.map((product, key) => (
+            <CartTableRow key={key} product={product}  />
           ))}
         </TableBody>
       </Table>

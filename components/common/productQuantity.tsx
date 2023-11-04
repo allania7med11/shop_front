@@ -40,7 +40,7 @@ export const ProductQuantity: React.FC<{
   sx?: SxProps<Theme>;
 }> = ({ cart_item, sx }) => {
   const item = cart_item;
-  const quantity = item ? item.quantity : 0;
+  const quantity =  item.quantity 
   const [addItem, { error: errorCreate, isLoading: isLoadingCreate }] =
     useCreateCartItemMutation();
   const [deleteItem, { error: errorDelete, isLoading: isLoadingDelete }] =
@@ -65,7 +65,7 @@ export const ProductQuantity: React.FC<{
       if (value != quantity && value > 0) {
         try {
           const data = {
-            product: item.id,
+            product: item.product,
             quantity: value,
           };
           await addItem(data).unwrap();
@@ -74,7 +74,7 @@ export const ProductQuantity: React.FC<{
           console.error("Error creating cart item:", error);
         }
       }
-      if (item && value === 0) {
+      if (item.id && value === 0) {
         try {
           await deleteItem(item.id).unwrap();
         } catch (error) {
