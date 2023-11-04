@@ -14,6 +14,9 @@ import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
 import { addItemsToProducts } from "@/utils/products";
 
 export const CartTableRow: React.FC<{ product: IsProduct }> = ({ product }) => {
+  const price =
+    Math.round(product.current_price * product.cart_item.quantity * Math.pow(10, 5)) /
+    Math.pow(10, 5);
   return (
     <TableRow>
       <TableCell>
@@ -22,7 +25,7 @@ export const CartTableRow: React.FC<{ product: IsProduct }> = ({ product }) => {
       <TableCell>
         <ProductQuantity cart_item={product.cart_item} />
       </TableCell>
-      <TableCell>{product.current_price}</TableCell>
+      <TableCell>${price}</TableCell>
     </TableRow>
   );
 };
@@ -51,7 +54,7 @@ export const CartTable = () => {
         </TableHead>
         <TableBody>
           {products.map((product, key) => (
-            <CartTableRow key={key} product={product}  />
+            <CartTableRow key={key} product={product} />
           ))}
         </TableBody>
       </Table>
