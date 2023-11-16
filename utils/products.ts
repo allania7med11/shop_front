@@ -8,7 +8,7 @@ function getValue(obj, key, dflt) {
 export const addItemsToProducts = (
   products: IsProduct[],
   items: IsCartItem[]
-) => {
+) : IsProduct[] => {
   const mapProductItem = items.reduce((acc, item) => {
     acc[item.product] = item;
     return acc;

@@ -15,9 +15,7 @@ import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
 import { addItemsToProducts } from "@/utils/products";
 
 export const CartTableRow: React.FC<{ product: IsProduct }> = ({ product }) => {
-  const price =
-    Math.round(product.current_price * product.cart_item.quantity * Math.pow(10, 5)) /
-    Math.pow(10, 5);
+  const price = roundPrice(product.current_price * product.cart_item.quantity);
   return (
     <TableRow>
       <TableCell>
@@ -45,21 +43,39 @@ export const CartTable = () => {
 
   // Pagination state
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5); // Set the number of rows per page
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number
+  ) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
+  // Calculate total items and total price
+  const totalItems = products.reduce(
+    (acc, product) => acc + product.cart_item.quantity,
+    0
+  );
+  const totalPrice = products.reduce(
+    (acc, product) => acc + product.current_price * product.cart_item.quantity,
+    0
+  );
+
   return (
     <Paper>
       <TableContainer>
-        <Table aria-label="simple table" sx={{ "& td": { padding: "12px 4px" } }}>
+        <Table
+          aria-label="simple table"
+          sx={{ "& td": { padding: "12px 4px" } }}
+        >
           <TableHead>
             <TableRow>
               {headers.map((header, key) => (
@@ -73,6 +89,13 @@ export const CartTable = () => {
               .map((product, key) => (
                 <CartTableRow key={key} product={product} />
               ))}
+          </TableBody>
+          <TableBody>
+            <TableRow sx={{ "& td": { fontWeight: "bold", fontSize: "18px" } }}>
+              <TableCell sx={{textAlign: "center"}}>Total</TableCell>
+              <TableCell>{totalItems} Items</TableCell>
+              <TableCell>${roundPrice(totalPrice)}</TableCell>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer>
@@ -88,3 +111,6 @@ export const CartTable = () => {
     </Paper>
   );
 };
+
+const roundPrice = (price) =>
+  Math.round(price * Math.pow(10, 2)) / Math.pow(10, 2);
