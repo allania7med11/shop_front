@@ -1,3 +1,5 @@
+import { IsCartItem } from "./cart";
+
 export interface IsFile {
   url: string;
 }
@@ -26,18 +28,20 @@ export interface IsProduct {
   files: IsFile[];
   discount: IsDiscount;
   description_html: string;
+  cart_item?: IsCartItem
 }
 
 export type IsProductOrder = "current_price" | "-current_price" | "name" | "-name"| "";
 
 export interface IsProductFilters {
-  category: string;
-  search: string[];
-  current_price_min: string;
-  current_price_max: string;
-  discount_min: string;
-  discount_max: string;
-  ordering: IsProductOrder;
+  category?: string;
+  search?: string[];
+  current_price_min?: string;
+  current_price_max?: string;
+  discount_min?: string;
+  discount_max?: string;
+  ordering?: IsProductOrder;
+  id_in?: number[];
 }
 
 export interface IsCategory extends IsCategoryNoProducts {

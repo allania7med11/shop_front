@@ -8,6 +8,8 @@ import { FetchWrap } from "@/components/common/fetchWrap";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/reducer";
 import { IsProductFilters } from "@/data/categories";
+import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
+import { addItemsToProducts } from "@/utils/products";
 
 const sxProducts: SxProps = {
   p: "24px",
@@ -18,6 +20,7 @@ const sxProducts: SxProps = {
 };
 
 export const Products = () => {
+  const { data: items = [] } = useCartItemsQuery();
   const filters: IsProductFilters = useSelector((state: RootState) => ({
     category: state.filters.categorySlug || "",
     search: state.filters.search || [""],
@@ -27,12 +30,12 @@ export const Products = () => {
     discount_max: state.filters.discount_max || "",
     ordering: state.filters.ordering || "",
   }));
-  const { data, error, isLoading } = useProductsQuery(filters, {
+  const { data: productsApi = [], error, isLoading } = useProductsQuery(filters, {
     skip: !filters.category,
   });
-  const products = data ? data : [];
+  const products = addItemsToProducts(productsApi, items);
   return (
-    <FetchWrap isLoading={isLoading} error={error} data={data}>
+    <FetchWrap isLoading={isLoading} error={error} data={products}>
       <Box sx={sxProducts}>
         {products.map((product, key) => (
           <CardProduct key={key} product={product} />

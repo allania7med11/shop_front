@@ -5,6 +5,7 @@ import { IsProduct } from "@/data/categories";
 import { ProductPrice } from "@/components/common/productPrice";
 import { HtmlRender } from "@/components/common/htmlRender";
 import { grey } from "@mui/material/colors";
+import { ProductQuantity } from "@/components/common/productQuantity";
 
 const sxPaper: SxProps = {
   p: "24px",
@@ -24,6 +25,7 @@ export const ProductInfos: FC<{
     discount,
     current_price,
     description_html,
+    cart_item
   } = product;
 
   return (
@@ -31,10 +33,13 @@ export const ProductInfos: FC<{
       <Typography gutterBottom variant="h5" component="div">
         {name}
       </Typography>
-      <ProductPrice
-        priceInfos={{ price, price_currency, discount, current_price }}
-        size="medium"
-      />
+      <Box sx={{display:"flex", flexDirection: "column", gap: "8px"}}>
+        <ProductPrice
+          priceInfos={{ price, price_currency, discount, current_price }}
+          size="medium"
+        />
+        <ProductQuantity cart_item={cart_item}  />
+      </Box>
       <Box>
         {description_html && (
           <Typography gutterBottom variant="h6" component="div">

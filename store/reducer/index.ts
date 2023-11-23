@@ -10,6 +10,6 @@ export const rootReducer = combineReducers({
 });
 
 export const rootMiddleware = (getDefaultMiddleware) =>
-  getDefaultMiddleware().concat(productApi.middleware);
+  getDefaultMiddleware().concat(productApi.middleware, cartApi.middleware);
 
 export type RootState = ReturnType<typeof rootReducer>;
