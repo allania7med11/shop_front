@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { InputLabel, Paper, Typography } from '@mui/material';
 import LogoSmall from './logoSmall';
+import { useForm } from 'react-hook-form';
+import FormTextField from './Form/formTextField';
 
 export const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { control, handleSubmit } = useForm();
 
-  const handleLogin = () => {
-    // Handle login logic here
-    console.log('Email:', email);
-    console.log('Password:', password);
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
@@ -29,33 +27,41 @@ export const Login = () => {
           Welcome To Logipsum
         </Typography>
       </Box>
-      <Box>
-        <InputLabel htmlFor="email">Email</InputLabel>
-        <TextField
-          id="email"
-          placeholder="example@gmail.com"
-          variant="outlined"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          fullWidth
-        />
-      </Box>
-      <Box>
-        <InputLabel htmlFor="email">Password</InputLabel>
-        <TextField
-          id="email"
-          placeholder="********"
-          variant="outlined"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-        />
-      </Box>
-      <Box sx={{display: "flex", justifyContent: "center", pt:2}}>
-        <Button sx={{ textTransform: "none" }} size="large" variant="contained" color="primary" onClick={handleLogin}>
-          Login
-        </Button>
-      </Box>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box>
+          <InputLabel htmlFor="email">Email</InputLabel>
+          <FormTextField
+            name="email"
+            control={control}
+            defaultValue=""
+            rules={{ required: 'Email is required' }}
+            type="email"
+            id="email"
+            placeholder="example@gmail.com"
+            variant="outlined"
+            fullWidth
+          />
+        </Box>
+        <Box>
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <FormTextField
+            name="password"
+            control={control}
+            defaultValue=""
+            rules={{ required: 'Password is required' }}
+            type="password"
+            id="password"
+            placeholder="********"
+            variant="outlined"
+            fullWidth
+          />
+        </Box>
+        <Box sx={{display: "flex", justifyContent: "center", pt:2}}>
+          <Button type="submit" sx={{ textTransform: "none" }} size="large" variant="contained" color="primary">
+            Login
+          </Button>
+        </Box>
+      </form>
     </Paper>
   );
 };
