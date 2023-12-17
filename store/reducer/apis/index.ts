@@ -12,7 +12,9 @@ const api_init = createApi({
         baseUrl,
         prepareHeaders: (headers, { getState }) => {
             const accessToken = (getState() as RootState).auth.access;
-            headers.set('Authorization', `Bearer ${accessToken}`);
+            if (accessToken) {
+                headers.set('Authorization', `Bearer ${accessToken}`);
+            }
             return headers;
         },
     }),
