@@ -1,13 +1,8 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseUrl } from "./utils";
-import { AuthResponse,  IsUser,  LoginCredentials} from "@/data/auth";
+import { AuthCredentials, IsUser, LoginCredentials } from "@/data/auth";
+import { api } from ".";
 
-export const authApi = createApi({
-  reducerPath: "authApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: baseUrl,
-    credentials: "include"
-  }),
+
+const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
     createGuestItem: builder.mutation({
       query: () => ({
@@ -15,21 +10,23 @@ export const authApi = createApi({
         method: "POST",
       }),
     }),
-    login: builder.mutation<AuthResponse, LoginCredentials>({
+    login: builder.mutation<AuthCredentials, LoginCredentials>({
       query: (credentials) => ({
         url: '/auth/token/',
         method: 'POST',
         body: credentials,
       }),
+      invalidatesTags: ["User"],
     }),
     profile: builder.query<IsUser, void>({
       query: () => "/auth/profile/",
+      providesTags: ["User"],
     }),
   }),
 });
 
 export const {
-    useCreateGuestItemMutation,
-    useLoginMutation,
-    useProfileQuery,
+  useCreateGuestItemMutation,
+  useLoginMutation,
+  useProfileQuery,
 } = authApi;

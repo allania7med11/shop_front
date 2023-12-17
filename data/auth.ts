@@ -3,9 +3,9 @@ export interface LoginCredentials {
     password: string;
 }
 
-export interface AuthResponse {
-    accessToken: string;
-    refreshToken: string;
+export interface AuthCredentials {
+    access: string;
+    refresh: string;
 }
 
 export interface IsUser {

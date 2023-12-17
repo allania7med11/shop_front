@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from "react-redux";
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { CircularProgress, InputLabel, Paper, Typography } from '@mui/material';
@@ -6,8 +7,10 @@ import LogoSmall from './logoSmall';
 import { useForm } from 'react-hook-form';
 import FormTextField from './Form/formTextField';
 import { useLoginMutation } from '@/store/reducer/apis/authApi';
+import { setTokens } from '@/store/reducer/slices/auth';
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const { control, handleSubmit } = useForm();
   const [login, response] = useLoginMutation(); // Destructure the login mutation and loading state
   const { isLoading, error, data } = response
@@ -23,6 +26,7 @@ export const Login = () => {
       } else {
         // Access the successful response data
         console.log('Login successful!', data);
+        dispatch(setTokens(data))
       }
 
     } catch (error) {
