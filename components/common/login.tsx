@@ -5,12 +5,25 @@ import { InputLabel, Paper, Typography } from '@mui/material';
 import LogoSmall from './logoSmall';
 import { useForm } from 'react-hook-form';
 import FormTextField from './Form/formTextField';
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
+
 
 export const Login = () => {
   const { control, handleSubmit } = useForm();
 
   const onSubmit = async (form_data) => {
     console.log('Login successful!', form_data);
+    fetch("/api/auth/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": cookies.get("csrftoken"),
+      },
+      credentials: "same-origin",
+      body: JSON.stringify({email: form_data.email, password: form_data.password}),
+    })
   };
 
   return (
