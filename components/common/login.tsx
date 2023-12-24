@@ -1,29 +1,39 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { InputLabel, Paper, Typography } from '@mui/material';
+import { CircularProgress, InputLabel, Paper, Typography } from '@mui/material';
 import LogoSmall from './logoSmall';
 import { useForm } from 'react-hook-form';
 import FormTextField from './Form/formTextField';
 import Cookies from "universal-cookie";
+import { useLoginMutation } from '@/store/reducer/apis/authApi';
+import { useDispatch } from 'react-redux';
 
 const cookies = new Cookies();
 
 
 export const Login = () => {
+  const dispatch = useDispatch();
   const { control, handleSubmit } = useForm();
+  const [login, response] = useLoginMutation(); // Destructure the login mutation and loading state
+  const { isLoading, error, data } = response
 
   const onSubmit = async (form_data) => {
-    console.log('Login successful!', form_data);
-    fetch("/api/auth/login/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": cookies.get("csrftoken"),
-      },
-      credentials: "same-origin",
-      body: JSON.stringify({email: form_data.email, password: form_data.password}),
-    })
+    try {
+      // Trigger the login mutation with the form data
+      await login(form_data);
+
+      // Check if there are any errors in the response
+      if (error) {
+        console.error('Login failed', error);
+      } else {
+        // Access the successful response data
+        console.log('Login successful!', data);
+      }
+
+    } catch (error) {
+      console.error('Login failed', error);
+    }
   };
 
   return (
@@ -73,7 +83,7 @@ export const Login = () => {
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", pt: 4 }}>
           <Button type="submit" variant="contained" color="primary" >
-            Login
+            {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Login'}
           </Button>
         </Box>
       </form>
