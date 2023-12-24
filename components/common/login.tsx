@@ -5,15 +5,11 @@ import { CircularProgress, InputLabel, Paper, Typography } from '@mui/material';
 import LogoSmall from './logoSmall';
 import { useForm } from 'react-hook-form';
 import FormTextField from './Form/formTextField';
-import Cookies from "universal-cookie";
 import { useLoginMutation } from '@/store/reducer/apis/authApi';
-import { useDispatch } from 'react-redux';
 
-const cookies = new Cookies();
 
 
 export const Login = () => {
-  const dispatch = useDispatch();
   const { control, handleSubmit } = useForm();
   const [login, response] = useLoginMutation(); // Destructure the login mutation and loading state
   const { isLoading, error, data } = response

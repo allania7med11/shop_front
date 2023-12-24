@@ -1,11 +1,15 @@
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import { useProfileQuery } from "@/store/reducer/apis/authApi";
+import { useLogoutMutation, useProfileQuery } from "@/store/reducer/apis/authApi";
 import { Button, Menu, MenuItem, Typography } from "@mui/material";
 import React from "react";
 import { Link } from "@/components/common/Link";
 
 const profileButton = () => {
-    const { data: profile = false } = useProfileQuery();
+    const [logout, response] = useLogoutMutation();
+    let { data: profile = false, error } = useProfileQuery();
+    if(error){
+        profile = false
+    }
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -13,6 +17,10 @@ const profileButton = () => {
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+    const handleLogout = async () => {
+        setAnchorEl(null);
+        await logout()
     };
     return (
         <div>
@@ -48,15 +56,13 @@ const profileButton = () => {
                     horizontal: 'right',
                 }}
             >
-                {profile && (
-                    <Link href="/auth/login" sx={{ "& a": { textDecoration: "none", color: "gray" } }}>
-                        <MenuItem>Logout</MenuItem>
-                    </Link>
-                )}
+                {profile && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
                 {!profile && (
-                    <Link href="/auth/login" sx={{ "& a": { textDecoration: "none", color: "gray" } }}>
-                        <MenuItem>Login</MenuItem>
-                    </Link>
+                    <MenuItem>
+                        <Link href="/auth/login" sx={{ "& a": { textDecoration: "none", color: "gray" } }}>
+                            Login
+                        </Link>
+                    </MenuItem>
                 )}
             </Menu>
         </div>
