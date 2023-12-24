@@ -1,14 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseUrl } from "./utils";
 import { IsCartItem } from "@/data/cart";
+import { api } from ".";
 
-export const cartApi = createApi({
-  reducerPath: "cartApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: baseUrl,
-    credentials: "include"
-  }),
-  tagTypes: ["Cart"],
+const cartApi = api.injectEndpoints({
   endpoints: (builder) => ({
     cartItems: builder.query<IsCartItem[], void>({
       query: () => "/cart_items/",
