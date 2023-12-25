@@ -7,7 +7,7 @@ import { Link } from "@/components/common/Link";
 const profileButton = () => {
     const [logout, response] = useLogoutMutation();
     let { data: profile = false, error } = useProfileQuery();
-    if(error){
+    if (error) {
         profile = false
     }
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -58,11 +58,18 @@ const profileButton = () => {
             >
                 {profile && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
                 {!profile && (
-                    <MenuItem>
-                        <Link href="/auth/login" sx={{ "& a": { textDecoration: "none", color: "gray" } }}>
-                            Login
-                        </Link>
-                    </MenuItem>
+                    [
+                        <MenuItem key="1">
+                            <Link href="/auth/login" sx={{ "& a": { textDecoration: "none", color: "gray" } }}>
+                                Login
+                            </Link>
+                        </MenuItem>,
+                        <MenuItem key="2">
+                            <Link href="/auth/register" sx={{ "& a": { textDecoration: "none", color: "gray" } }}>
+                                Register
+                            </Link>
+                        </MenuItem>
+                    ]
                 )}
             </Menu>
         </div>
