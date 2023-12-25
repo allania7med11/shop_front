@@ -48,33 +48,33 @@ export const Register = () => {
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Box>
-                <InputLabel htmlFor="first_name">First Name</InputLabel>
-                <FormTextField
-                name="first_name"
-                control={control}
-                defaultValue=""
-                rules={{ required: 'First Name is required' }}
-                type="first_name"
-                id="first_name"
-                placeholder="James"
-                variant="outlined"
-                fullWidth
-                />
-            </Box>
-            <Box>
-                <InputLabel htmlFor="last_name">Last Name</InputLabel>
-                <FormTextField
-                name="last_name"
-                control={control}
-                defaultValue=""
-                rules={{ required: 'Last Name is required' }}
-                type="last_name"
-                id="last_name"
-                placeholder="James"
-                variant="outlined"
-                fullWidth
-                />
+            <Box sx={{ display: "flex", gap: 2 }}>
+                <Box>
+                    <InputLabel htmlFor="first_name">First Name</InputLabel>
+                    <FormTextField
+                    name="first_name"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: 'First Name is required' }}
+                    type="first_name"
+                    id="first_name"
+                    placeholder="Alexander"
+                    variant="outlined"
+                    />
+                </Box>
+                <Box>
+                    <InputLabel htmlFor="last_name">Last Name</InputLabel>
+                    <FormTextField
+                    name="last_name"
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: 'Last Name is required' }}
+                    type="last_name"
+                    id="last_name"
+                    placeholder="Thompson"
+                    variant="outlined"
+                    />
+                </Box>
             </Box>
             <Box>
                 <InputLabel htmlFor="email">Email</InputLabel>
