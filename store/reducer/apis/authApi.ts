@@ -1,4 +1,4 @@
-import {  IsUser, LoginCredentials } from "@/data/auth";
+import {  IsUser, LoginCredentials, RegisterCredentials } from "@/data/auth";
 import { api } from ".";
 
 
@@ -7,6 +7,14 @@ const authApi = api.injectEndpoints({
     login: builder.mutation<void, LoginCredentials>({
       query: (credentials) => ({
         url: '/auth/login/',
+        method: 'POST',
+        body: credentials,
+      }),
+      invalidatesTags: ["User"],
+    }),
+    register: builder.mutation<void, RegisterCredentials>({
+      query: (credentials) => ({
+        url: '/auth/register/',
         method: 'POST',
         body: credentials,
       }),
@@ -25,6 +33,7 @@ const authApi = api.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useRegisterMutation,
   useLogoutMutation,
   useProfileQuery,
 } = authApi;

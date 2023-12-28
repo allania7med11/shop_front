@@ -12,7 +12,12 @@ const FormTextField = ({ name, control, defaultValue = '', rules, ...props }) =>
       render={({ field, fieldState }) => (
         <TextField
           error={!!fieldState.error}
-          helperText={fieldState?.error?.message}
+          helperText={(
+            <>
+              {fieldState?.error?.message.split("\n").map(msg => <div>{msg}</div>)}
+
+            </>
+          )}
           {...field}
           {...props}
         />
