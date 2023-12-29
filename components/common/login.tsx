@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import FormTextField from "./Form/formTextField";
 import { useLoginMutation } from "@/store/reducer/apis/authApi";
 import useErrors from "@/hooks/useErrors";
+import FormPasswordField from "./Form/formPasswordField";
 
 export const Login = () => {
   const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
@@ -74,12 +75,11 @@ export const Login = () => {
           </Box>
           <Box>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <FormTextField
+            <FormPasswordField
               name="password"
               control={control}
               defaultValue=""
               rules={{ required: "Password is required" }}
-              type="password"
               id="password"
               placeholder="********"
               variant="outlined"
