@@ -8,6 +8,7 @@ const useErrors = (error, setError, getValues) => {
     const [globalErrors, setGlobalErrors] = useState([]);
     useEffect(() => {
         if (apiError) {
+            let arr = []
             for (let key in apiError.data) {
                 if (
                     fields.includes(key)
@@ -17,9 +18,14 @@ const useErrors = (error, setError, getValues) => {
                         message: apiError.data[key].join("\n"),
                     });
                 } else {
-                    setGlobalErrors(apiError.data["non_field_errors"]);
+                    let fieldErrors = apiError.data[key]
+                    if(!Array.isArray(fieldErrors)){
+                        fieldErrors = [fieldErrors]
+                    }
+                    arr = [...arr, ...fieldErrors]
                 }
             }
+            setGlobalErrors(arr)
         }
 
     }, [apiError, fields])
