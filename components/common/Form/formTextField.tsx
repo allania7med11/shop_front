@@ -1,8 +1,14 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import { TextField } from '@mui/material';
+import React from "react";
+import { Controller } from "react-hook-form";
+import { TextField } from "@mui/material";
 
-const FormTextField = ({ name, control, defaultValue = '', rules, ...props }) => {
+const FormTextField = ({
+  name,
+  control,
+  defaultValue = "",
+  rules,
+  ...props
+}) => {
   return (
     <Controller
       name={name}
@@ -12,12 +18,16 @@ const FormTextField = ({ name, control, defaultValue = '', rules, ...props }) =>
       render={({ field, fieldState }) => (
         <TextField
           error={!!fieldState.error}
-          helperText={(
+          helperText={
             <>
-              {fieldState?.error?.message.split("\n").map(msg => <div>{msg}</div>)}
-
+              {fieldState?.error?.message.split("\n").map((msg, index) => (
+                <React.Fragment key={index}>
+                  {msg}
+                  <br />
+                </React.Fragment>
+              ))}
             </>
-          )}
+          }
           {...field}
           {...props}
         />
