@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import {
@@ -12,43 +12,17 @@ import LogoSmall from "./logoSmall";
 import { useForm } from "react-hook-form";
 import FormTextField from "./Form/formTextField";
 import { useRegisterMutation } from "@/store/reducer/apis/authApi";
-import { ApiError } from "@/data/error";
+import useErrors from "@/hooks/useErrors";
 
 export const Register = () => {
-  const { control, handleSubmit, setError, clearErrors } = useForm();
-  const [register, response] = useRegisterMutation();
-  const { isLoading, error, data } = response;
-  const apiError = error as ApiError;
-  const [errors, setErrors] = useState([]);
-
+  const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
+  const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
+  const { globalErrors, setGlobalErrors } = useErrors(error, setError, getValues);
   const onSubmit = async (form_data) => {
     clearErrors();
-    setErrors([]);
+    setGlobalErrors([]);
     await register(form_data);
   };
-  useEffect(() => {
-    if (apiError) {
-      for (let key in apiError.data) {
-        if (
-          [
-            "email",
-            "first_name",
-            "last_name",
-            "password1",
-            "password2",
-          ].includes(key)
-        ) {
-          setError(key, {
-            type: "server",
-            message: apiError.data[key].join("\n"),
-          });
-        } else {
-          setErrors(apiError.data["non_field_errors"]);
-        }
-      }
-    }
-
-  },[apiError])
 
   return (
     <Paper
@@ -77,8 +51,8 @@ export const Register = () => {
         <Box
           sx={{ display: "flex", flexDirection: "column", gap: 1, my: "16px" }}
         >
-          {errors &&
-            errors.map((error) => <Alert severity="error">{error}</Alert>)}
+          {globalErrors &&
+            globalErrors.map((error, key) => <Alert key={key} severity="error">{error}</Alert>)}
         </Box>
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           <Box sx={{ display: "flex", gap: 2 }}>
@@ -153,8 +127,8 @@ export const Register = () => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", pt: 4 }}>
-          <Button type="submit" variant="contained" color="primary">
-            {isLoading ? (
+          <Button type="submit" variant="contained" color="primary" disabled={isLoading || isSuccess}>
+            {isLoading || isSuccess ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
               "Register"
