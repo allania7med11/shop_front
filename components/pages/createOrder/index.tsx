@@ -5,14 +5,21 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Card from "@mui/material/Card";
 import { CartStep } from "./cartStep";
+import { Button } from "@mui/material";
 
 const steps = ["Cart", "Login", "Address", "Review"];
 
 export const CreateOrder = () => {
-  const activeStep = 0;
+  const [activeStep, setActiveStep] = React.useState(0);
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
   return (
     <Box sx={{ width: "100%" }}>
-      <Card sx={{padding: "24px", margin:"32px auto", maxWidth: "800px"}}>
+      <Card sx={{ padding: "24px", margin: "32px auto", maxWidth: "800px" }}>
         <Stepper activeStep={activeStep}>
           {steps.map((label) => {
             const stepProps: { completed?: boolean } = {};
@@ -24,8 +31,19 @@ export const CreateOrder = () => {
           })}
         </Stepper>
       </Card>
-
       {activeStep == 0 && <CartStep />}
+      <Box sx={{ display: "flex", flexDirection: "row", pt: 2, justifyContent: "center", gap: 2 }}>
+        <Button
+          color="inherit"
+          disabled={activeStep === 0}
+          onClick={handleBack}
+        >
+          Back
+        </Button>
+        <Button onClick={handleNext}>
+          {activeStep === steps.length - 1 ? "Finish" : "Next"}
+        </Button>
+      </Box>
     </Box>
   );
 };
