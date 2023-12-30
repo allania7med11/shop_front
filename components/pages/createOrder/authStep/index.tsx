@@ -1,10 +1,11 @@
 import { Box, Button, Card, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useRouter } from "next/router";
 import { Register } from "@/components/common/register";
+import React from "react";
+import { Login } from "@/components/common/login";
 
 export const AuthStep = () => {
-  const router = useRouter();
+  const [hasAccount, setHasAccount] = React.useState(false);
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
       <Card
@@ -16,16 +17,15 @@ export const AuthStep = () => {
       >
         <Typography variant="h6">Create Account</Typography>
         <Button
-          variant="outlined"
-          startIcon={<ArrowBackIcon />}
+          variant="text"
           sx={{ textTransform: "none" }}
-          onClick={() => router.back()}
+          onClick={() => setHasAccount((prev) => !prev)}
         >
-          Already have an account?
+          {hasAccount ? "Don't have account?" : "Already have an account?"}
         </Button>
       </Card>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Register />
+        {hasAccount ? <Login /> : <Register />}
       </Box>
     </Box>
   );
