@@ -1,18 +1,16 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useProfileQuery } from '@/store/reducer/apis/authApi';
+import useAuth from './useAuth';
 
 const useRedirectIfLoggedIn = () => {
     const router = useRouter();
-    let { data: profile = false, error } = useProfileQuery();
-    if (error) {
-        profile = false
-    }
+    let { isAuthenticated } = useAuth()
+
     useEffect(() => {
-        if (profile) {
+        if (isAuthenticated) {
             router.push('/');
         }
-    }, [profile, router]);
+    }, [isAuthenticated]);
 };
 
 export default useRedirectIfLoggedIn;

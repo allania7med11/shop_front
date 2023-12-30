@@ -6,11 +6,17 @@ import StepLabel from "@mui/material/StepLabel";
 import Card from "@mui/material/Card";
 import { CartStep } from "./cartStep";
 import { Button } from "@mui/material";
-
-const steps = ["Cart", "Login", "Address", "Review"];
+import { AuthStep } from "./authStep";
+import useAuth from "@/hooks/useAuth";
 
 export const CreateOrder = () => {
+  let steps = ["Cart", "Login", "Address", "Review"];
+  let { isAuthenticated } = useAuth();
+  if (isAuthenticated) {
+    steps = ["Cart", "Address", "Review"];
+  }
   const [activeStep, setActiveStep] = React.useState(0);
+  let disableNext = activeStep > 0 && !isAuthenticated;
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -32,7 +38,16 @@ export const CreateOrder = () => {
         </Stepper>
       </Card>
       {activeStep == 0 && <CartStep />}
-      <Box sx={{ display: "flex", flexDirection: "row", pt: 2, justifyContent: "center", gap: 2 }}>
+      {steps[activeStep] == "Login" && <AuthStep />}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          pt: 2,
+          justifyContent: "center",
+          gap: 2,
+        }}
+      >
         <Button
           color="inherit"
           disabled={activeStep === 0}
@@ -40,7 +55,7 @@ export const CreateOrder = () => {
         >
           Back
         </Button>
-        <Button onClick={handleNext}>
+        <Button onClick={handleNext} disabled={disableNext}>
           {activeStep === steps.length - 1 ? "Finish" : "Next"}
         </Button>
       </Box>
