@@ -30,10 +30,12 @@
     "prop-types": "latest",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.49.2",
     "react-redux": "^8.0.5",
     "react-swiper": "^0.1.5",
     "redux": "^4.2.0",
     "swiper": "^8.1.6",
+    "universal-cookie": "^6.1.1",
     "use-debounce": "^9.0.4"
   },
   "devDependencies": {

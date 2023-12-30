@@ -7,6 +7,7 @@ import { AppBar } from "@/components/layouts/appBar.styled";
 import { Link } from "@/components/common/Link";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
+import ProfileButton from "./profileButton";
 
 export default function NavBar({ open, handleDrawerOpen }) {
   const { data: items = [] } = useCartItemsQuery();
@@ -36,13 +37,17 @@ export default function NavBar({ open, handleDrawerOpen }) {
           </Button>
         </Link>
         <Box sx={{ flexGrow: 1 }}></Box>
-        <Link href="/cart">
-          <IconButton>
-            <Badge badgeContent={items.length} color="error">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-        </Link>
+        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+          <ProfileButton />
+          <Link href="/cart">
+            <IconButton>
+              <Badge badgeContent={items.length} color="error">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          </Link>
+        </Box>
+
       </Toolbar>
     </AppBar>
   );
