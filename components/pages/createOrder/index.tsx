@@ -16,7 +16,7 @@ export const CreateOrder = () => {
     steps = ["Cart", "Address", "Review"];
   }
   const [activeStep, setActiveStep] = React.useState(0);
-  let disableNext = activeStep > 0 && !isAuthenticated;
+  const [disableNext, setDisableNext] = React.useState(true);
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -37,8 +37,8 @@ export const CreateOrder = () => {
           })}
         </Stepper>
       </Card>
-      {activeStep == 0 && <CartStep />}
-      {steps[activeStep] == "Login" && <AuthStep />}
+      {activeStep == 0 && <CartStep setDisableNext={setDisableNext} />}
+      {steps[activeStep] == "Login" && <AuthStep setDisableNext={setDisableNext} />}
       <Box
         sx={{
           display: "flex",

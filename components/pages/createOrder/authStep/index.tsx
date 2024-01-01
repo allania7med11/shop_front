@@ -1,10 +1,10 @@
 import { Box, Button, Card, Typography } from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Register } from "@/components/common/register";
 import React from "react";
 import { Login } from "@/components/common/login";
 
-export const AuthStep = () => {
+export const AuthStep = ({ setDisableNext }) => {
+  setDisableNext(true);
   const [hasAccount, setHasAccount] = React.useState(false);
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
