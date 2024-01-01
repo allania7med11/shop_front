@@ -10,7 +10,7 @@ const authApi = api.injectEndpoints({
         method: 'POST',
         body: credentials,
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Cart", "User"],
     }),
     register: builder.mutation<void, RegisterCredentials>({
       query: (credentials) => ({
@@ -18,11 +18,11 @@ const authApi = api.injectEndpoints({
         method: 'POST',
         body: credentials,
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Cart", "User"],
     }),
     logout: builder.mutation<void, void>({
       query: () => "/auth/logout/",
-      invalidatesTags: ["User"],
+      invalidatesTags: ["Cart", "User"],
     }),
     profile: builder.query<IsUser, void>({
       query: () => "/auth/profile/",
