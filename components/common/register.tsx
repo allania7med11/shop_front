@@ -36,7 +36,6 @@ export const Register = () => {
         display: "flex",
         padding: "32px 48px",
         flexDirection: "column",
-        gap: "16px",
         width: "min(100%, 500px)",
       }}
     >
