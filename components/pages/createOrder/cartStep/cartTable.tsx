@@ -33,12 +33,15 @@ export const CartTable = () => {
   const headers = ["Name", "Quantity", "Price"];
   const { data: items = [] } = useCartItemsQuery();
   const product_ids = items.map((item) => item.product);
-  const { data: productsApi = [] } = useProductsQuery(
+  let { data: productsApi = [] } = useProductsQuery(
     { id_in: product_ids },
     {
       skip: product_ids.length === 0,
     }
   );
+  if(product_ids.length === 0){
+     productsApi = []
+  }
   const products = addItemsToProducts(productsApi, items);
 
   // Pagination state
