@@ -15,6 +15,9 @@ export const CreateOrder = () => {
   if (isAuthenticated) {
     steps = ["Cart", "Address", "Review"];
   }
+  React.useEffect(() => {
+    setActiveStep(0)
+  }, [isAuthenticated])
   const [activeStep, setActiveStep] = React.useState(0);
   const [disableNext, setDisableNext] = React.useState(true);
   const handleBack = () => {
