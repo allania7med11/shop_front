@@ -41,7 +41,7 @@ export default function NavBar({ open, handleDrawerOpen }) {
           </Button>
         </Link>
         <Box sx={{ flexGrow: 1 }}></Box>
-        {userProfile &&  <AvatarComponent fullName={ getFullName(userProfile) } /> }
+        <AvatarComponent fullName={ getFullName(userProfile) } /> 
         <Link href="/cart">
           <IconButton>
             <Badge badgeContent={items.length} color="error">
