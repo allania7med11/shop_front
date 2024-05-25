@@ -1,11 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "./utils";
-
-interface UserProfile {
-    email: string;
-    first_name: string;
-    last_name: string;
-}
+import { IsUserProfile } from "@/data/auth";
 
 export const authApi = createApi({
     reducerPath: "authApi",
@@ -14,7 +9,7 @@ export const authApi = createApi({
         credentials: "include"  
     }),
     endpoints: (builder) => ({
-        getUserProfile: builder.query<UserProfile, void>({
+        getUserProfile: builder.query<IsUserProfile, void>({
             query: () => "/auth/profile"
         })
     }),

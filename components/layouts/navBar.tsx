@@ -8,6 +8,7 @@ import { Link } from "@/components/common/Link";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
 import { useGetUserProfileQuery } from "@/store/reducer/apis/authApi";  
+import { getFullName } from "@/utils/auth";
 
 export default function NavBar({ open, handleDrawerOpen }) {
   const { data: items = [] } = useCartItemsQuery();
@@ -41,7 +42,7 @@ export default function NavBar({ open, handleDrawerOpen }) {
         <Box sx={{ flexGrow: 1 }}></Box>
         {userProfile && (
           <Typography variant="subtitle1" component="div" sx={{ paddingRight: 2 }}>
-            {userProfile.first_name} {userProfile.last_name}
+            { getFullName(userProfile) }
           </Typography>
         )}
         <Link href="/cart">
