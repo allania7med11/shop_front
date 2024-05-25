@@ -1,10 +1,11 @@
 import * as React from "react";
 
-import { Badge, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
+import { Badge, Box, Button, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "@/components/layouts/logo";
 import { AppBar } from "@/components/layouts/appBar.styled";
 import { Link } from "@/components/common/Link";
+import { AvatarComponent } from "@/components/common/avatar";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
 import { useGetUserProfileQuery } from "@/store/reducer/apis/authApi";  
@@ -40,11 +41,7 @@ export default function NavBar({ open, handleDrawerOpen }) {
           </Button>
         </Link>
         <Box sx={{ flexGrow: 1 }}></Box>
-        {userProfile && (
-          <Typography variant="subtitle1" component="div" sx={{ paddingRight: 2 }}>
-            { getFullName(userProfile) }
-          </Typography>
-        )}
+        {userProfile &&  <AvatarComponent fullName={ getFullName(userProfile) } /> }
         <Link href="/cart">
           <IconButton>
             <Badge badgeContent={items.length} color="error">
