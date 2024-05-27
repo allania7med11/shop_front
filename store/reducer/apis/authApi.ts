@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "./utils";
 import { IsUserProfile } from "@/data/auth";
-import { RootState } from "..";
 import { getCsrfToken } from "@/utils/auth";
 
 export const authApi = createApi({

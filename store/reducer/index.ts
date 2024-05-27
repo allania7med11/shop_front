@@ -1,8 +1,9 @@
 import { combineReducers } from "redux";
-import { productApi } from "./apis/productApi";
+import { api } from "./apis";
 import { filtersReducer } from "./slices/filters";
 import { cartApi } from "./apis/cartApi";
 import { authApi } from "./apis/authApi";  
+import { productApi } from "./apis/productApi";
 
 export const rootReducer = combineReducers({
   [productApi.reducerPath]: productApi.reducer,

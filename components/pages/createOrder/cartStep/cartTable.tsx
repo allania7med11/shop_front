@@ -29,17 +29,8 @@ export const CartTableRow: React.FC<{ product: IsProduct }> = ({ product }) => {
   );
 };
 
-export const CartTable = () => {
+export const CartTable: React.FC<{ products: IsProduct[] }> = ({products}) => {
   const headers = ["Name", "Quantity", "Price"];
-  const { data: items = [] } = useCartItemsQuery();
-  const product_ids = items.map((item) => item.product);
-  const { data: productsApi = [] } = useProductsQuery(
-    { id_in: product_ids },
-    {
-      skip: product_ids.length === 0,
-    }
-  );
-  const products = addItemsToProducts(productsApi, items);
 
   // Pagination state
   const [page, setPage] = React.useState(0);
