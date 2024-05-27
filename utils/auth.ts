@@ -8,3 +8,15 @@ export function getFullName(userProfile: IsUserProfile): string {
     const fullName = `${first_name} ${last_name}`.trim();
     return fullName ||  email.split('@')[0] 
 }
+
+export function getCsrfToken() {
+    let csrfToken = null;
+    if (document.cookie) {
+        const csrfCookies = document.cookie.split(';').find(cookie => cookie.trim().startsWith('csrftoken='));
+        if (csrfCookies) {
+            csrfToken = csrfCookies.split('=')[1];
+        }
+    }
+    return csrfToken;
+}
+

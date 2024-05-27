@@ -1,12 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseUrl } from "./utils";
 import { IsCartItem } from "@/data/cart";
+import { getCsrfToken } from "@/utils/auth";
 
 export const cartApi = createApi({
   reducerPath: "cartApi",
   baseQuery: fetchBaseQuery({
     baseUrl: baseUrl,
-    credentials: "include"
+    credentials: "include",
+    prepareHeaders: (headers) => {
+      let token = getCsrfToken()
+      if (token) {
+        headers.set('X-CSRFToken', token)
+      }
+      return headers;
+    }
   }),
   tagTypes: ["Cart"],
   endpoints: (builder) => ({
