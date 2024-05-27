@@ -66,10 +66,10 @@ export const AvatarComponent: React.FC<{ fullName: string }> = ({ fullName }) =>
                 ) : (
                     <>
                         <MenuItem onClick={handleClose}>
-                            <Link href="/signup" sx={sxLink}>Sign up</Link>
+                            <Link href="/auth/register" sx={sxLink}>Sign up</Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
-                            <Link href="/login" sx={sxLink}>Login</Link>
+                            <Link href="/auth/login" sx={sxLink}>Login</Link>
                         </MenuItem>
                     </>
                 )}

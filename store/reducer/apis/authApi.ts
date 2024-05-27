@@ -1,40 +1,50 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseUrl } from "./utils";
-import { IsUserProfile } from "@/data/auth";
-import { getCsrfToken } from "@/utils/auth";
+import {  IsUser, IsUserProfile, LoginCredentials, RegisterCredentials } from "@/data/auth";
+import { api } from ".";
 
-export const authApi = createApi({
-    reducerPath: "authApi",
-    baseQuery: fetchBaseQuery({
-        baseUrl: baseUrl,
-        credentials: "include",
-        prepareHeaders: (headers) => {
-            let token = getCsrfToken()
-            if (token) {
-                headers.set('X-CSRFToken', token)
-            }
-            return headers;
-        } 
+
+const authApi = api.injectEndpoints({
+  endpoints: (builder) => ({
+    login: builder.mutation<void, LoginCredentials>({
+      query: (credentials) => ({
+        url: '/auth/login/',
+        method: 'POST',
+        body: credentials,
+      }),
+      invalidatesTags: ["Cart", "User"],
     }),
-    endpoints: (builder) => ({
-        getCSRF: builder.query<string, void>({
-            query: () => "/auth/csrf/",
-            transformResponse: response => response['X-CSRFToken'],
-        }),
-        getUserProfile: builder.query<IsUserProfile, void>({
-            query: () => "/auth/profile/"
-        }),
-        logoutUser: builder.mutation<void, void>({
-            query: () => ({
-                url: "/auth/logout/",
-                method: 'POST',
-            }),
+    register: builder.mutation<void, RegisterCredentials>({
+      query: (credentials) => ({
+        url: '/auth/register/',
+        method: 'POST',
+        body: credentials,
+      }),
+      invalidatesTags: ["Cart", "User"],
+    }),
+    logout: builder.mutation<void, void>({
+      query: () => "/auth/logout/",
+      invalidatesTags: ["Cart", "User"],
+    }),
+    getUserProfile: builder.query<IsUserProfile, void>({
+        query: () => "/auth/profile/"
+    }),
+    logoutUser: builder.mutation<void, void>({
+        query: () => ({
+            url: "/auth/logout/",
+            method: 'POST',
         }),
     }),
+    profile: builder.query<IsUser, void>({
+      query: () => "/auth/profile/",
+      providesTags: ["User"],
+    }),
+  }),
 });
 
 export const {
-    useGetCSRFQuery,
-    useGetUserProfileQuery,
-    useLogoutUserMutation
+  useLoginMutation,
+  useRegisterMutation,
+  useLogoutMutation,
+  useProfileQuery,
+  useGetUserProfileQuery,
+  useLogoutUserMutation
 } = authApi;

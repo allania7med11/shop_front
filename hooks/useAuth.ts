@@ -1,7 +1,7 @@
-import { useProfileQuery } from '@/store/reducer/apis/authApi';
+import { useGetUserProfileQuery } from '@/store/reducer/apis/authApi';
 
 const useAuth = () => {
-    let { data: profile = false, error } = useProfileQuery();
+    let { data: profile = false, error } = useGetUserProfileQuery();
     if (error) {
         profile = false
     }
