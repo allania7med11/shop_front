@@ -20,10 +20,6 @@ const authApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Cart", "User"],
     }),
-    logout: builder.mutation<void, void>({
-      query: () => "/auth/logout/",
-      invalidatesTags: ["Cart", "User"],
-    }),
     getUserProfile: builder.query<IsUserProfile, void>({
         query: () => "/auth/profile/",
         providesTags: ["User"],
@@ -33,6 +29,7 @@ const authApi = api.injectEndpoints({
             url: "/auth/logout/",
             method: 'POST',
         }),
+        invalidatesTags: ["Cart", "User"],
     }),
   }),
 });
@@ -40,7 +37,6 @@ const authApi = api.injectEndpoints({
 export const {
   useLoginMutation,
   useRegisterMutation,
-  useLogoutMutation,
   useGetUserProfileQuery,
   useLogoutUserMutation
 } = authApi;

@@ -8,12 +8,9 @@ import { Link } from "@/components/common/Link";
 import { AvatarComponent } from "@/components/common/avatar";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
-import { useGetUserProfileQuery } from "@/store/reducer/apis/authApi";  
-import { getFullName } from "@/utils/auth";
 
 export default function NavBar({ open, handleDrawerOpen }) {
   const { data: items = [] } = useCartItemsQuery();
-  const { data: userProfile } = useGetUserProfileQuery();  
 
   return (
     <AppBar
@@ -41,7 +38,7 @@ export default function NavBar({ open, handleDrawerOpen }) {
           </Button>
         </Link>
         <Box sx={{ flexGrow: 1 }}></Box>
-        <AvatarComponent fullName={ getFullName(userProfile) } /> 
+        <AvatarComponent /> 
         <Link href="/cart">
           <IconButton>
             <Badge badgeContent={items.length} color="error">

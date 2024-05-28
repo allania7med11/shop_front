@@ -5,10 +5,12 @@ import PersonIcon from '@mui/icons-material/Person';
 import { Link } from '@/components/common/Link';
 import { grey } from '@mui/material/colors';
 import { useLogoutUserMutation } from '@/store/reducer/apis/authApi';
+import useAuth from '@/hooks/useAuth';
 
 const sxLink: SxProps = { "& a": { textDecoration: 'none', color: "inherit" } };
 
-export const AvatarComponent: React.FC<{ fullName: string }> = ({ fullName }) => {
+export const AvatarComponent = () => {
+    const { isAuthenticated, fullName } = useAuth()
     const [logoutUser, { isLoading }] = useLogoutUserMutation();
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -25,7 +27,6 @@ export const AvatarComponent: React.FC<{ fullName: string }> = ({ fullName }) =>
         await logoutUser().unwrap();
         handleClose()
     };
-
 
     return (
         <Box display="flex" alignItems="center">
@@ -59,19 +60,18 @@ export const AvatarComponent: React.FC<{ fullName: string }> = ({ fullName }) =>
                 open={open}
                 onClose={handleClose}
             >
-                {userLoggedIn ? (
-                    <MenuItem onClick={handleLogout}  disabled={isLoading}>
+                {isAuthenticated ? (
+                    <MenuItem onClick={handleLogout} disabled={isLoading}>
                         {isLoading ? 'Logging out...' : 'Logout'}
                     </MenuItem>
-                ) : (
-                    <>
-                        <MenuItem onClick={handleClose}>
-                            <Link href="/auth/register" sx={sxLink}>Sign up</Link>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                            <Link href="/auth/login" sx={sxLink}>Login</Link>
-                        </MenuItem>
-                    </>
+                ) : ([
+                    <MenuItem key="1" onClick={handleClose}>
+                        <Link href="/auth/register" sx={sxLink}>Sign up</Link>
+                    </MenuItem>,
+                    <MenuItem key="2" onClick={handleClose}>
+                        <Link href="/auth/login" sx={sxLink}>Login</Link>
+                    </MenuItem>
+                ]
                 )}
             </Menu>
         </Box>
