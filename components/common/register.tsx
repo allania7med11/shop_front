@@ -14,6 +14,7 @@ import FormTextField from "./Form/formTextField";
 import { useRegisterMutation } from "@/store/reducer/apis/authApi";
 import useErrors from "@/hooks/useErrors";
 import FormPasswordField from "./Form/formPasswordField";
+import { sxAuthButton } from "@/styles/authButtonStyle";
 
 export const Register = () => {
   const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
@@ -138,11 +139,12 @@ export const Register = () => {
             variant="contained"
             color="primary"
             disabled={isLoading || isSuccess}
+            sx={sxAuthButton}
           >
             {isLoading || isSuccess ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "Register"
+              "Create Account"
             )}
           </Button>
         </Box>

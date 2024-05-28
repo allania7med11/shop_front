@@ -1,4 +1,4 @@
-import {  IsUser, LoginCredentials, RegisterCredentials } from "@/data/auth";
+import {  IsUser, IsUserProfile, LoginCredentials, RegisterCredentials } from "@/data/auth";
 import { api } from ".";
 
 
@@ -20,13 +20,16 @@ const authApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Cart", "User"],
     }),
-    logout: builder.mutation<void, void>({
-      query: () => "/auth/logout/",
-      invalidatesTags: ["Cart", "User"],
+    getUserProfile: builder.query<IsUserProfile, void>({
+        query: () => "/auth/profile/",
+        providesTags: ["User"],
     }),
-    profile: builder.query<IsUser, void>({
-      query: () => "/auth/profile/",
-      providesTags: ["User"],
+    logoutUser: builder.mutation<void, void>({
+        query: () => ({
+            url: "/auth/logout/",
+            method: 'POST',
+        }),
+        invalidatesTags: ["Cart", "User"],
     }),
   }),
 });
@@ -34,6 +37,6 @@ const authApi = api.injectEndpoints({
 export const {
   useLoginMutation,
   useRegisterMutation,
-  useLogoutMutation,
-  useProfileQuery,
+  useGetUserProfileQuery,
+  useLogoutUserMutation
 } = authApi;

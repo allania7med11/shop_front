@@ -1,3 +1,9 @@
+export interface IsUserProfile {
+    first_name: string;
+    last_name: string;
+    email: string;
+}
+
 export interface LoginCredentials {
     email: string;
     password: string;

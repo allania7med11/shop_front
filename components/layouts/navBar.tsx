@@ -5,12 +5,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "@/components/layouts/logo";
 import { AppBar } from "@/components/layouts/appBar.styled";
 import { Link } from "@/components/common/Link";
+import { AvatarComponent } from "@/components/common/avatar";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
-import ProfileButton from "./profileButton";
 
 export default function NavBar({ open, handleDrawerOpen }) {
   const { data: items = [] } = useCartItemsQuery();
+
   return (
     <AppBar
       position="fixed"
@@ -37,17 +38,14 @@ export default function NavBar({ open, handleDrawerOpen }) {
           </Button>
         </Link>
         <Box sx={{ flexGrow: 1 }}></Box>
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-          <ProfileButton />
-          <Link href="/cart">
-            <IconButton>
-              <Badge badgeContent={items.length} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-          </Link>
-        </Box>
-
+        <AvatarComponent /> 
+        <Link href="/cart">
+          <IconButton>
+            <Badge badgeContent={items.length} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </Link>
       </Toolbar>
     </AppBar>
   );

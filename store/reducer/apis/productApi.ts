@@ -1,4 +1,3 @@
-// src/services/taskApi.js
 import { IsCategory, IsProduct, IsProductFilters } from "@/data/categories";
 import { api } from ".";
 
@@ -21,7 +20,6 @@ const productApi = api.injectEndpoints({
     }),
   }),
 });
-
 export const {
   useCategoriesQuery,
   useCategoryQuery,

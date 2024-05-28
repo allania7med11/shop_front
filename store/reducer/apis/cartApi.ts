@@ -7,7 +7,6 @@ const cartApi = api.injectEndpoints({
       query: () => "/cart_items/",
       providesTags: ["Cart"],
     }),
-
     createCartItem: builder.mutation<IsCartItem, Partial<IsCartItem>>({
       query: (newCartItem) => ({
         url: "/cart_items/",
@@ -16,7 +15,6 @@ const cartApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Cart"],
     }),
-
     deleteCartItem: builder.mutation<void, number>({
       query: (id) => ({
         url: `/cart_items/${id}/`,
@@ -26,7 +24,6 @@ const cartApi = api.injectEndpoints({
     }),
   }),
 });
-
 export const {
   useCartItemsQuery,
   useCreateCartItemMutation,
