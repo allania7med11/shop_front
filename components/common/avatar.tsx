@@ -6,8 +6,8 @@ import { Link } from '@/components/common/Link';
 import { grey } from '@mui/material/colors';
 import { useLogoutUserMutation } from '@/store/reducer/apis/authApi';
 import useAuth from '@/hooks/useAuth';
+import { sxLink } from '@/styles/linkStyle';
 
-const sxLink: SxProps = { "& a": { textDecoration: 'none', color: "inherit" } };
 
 export const AvatarComponent = () => {
     const { isAuthenticated, fullName } = useAuth()
