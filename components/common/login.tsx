@@ -8,6 +8,7 @@ import FormTextField from "./Form/formTextField";
 import { useLoginMutation } from "@/store/reducer/apis/authApi";
 import useErrors from "@/hooks/useErrors";
 import FormPasswordField from "./Form/formPasswordField";
+import { sxAuthButton } from "@/styles/authButtonStyle";
 
 export const Login = () => {
   const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
@@ -88,11 +89,11 @@ export const Login = () => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", pt: 4 }}>
-          <Button type="submit" variant="contained" color="primary" disabled={isLoading || isSuccess}>
+          <Button type="submit" variant="contained" color="primary" disabled={isLoading || isSuccess} sx={sxAuthButton}>
             {isLoading || isSuccess ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "Login"
+              "Sign In"
             )}
           </Button>
         </Box>
