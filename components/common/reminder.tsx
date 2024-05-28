@@ -11,7 +11,7 @@ interface ReminderProps {
 
 export const Reminder: React.FC<ReminderProps> = ({message, link, linkText}) => (
     <>
-        <Typography sx={{ px: 1 }} color={grey[800]}>{ message }</Typography>
+        <Typography sx={{ px: 1 }} color={grey[700]}>{ message }</Typography>
         <Link href={ link } underline="none">
             { linkText }
         </Link>
