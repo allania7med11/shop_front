@@ -1,20 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseUrl } from "./utils";
 import { IsCartItem } from "@/data/cart";
+import { api } from ".";
 
-export const cartApi = createApi({
-  reducerPath: "cartApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: baseUrl,
-    credentials: "include"
-  }),
-  tagTypes: ["Cart"],
+const cartApi = api.injectEndpoints({
   endpoints: (builder) => ({
     cartItems: builder.query<IsCartItem[], void>({
       query: () => "/cart_items/",
       providesTags: ["Cart"],
     }),
-
     createCartItem: builder.mutation<IsCartItem, Partial<IsCartItem>>({
       query: (newCartItem) => ({
         url: "/cart_items/",
@@ -23,7 +15,6 @@ export const cartApi = createApi({
       }),
       invalidatesTags: ["Cart"],
     }),
-
     deleteCartItem: builder.mutation<void, number>({
       query: (id) => ({
         url: `/cart_items/${id}/`,
@@ -33,7 +24,6 @@ export const cartApi = createApi({
     }),
   }),
 });
-
 export const {
   useCartItemsQuery,
   useCreateCartItemMutation,
