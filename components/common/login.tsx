@@ -52,7 +52,7 @@ export const Login = () => {
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box
-          sx={{ display: "flex", flexDirection: "column", gap: 1, my: "16px" }}
+          sx={{ display: "flex", flexDirection: "column", gap: 1, my: "8px" }}
         >
           {globalErrors &&
             globalErrors.map((error, key) => (

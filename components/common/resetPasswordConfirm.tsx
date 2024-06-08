@@ -57,7 +57,7 @@ export const ResetPasswordConfirm = () => {
           <Box sx={{ width: "100%" }}>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Box
-                sx={{ display: "flex", flexDirection: "column", gap: 1, my: "0px" }}
+                sx={{ display: "flex", flexDirection: "column", gap: 1, my: "8px" }}
               >
                 {globalErrors &&
                   globalErrors.map((error, key) => (
