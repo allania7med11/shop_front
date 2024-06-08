@@ -9,6 +9,8 @@ import { useLoginMutation } from "@/store/reducer/apis/authApi";
 import useErrors from "@/hooks/useErrors";
 import FormPasswordField from "./Form/formPasswordField";
 import { sxAuthButton } from "@/styles/authButtonStyle";
+import Link from "@/src/Link";
+import { blue } from "@mui/material/colors";
 
 export const Login = () => {
   const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
@@ -50,7 +52,7 @@ export const Login = () => {
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Box
-          sx={{ display: "flex", flexDirection: "column", gap: 1, my: "16px" }}
+          sx={{ display: "flex", flexDirection: "column", gap: 1, my: "8px" }}
         >
           {globalErrors &&
             globalErrors.map((error, key) => (
@@ -86,6 +88,9 @@ export const Login = () => {
               variant="outlined"
               fullWidth
             />
+            <Link href="/auth/forget_password/" underline="none" color={blue[900]} sx={{ pt: 1 }}>
+              Forgot password?
+            </Link>
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", pt: 4 }}>

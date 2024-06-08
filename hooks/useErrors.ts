@@ -9,21 +9,27 @@ const useErrors = (error, setError, getValues) => {
     useEffect(() => {
         if (apiError) {
             let arr = []
-            for (let key in apiError.data) {
-                if (
-                    fields.includes(key)
-                ) {
-                    setError(key, {
-                        type: "server",
-                        message: apiError.data[key].join("\n"),
-                    });
-                } else {
-                    let fieldErrors = apiError.data[key]
-                    if(!Array.isArray(fieldErrors)){
-                        fieldErrors = [fieldErrors]
+            if (apiError.originalStatus >= 500) {
+                arr.push("Internal Server Error. Please try again later.");
+            } else {
+                for (let key in apiError.data) {
+                    if (
+                        fields.includes(key)
+                    ) {
+                        setError(key, {
+                            type: "server",
+                            message: apiError.data[key].join("\n"),
+                        });
+                    } else {
+                        let fieldErrors = apiError.data[key]
+                        if (!Array.isArray(fieldErrors)) {
+                            fieldErrors = [fieldErrors]
+                        }
+                        fieldErrors = fieldErrors.map(err => `${key}: ${err}`)
+                        arr = [...arr, ...fieldErrors]
                     }
-                    arr = [...arr, ...fieldErrors]
                 }
+
             }
             setGlobalErrors(arr)
         }
