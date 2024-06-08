@@ -1,6 +1,6 @@
 {
-  "name": "nextjs",
-  "version": "5.0.0",
+  "name": "shop_front",
+  "version": "v1.3.0+build20240529",
   "private": true,
   "scripts": {
     "dev": "next dev",

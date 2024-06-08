@@ -22,3 +22,10 @@ export interface IsUser {
     first_name: string;
     last_name: string;
 }
+
+export interface ConfirmResetPasswordCredentials {
+    uid: string;
+    token: string;
+    new_password1: string;
+    new_password2: string;
+}

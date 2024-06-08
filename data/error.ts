@@ -1,5 +1,5 @@
 export interface ApiError {
-    status: number;
+    originalStatus: number;
     data: {
         [key: string]: string[];
     };
