@@ -6,16 +6,16 @@ const authApi = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<void, LoginCredentials>({
       query: (credentials) => ({
-        url: '/auth/login/',
-        method: 'POST',
+        url: "/auth/login/",
+        method: "POST",
         body: credentials,
       }),
       invalidatesTags: ["Cart", "User"],
     }),
     register: builder.mutation<void, RegisterCredentials>({
       query: (credentials) => ({
-        url: '/auth/register/',
-        method: 'POST',
+        url: "/auth/register/",
+        method: "POST",
         body: credentials,
       }),
       invalidatesTags: ["Cart", "User"],
@@ -27,9 +27,16 @@ const authApi = api.injectEndpoints({
     logoutUser: builder.mutation<void, void>({
         query: () => ({
             url: "/auth/logout/",
-            method: 'POST',
+            method: "POST",
         }),
         invalidatesTags: ["Cart", "User"],
+    }),
+    resetPassword: builder.mutation<void, { email: string }>({
+      query: (data) => ({
+        url: "/auth/password/reset/",
+        method: "POST",
+        body: data,
+      }),
     }),
   }),
 });
@@ -38,5 +45,6 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGetUserProfileQuery,
-  useLogoutUserMutation
+  useLogoutUserMutation,
+  useResetPasswordMutation
 } = authApi;

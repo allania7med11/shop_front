@@ -5,7 +5,7 @@ import { Alert, CircularProgress, InputLabel, Paper, Typography } from "@mui/mat
 import LogoSmall from "./logoSmall";
 import { useForm } from "react-hook-form";
 import FormTextField from "./Form/formTextField";
-import { useLoginMutation } from "@/store/reducer/apis/authApi";
+import { useResetPasswordMutation } from "@/store/reducer/apis/authApi";
 import useErrors from "@/hooks/useErrors";
 import { sxAuthButton } from "@/styles/authButtonStyle";
 import SendEmailIcon from "./Icons/sendEmail";
@@ -13,7 +13,7 @@ import { grey } from "@mui/material/colors";
 
 export const ForgetPassword = () => {
   const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
-  const [login, { isLoading, error, isSuccess }] = useLoginMutation(); // Destructure the login mutation and loading state
+  const [resetPassword, { isLoading, error, isSuccess }] = useResetPasswordMutation(); 
   const { globalErrors, setGlobalErrors } = useErrors(
     error,
     setError,
@@ -23,7 +23,7 @@ export const ForgetPassword = () => {
   const onSubmit = async (form_data) => {
     clearErrors();
     setGlobalErrors([]);
-    await login(form_data);
+    await resetPassword(form_data);
   };
 
   return (
@@ -78,8 +78,8 @@ export const ForgetPassword = () => {
           </Box>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "center", pt: 4 }}>
-          <Button type="submit" variant="contained" color="primary" disabled={isLoading || isSuccess} sx={sxAuthButton} endIcon={<SendEmailIcon />}>
-            {isLoading || isSuccess ? (
+          <Button type="submit" variant="contained" color="primary" disabled={isLoading} sx={sxAuthButton} endIcon={<SendEmailIcon />}>
+            {isLoading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
               "Send"
