@@ -1,4 +1,4 @@
-import {  IsUser, IsUserProfile, LoginCredentials, RegisterCredentials } from "@/data/auth";
+import {   ConfirmResetPasswordCredentials, IsUserProfile, LoginCredentials, RegisterCredentials } from "@/data/auth";
 import { api } from ".";
 
 
@@ -38,6 +38,13 @@ const authApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    confirmResetPassword: builder.mutation<void, ConfirmResetPasswordCredentials>({
+      query: (credentials) => ({
+        url: `/auth/password/reset/confirm/${credentials.uid}/${credentials.token}/`,
+        method: "POST",
+        body: credentials,
+      }),
+    }),
   }),
 });
 
@@ -46,5 +53,6 @@ export const {
   useRegisterMutation,
   useGetUserProfileQuery,
   useLogoutUserMutation,
-  useResetPasswordMutation
+  useResetPasswordMutation,
+  useConfirmResetPasswordMutation
 } = authApi;

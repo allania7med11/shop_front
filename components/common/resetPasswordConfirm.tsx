@@ -4,16 +4,20 @@ import Box from "@mui/material/Box";
 import { Alert, CircularProgress, InputLabel, Paper, Typography } from "@mui/material";
 import LogoSmall from "./logoSmall";
 import { useForm } from "react-hook-form";
-import { useResetPasswordMutation } from "@/store/reducer/apis/authApi";
+import { useConfirmResetPasswordMutation } from "@/store/reducer/apis/authApi";
 import useErrors from "@/hooks/useErrors";
 import { sxAuthButton } from "@/styles/authButtonStyle";
 import { grey } from "@mui/material/colors";
 import { SuccessMessage } from "./successMessage";
 import FormPasswordField from "./Form/formPasswordField";
+import { useRouter } from "next/router";
+import Link from "@/src/Link";
 
 export const ResetPasswordConfirm = () => {
+  const router = useRouter();
+  const { uid, token } = router.query;
   const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
-  const [resetPassword, { isLoading, error, isSuccess }] = useResetPasswordMutation();
+  const [confirmResetPassword, { isLoading, error, isSuccess }] = useConfirmResetPasswordMutation();
   const { globalErrors, setGlobalErrors } = useErrors(
     error,
     setError,
@@ -23,7 +27,9 @@ export const ResetPasswordConfirm = () => {
   const onSubmit = async (form_data) => {
     clearErrors();
     setGlobalErrors([]);
-    await resetPassword(form_data);
+    form_data.uid = uid;
+    form_data.token = token;
+    await confirmResetPassword(form_data);
   };
 
   return (
@@ -69,7 +75,7 @@ export const ResetPasswordConfirm = () => {
                 <Box>
                   <InputLabel htmlFor="password">Password</InputLabel>
                   <FormPasswordField
-                    name="password1"
+                    name="new_password1"
                     control={control}
                     defaultValue=""
                     rules={{ required: "Password is required" }}
@@ -82,7 +88,7 @@ export const ResetPasswordConfirm = () => {
                 <Box>
                   <InputLabel htmlFor="password">Retype Password</InputLabel>
                   <FormPasswordField
-                    name="password2"
+                    name="new_password2"
                     control={control}
                     defaultValue=""
                     rules={{ required: "Retype Password is required" }}
@@ -106,7 +112,16 @@ export const ResetPasswordConfirm = () => {
           </Box>
         </Box>
       )}
-      {isSuccess && <SuccessMessage message="Your password reset link was emailed successfully" />}
+      {isSuccess && (
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
+          <SuccessMessage message="Your Password has been updated successfully" />
+          <Link href="/auth/login">
+            <Button variant="contained" color="primary" sx={sxAuthButton}>
+              Back to login
+            </Button>
+          </Link>
+        </Box>
+      )}
     </Paper>
   );
 };

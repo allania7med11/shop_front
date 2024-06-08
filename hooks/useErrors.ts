@@ -22,6 +22,7 @@ const useErrors = (error, setError, getValues) => {
                     if(!Array.isArray(fieldErrors)){
                         fieldErrors = [fieldErrors]
                     }
+                    fieldErrors = fieldErrors.map(err => `${key}: ${err}`)
                     arr = [...arr, ...fieldErrors]
                 }
             }
