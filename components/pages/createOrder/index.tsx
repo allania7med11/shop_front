@@ -5,21 +5,39 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Card from "@mui/material/Card";
 import { CartStep } from "./cartStep";
-import { Button } from "@mui/material";
-import { AuthStep } from "./authStep";
+import { Button, SxProps, Typography } from "@mui/material";
 import useAuth from "@/hooks/useAuth";
+import Modal from '@mui/material/Modal';
+import { OrderValidationStep } from "./orderValidationStep";
+
+
+const style: SxProps = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 
 export const CreateOrder = () => {
-  let steps = ["Cart", "Login", "Address", "Review"];
+  let steps = ["Cart", "Order Validation", "Order Complete"];
   let { isAuthenticated } = useAuth();
-  if (isAuthenticated) {
-    steps = ["Cart", "Address", "Review"];
-  }
-  React.useEffect(() => {
-    setActiveStep(0)
-  }, [isAuthenticated])
   const [activeStep, setActiveStep] = React.useState(0);
   const [disableNext, setDisableNext] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  React.useEffect(() => {
+    if(activeStep>0 && !isAuthenticated){
+      setActiveStep(0)
+      handleOpen()
+    }
+  }, [isAuthenticated, activeStep])
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -41,7 +59,19 @@ export const CreateOrder = () => {
         </Stepper>
       </Card>
       {activeStep == 0 && <CartStep setDisableNext={setDisableNext} />}
-      {steps[activeStep] == "Login" && <AuthStep setDisableNext={setDisableNext} />}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+        </Box>
+      </Modal>
+      {steps[activeStep] == "Order Validation" && <OrderValidationStep  />}
       <Box
         sx={{
           display: "flex",
