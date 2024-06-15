@@ -5,10 +5,10 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Card from "@mui/material/Card";
 import { CartStep } from "./cartStep";
-import { Button, SxProps, Typography } from "@mui/material";
+import { Button, SxProps } from "@mui/material";
 import useAuth from "@/hooks/useAuth";
-import Modal from '@mui/material/Modal';
 import { OrderValidationStep } from "./orderValidationStep";
+import { AuthModal } from "./authModal";
 
 
 const style: SxProps = {
@@ -29,11 +29,11 @@ export const CreateOrder = () => {
   let { isAuthenticated } = useAuth();
   const [activeStep, setActiveStep] = React.useState(0);
   const [disableNext, setDisableNext] = React.useState(true);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   React.useEffect(() => {
-    if(activeStep>0 && !isAuthenticated){
+    if (activeStep > 0 && !isAuthenticated) {
       setActiveStep(0)
       handleOpen()
     }
@@ -59,19 +59,11 @@ export const CreateOrder = () => {
         </Stepper>
       </Card>
       {activeStep == 0 && <CartStep setDisableNext={setDisableNext} />}
-      <Modal
+      <AuthModal
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-        </Box>
-      </Modal>
-      {steps[activeStep] == "Order Validation" && <OrderValidationStep  />}
+      />
+      {steps[activeStep] == "Order Validation" && <OrderValidationStep />}
       <Box
         sx={{
           display: "flex",
