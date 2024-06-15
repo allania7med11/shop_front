@@ -1,9 +1,10 @@
 import useErrors from "@/hooks/useErrors";
 import { useLoginMutation } from "@/store/reducer/apis/authApi";
-import { Alert, Box, Button, CircularProgress, InputLabel, SxProps, Typography } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, InputLabel, Link, SxProps, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import FormTextField from "../../../common/Form/formTextField";
 import FormPasswordField from "../../../common/Form/formPasswordField";
+import { blue } from "@mui/material/colors";
 
 
 const sxAuthButton: SxProps = { textTransform: "none" };
@@ -68,6 +69,9 @@ export const LoginForm = () => {
                             variant="outlined"
                             fullWidth
                         />
+                        <Link href="/auth/forget_password/" underline="none" color={blue[900]} sx={{ pt: 1 }}>
+                            Forgot password?
+                        </Link>
                     </Box>
                 </Box>
                 <Box sx={{ display: "flex", justifyContent: "end", pt: 2 }}>

@@ -1,7 +1,8 @@
 import { LoginForm } from "@/components/pages/createOrder/authModal/loginForm";
-import { Box, Card, Divider, Fab, Modal } from "@mui/material"
+import { Box, Card, Fab, IconButton, Modal } from "@mui/material"
 import { RegisterForm } from "./registerForm";
 import { grey } from "@mui/material/colors";
+import CloseIcon from '@mui/icons-material/Close';
 
 export const AuthModal = ({ open, onClose }) => {
     return (
@@ -26,6 +27,18 @@ export const AuthModal = ({ open, onClose }) => {
                     outline: "none"
                 }}
             >
+                <IconButton
+                    aria-label="close"
+                    onClick={onClose}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: grey[500],
+                    }}
+                >
+                    <CloseIcon />
+                </IconButton>
                 <Box sx={{ width: "40%", maxWidth: "400px", pt: "20px" }}>
                     <RegisterForm />
                 </Box>
