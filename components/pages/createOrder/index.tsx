@@ -11,31 +11,21 @@ import { OrderValidationStep } from "./orderValidationStep";
 import { AuthModal } from "./authModal";
 
 
-const style: SxProps = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
-
 export const CreateOrder = () => {
   let steps = ["Cart", "Order Validation", "Order Complete"];
   let { isAuthenticated } = useAuth();
   const [activeStep, setActiveStep] = React.useState(0);
   const [disableNext, setDisableNext] = React.useState(true);
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   React.useEffect(() => {
     if (activeStep > 0 && !isAuthenticated) {
       setActiveStep(0)
       handleOpen()
+    }
+    if (isAuthenticated) {
+      handleClose()
     }
   }, [isAuthenticated, activeStep])
   const handleBack = () => {
