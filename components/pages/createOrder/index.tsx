@@ -5,21 +5,29 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Card from "@mui/material/Card";
 import { CartStep } from "./cartStep";
-import { Button } from "@mui/material";
-import { AuthStep } from "./authStep";
+import { Button, SxProps } from "@mui/material";
 import useAuth from "@/hooks/useAuth";
+import { OrderValidationStep } from "./orderValidationStep";
+import { AuthModal } from "./authModal";
+
 
 export const CreateOrder = () => {
-  let steps = ["Cart", "Login", "Address", "Review"];
+  let steps = ["Cart", "Order Validation", "Order Complete"];
   let { isAuthenticated } = useAuth();
-  if (isAuthenticated) {
-    steps = ["Cart", "Address", "Review"];
-  }
-  React.useEffect(() => {
-    setActiveStep(0)
-  }, [isAuthenticated])
   const [activeStep, setActiveStep] = React.useState(0);
   const [disableNext, setDisableNext] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  React.useEffect(() => {
+    if (activeStep > 0 && !isAuthenticated) {
+      setActiveStep(0)
+      handleOpen()
+    }
+    if (isAuthenticated) {
+      handleClose()
+    }
+  }, [isAuthenticated, activeStep])
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
@@ -41,7 +49,11 @@ export const CreateOrder = () => {
         </Stepper>
       </Card>
       {activeStep == 0 && <CartStep setDisableNext={setDisableNext} />}
-      {steps[activeStep] == "Login" && <AuthStep setDisableNext={setDisableNext} />}
+      <AuthModal
+        open={open}
+        onClose={handleClose}
+      />
+      {steps[activeStep] == "Order Validation" && <OrderValidationStep />}
       <Box
         sx={{
           display: "flex",
