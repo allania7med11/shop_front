@@ -17,12 +17,12 @@ export const OrderValidationStep = () => {
                 display: "flex",
                 padding: "32px 48px",
                 flexDirection: "column",
-                width: "min(100%, 800px)",
+                width: "100%",
                 margin: "auto",
             }}
         >
             <form>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
                     <Box>
                         <InputLabel htmlFor="street">Street</InputLabel>
                         <TextField

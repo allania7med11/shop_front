@@ -5,10 +5,11 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Card from "@mui/material/Card";
 import { CartStep } from "./cartStep";
-import { Button, SxProps } from "@mui/material";
+import { Button } from "@mui/material";
 import useAuth from "@/hooks/useAuth";
 import { OrderValidationStep } from "./orderValidationStep";
 import { AuthModal } from "./authModal";
+import { StepHeader } from "./stepHeader";
 
 
 export const CreateOrder = () => {
@@ -35,7 +36,11 @@ export const CreateOrder = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", maxWidth: "1000px", margin: "auto" }}>
+      <AuthModal
+        open={open}
+        onClose={handleClose}
+      />
       <Card sx={{ padding: "24px", margin: "32px auto", maxWidth: "800px" }}>
         <Stepper activeStep={activeStep}>
           {steps.map((label) => {
@@ -48,12 +53,11 @@ export const CreateOrder = () => {
           })}
         </Stepper>
       </Card>
-      {activeStep == 0 && <CartStep setDisableNext={setDisableNext} />}
-      <AuthModal
-        open={open}
-        onClose={handleClose}
-      />
-      {steps[activeStep] == "Order Validation" && <OrderValidationStep />}
+      <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+        <StepHeader title={steps[activeStep]} />
+        {activeStep == 0 && <CartStep setDisableNext={setDisableNext} />}
+        {activeStep == 1 && <OrderValidationStep />}
+      </Box>
       <Box
         sx={{
           display: "flex",
