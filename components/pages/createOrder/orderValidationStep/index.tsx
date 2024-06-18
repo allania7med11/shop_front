@@ -1,98 +1,124 @@
 import React from "react";
 import {
-    Box,
-    Paper,
-    InputLabel,
-    TextField,
-    Radio,
-    RadioGroup,
-    FormControlLabel,
+  Box,
+  Paper,
+  InputLabel,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Alert,
 } from "@mui/material";
+import FormTextField from "@/components/common/Form/formTextField";
 
-export const OrderValidationStep = () => {
-    return (
-        <Paper
-            elevation={3}
-            sx={{
-                display: "flex",
-                padding: "32px 48px",
-                flexDirection: "column",
-                width: "100%",
-                margin: "auto",
-            }}
-        >
-            <form>
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                    <Box>
-                        <InputLabel htmlFor="street">Street</InputLabel>
-                        <TextField
-                            id="street"
-                            name="street"
-                            variant="outlined"
-                            fullWidth
-                            placeholder="123 Main Street"
-                        />
-                    </Box>
-                    <Box sx={{ display: "flex", gap: 2 }}>
-                        <Box sx={{ flex: 1 }}>
-                            <InputLabel htmlFor="city">City</InputLabel>
-                            <TextField
-                                id="city"
-                                name="city"
-                                variant="outlined"
-                                fullWidth
-                                placeholder="Springfield"
-                            />
-                        </Box>
-                        <Box sx={{ flex: 1 }}>
-                            <InputLabel htmlFor="zip">Zip Code</InputLabel>
-                            <TextField
-                                id="zip"
-                                name="zip"
-                                variant="outlined"
-                                fullWidth
-                                placeholder="12345"
-                            />
-                        </Box>
-                    </Box>
-                    <Box sx={{ display: "flex", gap: 2 }}>
-                        <Box sx={{ flex: 1 }}>
-                            <InputLabel htmlFor="country">Country</InputLabel>
-                            <TextField
-                                id="country"
-                                name="country"
-                                variant="outlined"
-                                fullWidth
-                                placeholder="United States"
-                            />
-                        </Box>
-                        <Box sx={{ flex: 1 }}>
-                            <InputLabel htmlFor="phone">Phone</InputLabel>
-                            <TextField
-                                id="phone"
-                                name="phone"
-                                variant="outlined"
-                                fullWidth
-                                placeholder="+1 (555) 123-4567"
-                            />
-                        </Box>
-                    </Box>
-                    <Box>
-                        <RadioGroup
-                            aria-label="payment"
-                            defaultValue="cash"
-                            name="radio-buttons-group"
-                        >
-                            <FormControlLabel
-                                value="cash"
-                                control={<Radio />}
-                                label="Pay with cash upon delivery"
-                            />
-                        </RadioGroup>
-                    </Box>
-                </Box>
-            </form>
-        </Paper>
-    );
+export const OrderValidationStep = ({globalErrors, control}) => {
+
+  return (
+    <Paper
+      elevation={3}
+      sx={{
+        display: "flex",
+        padding: "32px 48px",
+        flexDirection: "column",
+        width: "100%",
+        margin: "auto",
+      }}
+    >
+      <form>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+          {globalErrors && globalErrors.map((error, index) => (
+            <Alert key={index} severity="error">
+              {error}
+            </Alert>
+          ))}
+          <Box>
+            <InputLabel htmlFor="street">Street</InputLabel>
+            <FormTextField
+              name="street"
+              control={control}
+              defaultValue=""
+              rules={{ required: "Street is required" }}
+              type="text"
+              id="street"
+              placeholder="123 Main Street"
+              variant="outlined"
+              fullWidth
+            />
+          </Box>
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ flex: 1 }}>
+              <InputLabel htmlFor="city">City</InputLabel>
+              <FormTextField
+                name="city"
+                control={control}
+                defaultValue=""
+                rules={{ required: "City is required" }}
+                type="text"
+                id="city"
+                placeholder="Springfield"
+                variant="outlined"
+                fullWidth
+              />
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              <InputLabel htmlFor="zip">Zip Code</InputLabel>
+              <FormTextField
+                name="zip_code"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Zip Code is required" }}
+                type="text"
+                id="zip"
+                placeholder="12345"
+                variant="outlined"
+                fullWidth
+              />
+            </Box>
+          </Box>
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Box sx={{ flex: 1 }}>
+              <InputLabel htmlFor="country">Country</InputLabel>
+              <FormTextField
+                name="country"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Country is required" }}
+                type="text"
+                id="country"
+                placeholder="United States"
+                variant="outlined"
+                fullWidth
+              />
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              <InputLabel htmlFor="phone">Phone</InputLabel>
+              <FormTextField
+                name="phone"
+                control={control}
+                defaultValue=""
+                rules={{ required: "Phone is required" }}
+                type="text"
+                id="phone"
+                placeholder="+1 (555) 123-4567"
+                variant="outlined"
+                fullWidth
+              />
+            </Box>
+          </Box>
+          <Box>
+            <RadioGroup
+              aria-label="payment"
+              defaultValue="cash"
+              name="payment"
+            >
+              <FormControlLabel
+                value="cash"
+                control={<Radio />}
+                label="Pay with cash upon delivery"
+              />
+            </RadioGroup>
+          </Box>
+        </Box>
+      </form>
+    </Paper>
+  );
 };
-
