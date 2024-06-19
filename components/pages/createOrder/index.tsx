@@ -11,16 +11,28 @@ import { OrderValidationStep } from "./orderValidationStep";
 import { AuthModal } from "./authModal";
 import { StepHeader } from "./stepHeader";
 import { useForm } from "react-hook-form";
-import { useCreateAddressMutation } from "@/store/reducer/apis/cartApi";
+import {
+  useCartItemsQuery,
+  useCreateAddressMutation,
+} from "@/store/reducer/apis/cartApi";
 import useErrors from "@/hooks/useErrors";
 import { OrderCompleteStep } from "./orderCompleteStep";
 
 export const CreateOrder = () => {
+  const { data: items = [] } = useCartItemsQuery();
+  let cartEmpty = items.length == 0;
   let steps = ["Cart", "Order Validation", "Order Complete"];
   let stepsNext = ["Next", "Order", "Continue SHOPPING"];
   let { isAuthenticated } = useAuth();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(2);
   const [disableNext, setDisableNext] = React.useState(true);
+  React.useEffect(() => {
+    if (activeStep < 2 && cartEmpty) {
+      setDisableNext(true);
+    } else {
+      setDisableNext(false);
+    }
+  }, [cartEmpty, activeStep]);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -80,7 +92,7 @@ export const CreateOrder = () => {
       </Card>
       <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
         <StepHeader title={steps[activeStep]} />
-        {activeStep == 0 && <CartStep setDisableNext={setDisableNext} />}
+        {activeStep == 0 && <CartStep />}
         {activeStep == 1 && (
           <OrderValidationStep globalErrors={globalErrors} control={control} />
         )}
