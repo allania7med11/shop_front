@@ -28,7 +28,7 @@ export const CreateOrder = () => {
   let stepsNext = ["Next", "Order", "Continue Shopping"];
   let stepsBack = ["Back", "Back", "Back Home"];
   let { isAuthenticated } = useAuth();
-  const [activeStep, setActiveStep] = React.useState(1);
+  const [activeStep, setActiveStep] = React.useState(2);
   const [disableNext, setDisableNext] = React.useState(true);
   React.useEffect(() => {
     if (activeStep < 2 && cartEmpty) {
@@ -56,7 +56,7 @@ export const CreateOrder = () => {
   };
   // End Address Form
   React.useEffect(() => {
-    if (activeStep > 0 && !isAuthenticated) {
+    if (activeStep == 1 && !isAuthenticated) {
       setActiveStep(0);
       handleOpen();
     }
