@@ -7,7 +7,7 @@ export const OrderCompleteStep = () => (
     elevation={3}
     sx={{
       display: "flex",
-      padding: "32px 48px",
+      padding: "32px 48px 48px 32px",
       flexDirection: "column",
       width: "100%",
       margin: "auto",
