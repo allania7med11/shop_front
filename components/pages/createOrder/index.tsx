@@ -11,16 +11,32 @@ import { OrderValidationStep } from "./orderValidationStep";
 import { AuthModal } from "./authModal";
 import { StepHeader } from "./stepHeader";
 import { useForm } from "react-hook-form";
-import { useCreateAddressMutation } from "@/store/reducer/apis/cartApi";
+import {
+  useCartItemsQuery,
+  useCreateAddressMutation,
+} from "@/store/reducer/apis/cartApi";
 import useErrors from "@/hooks/useErrors";
 import { OrderCompleteStep } from "./orderCompleteStep";
+import { useRouter } from "next/router";
+import { grey } from "@mui/material/colors";
 
 export const CreateOrder = () => {
+  const router = useRouter();
+  const { data: items = [] } = useCartItemsQuery();
+  let cartEmpty = items.length == 0;
   let steps = ["Cart", "Order Validation", "Order Complete"];
-  let stepsNext = ["Next", "Order", "Continue SHOPPING"];
+  let stepsNext = ["Next", "Order", "Continue Shopping"];
+  let stepsBack = ["Back", "Back", "Back Home"];
   let { isAuthenticated } = useAuth();
   const [activeStep, setActiveStep] = React.useState(0);
   const [disableNext, setDisableNext] = React.useState(true);
+  React.useEffect(() => {
+    if (activeStep < 2 && cartEmpty) {
+      setDisableNext(true);
+    } else {
+      setDisableNext(false);
+    }
+  }, [cartEmpty, activeStep]);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -40,7 +56,7 @@ export const CreateOrder = () => {
   };
   // End Address Form
   React.useEffect(() => {
-    if (activeStep > 0 && !isAuthenticated) {
+    if (activeStep == 1 && !isAuthenticated) {
       setActiveStep(0);
       handleOpen();
     }
@@ -49,19 +65,27 @@ export const CreateOrder = () => {
     }
   }, [isAuthenticated, activeStep]);
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeStep == 2) {
+      router.push("/");
+    } else {
+      setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    }
   };
   const handleNext = async () => {
     if (activeStep == 1) {
       setDisableNext(true);
       await handleSubmit(onSubmit)();
       setDisableNext(false);
+    } else if (activeStep == 2) {
+      router.back();
     } else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
   };
   React.useEffect(() => {
-    setActiveStep(2);
+    if (isSuccess) {
+      setActiveStep(2);
+    }
   }, [isSuccess]);
   return (
     <Box sx={{ width: "100%", maxWidth: "1000px", margin: "auto" }}>
@@ -80,7 +104,7 @@ export const CreateOrder = () => {
       </Card>
       <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
         <StepHeader title={steps[activeStep]} />
-        {activeStep == 0 && <CartStep setDisableNext={setDisableNext} />}
+        {activeStep == 0 && <CartStep />}
         {activeStep == 1 && (
           <OrderValidationStep globalErrors={globalErrors} control={control} />
         )}
@@ -97,10 +121,11 @@ export const CreateOrder = () => {
       >
         <Button
           color="inherit"
+          sx={{ color: grey[700] }}
           disabled={activeStep === 0}
           onClick={handleBack}
         >
-          Back
+          {stepsBack[activeStep]}
         </Button>
         <Button onClick={handleNext} disabled={disableNext} variant="contained">
           {stepsNext[activeStep]}
