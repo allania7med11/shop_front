@@ -5,7 +5,7 @@ import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Card from "@mui/material/Card";
 import { CartStep } from "./cartStep";
-import { Button, CircularProgress, Typography } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import useAuth from "@/hooks/useAuth";
 import { OrderValidationStep } from "./orderValidationStep";
 import { AuthModal } from "./authModal";
