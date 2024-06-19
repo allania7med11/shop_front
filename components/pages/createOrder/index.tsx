@@ -28,7 +28,7 @@ export const CreateOrder = () => {
   let stepsNext = ["Next", "Order", "Continue Shopping"];
   let stepsBack = ["Back", "Back", "Back Home"];
   let { isAuthenticated } = useAuth();
-  const [activeStep, setActiveStep] = React.useState(2);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [disableNext, setDisableNext] = React.useState(true);
   React.useEffect(() => {
     if (activeStep < 2 && cartEmpty) {
@@ -83,7 +83,9 @@ export const CreateOrder = () => {
     }
   };
   React.useEffect(() => {
-    setActiveStep(2);
+    if (isSuccess) {
+      setActiveStep(2);
+    }
   }, [isSuccess]);
   return (
     <Box sx={{ width: "100%", maxWidth: "1000px", margin: "auto" }}>
