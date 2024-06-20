@@ -29,6 +29,7 @@
     "pluralize": "^8.0.0",
     "prop-types": "latest",
     "react": "^18.2.0",
+    "react-confetti-explosion": "^2.1.2",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.2",
     "react-redux": "^8.0.5",

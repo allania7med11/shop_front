@@ -1,4 +1,4 @@
-import { IsCartItem } from "@/data/cart";
+import { IsAddress, IsCartItem } from "@/data/cart";
 import { api } from ".";
 
 const cartApi = api.injectEndpoints({
@@ -22,10 +22,19 @@ const cartApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Cart"],
     }),
+    createAddress: builder.mutation<IsAddress, Partial<IsAddress>>({
+      query: (newAddress) => ({
+        url: "/addresses/",
+        method: "POST",
+        body: newAddress,
+      }),
+      invalidatesTags: ["Cart"],
+    }),
   }),
 });
 export const {
   useCartItemsQuery,
   useCreateCartItemMutation,
   useDeleteCartItemMutation,
+  useCreateAddressMutation
 } = cartApi;
