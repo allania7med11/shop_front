@@ -1,6 +1,8 @@
 import React from "react";
 import { Control } from "react-hook-form";
-import { DeliveryAddress } from "./DeliveryAddress";
+import { DeliveryAddress } from "./deliveryAddress";
+import { Box } from "@mui/material";
+import OrderSummary from "./orderSummary";
 
 interface OrderValidationStepProps {
   globalErrors: string[];
@@ -9,6 +11,9 @@ interface OrderValidationStepProps {
 
 export const OrderValidationStep: React.FC<OrderValidationStepProps> = ({ globalErrors, control }) => {
   return (
-    <DeliveryAddress globalErrors={globalErrors} control={control} />
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+      <OrderSummary />
+      <DeliveryAddress globalErrors={globalErrors} control={control} />
+    </Box>
   );
 };
