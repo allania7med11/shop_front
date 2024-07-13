@@ -20,7 +20,8 @@ const sxProducts: SxProps = {
 };
 
 export const Products = () => {
-  const { data: { items } } = useCurrentCartQuery();
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : []
   const filters: IsProductFilters = useSelector((state: RootState) => ({
     category: state.filters.categorySlug || "",
     search: state.filters.search || [""],

@@ -28,7 +28,8 @@ export const Category: FC<{ category: IsCategory }> = ({ category }) => {
   if (productsApi.length == 0) {
     return <></>
   }
-  const { data: { items } } = useCurrentCartQuery();
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : []
   const products = addItemsToProducts(productsApi, items);
   return (
     <Paper elevation={3}>

@@ -10,7 +10,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useCurrentCartQuery } from "@/store/reducer/apis/cartApi";
 
 export default function NavBar({ open, handleDrawerOpen }) {
-  const { data: { items } } = useCurrentCartQuery();
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : []
 
   return (
     <AppBar
@@ -38,7 +39,7 @@ export default function NavBar({ open, handleDrawerOpen }) {
           </Button>
         </Link>
         <Box sx={{ flexGrow: 1 }}></Box>
-        <AvatarComponent /> 
+        <AvatarComponent />
         <Link href="/cart">
           <IconButton>
             <Badge badgeContent={items.length} color="error">

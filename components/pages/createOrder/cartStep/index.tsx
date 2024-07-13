@@ -5,8 +5,10 @@ import { useCurrentCartQuery } from "@/store/reducer/apis/cartApi";
 import { addItemsToProducts } from "@/utils/products";
 
 export const CartStep = () => {
-  const { data: { items } } = useCurrentCartQuery();
-  const product_ids = items.map((item) => item.product);
+  debugger
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : []
+  const product_ids = items.map((item) => item.product.id);
   let { data: productsApi = [] } = useProductsQuery(
     { id_in: product_ids },
     {

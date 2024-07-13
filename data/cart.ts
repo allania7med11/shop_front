@@ -18,6 +18,7 @@ interface IsProductFile {
 }
 
 interface IsProduct {
+    id: number;
     name: string;
     files: IsProductFile[];
 }

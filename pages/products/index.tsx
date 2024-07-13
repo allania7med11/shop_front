@@ -17,7 +17,8 @@ export default function Index() {
   const { data: productApi = null, error, isLoading } = useProductQuery(slug, {
     skip: !slug,
   });
-  const { data: { items } } = useCurrentCartQuery();
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : []
   const product = productApi && addItemsToProducts([productApi], items)[0];
   return (
     <Container maxWidth={false} sx={{ maxWidth: "1400px" }}>

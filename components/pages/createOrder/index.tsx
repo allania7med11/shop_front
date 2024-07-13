@@ -22,7 +22,8 @@ import { grey } from "@mui/material/colors";
 
 export const CreateOrder = () => {
   const router = useRouter();
-  const { data: { items } } = useCurrentCartQuery();
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : []
   let cartEmpty = items.length == 0;
   let steps = ["Cart", "Order Validation", "Order Complete"];
   let stepsNext = ["Next", "Order", "Continue Shopping"];
