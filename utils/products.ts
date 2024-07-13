@@ -11,6 +11,7 @@ export const addItemsToProducts = (
 ) : IsProduct[] => {
   const mapProductItem = items.reduce((acc, item) => {
     acc[item.product.id] = item;
+    acc[item.product.id].product = item.product.id
     return acc;
   }, {});
   return products.map((product) => ({
