@@ -11,7 +11,7 @@ export const StepHeader = ({ title }) => {
             padding: "24px 12px",
         }}
     >
-        <Typography variant="h6">{ title }</Typography>
+        <Typography variant="h5">{ title }</Typography>
         <Button
             variant="outlined"
             startIcon={<ArrowBackIcon />}
