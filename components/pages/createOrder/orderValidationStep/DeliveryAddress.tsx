@@ -8,7 +8,7 @@ import {
   FormControlLabel,
   Alert,
 } from "@mui/material";
-import { Control, FieldErrors } from "react-hook-form";
+import { Control } from "react-hook-form";
 import FormTextField from "@/components/common/Form/formTextField";
 
 interface DeliveryAddressProps {
