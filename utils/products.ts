@@ -1,4 +1,4 @@
-import { IsCartItem } from "@/data/cart";
+import { IsCartItem, IsCartItemRead } from "@/data/cart";
 import { IsProduct } from "@/data/categories";
 
 function getValue(obj, key, dflt) {
@@ -7,10 +7,10 @@ function getValue(obj, key, dflt) {
 
 export const addItemsToProducts = (
   products: IsProduct[],
-  items: IsCartItem[]
+  items: IsCartItemRead[]
 ) : IsProduct[] => {
   const mapProductItem = items.reduce((acc, item) => {
-    acc[item.product] = item;
+    acc[item.product.id] = item;
     return acc;
   }, {});
   return products.map((product) => ({

@@ -1,4 +1,4 @@
-import { IsAddress, IsCartItem } from "@/data/cart";
+import { IsAddress, IsCartItem, IsCart } from "@/data/cart"; // Make sure to define IsCart type
 import { api } from ".";
 
 const cartApi = api.injectEndpoints({
@@ -30,11 +30,16 @@ const cartApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Cart"],
     }),
+    currentCart: builder.query<IsCart, void>({
+      query: () => "/cart/current/",
+      providesTags: ["Cart"],
+    }),
   }),
 });
+
 export const {
-  useCartItemsQuery,
   useCreateCartItemMutation,
   useDeleteCartItemMutation,
-  useCreateAddressMutation
+  useCreateAddressMutation,
+  useCurrentCartQuery, 
 } = cartApi;

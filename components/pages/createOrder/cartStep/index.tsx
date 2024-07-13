@@ -1,11 +1,11 @@
 import { CartTable } from "./cartTable";
 import * as React from "react";
 import { useProductsQuery } from "@/store/reducer/apis/productApi";
-import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
+import { useCurrentCartQuery } from "@/store/reducer/apis/cartApi";
 import { addItemsToProducts } from "@/utils/products";
 
 export const CartStep = () => {
-  const { data: items = [] } = useCartItemsQuery();
+  const { data: { items } } = useCurrentCartQuery();
   const product_ids = items.map((item) => item.product);
   let { data: productsApi = [] } = useProductsQuery(
     { id_in: product_ids },

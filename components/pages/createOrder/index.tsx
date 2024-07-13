@@ -12,7 +12,7 @@ import { AuthModal } from "./authModal";
 import { StepHeader } from "./stepHeader";
 import { useForm } from "react-hook-form";
 import {
-  useCartItemsQuery,
+  useCurrentCartQuery,
   useCreateAddressMutation,
 } from "@/store/reducer/apis/cartApi";
 import useErrors from "@/hooks/useErrors";
@@ -22,7 +22,7 @@ import { grey } from "@mui/material/colors";
 
 export const CreateOrder = () => {
   const router = useRouter();
-  const { data: items = [] } = useCartItemsQuery();
+  const { data: { items } } = useCurrentCartQuery();
   let cartEmpty = items.length == 0;
   let steps = ["Cart", "Order Validation", "Order Complete"];
   let stepsNext = ["Next", "Order", "Continue Shopping"];

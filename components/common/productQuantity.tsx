@@ -1,7 +1,6 @@
 import { useDebounce } from "use-debounce";
 import { Box, Button, OutlinedInput, SxProps, Theme } from "@mui/material";
 import {
-  useCartItemsQuery,
   useCreateCartItemMutation,
   useDeleteCartItemMutation,
 } from "@/store/reducer/apis/cartApi";

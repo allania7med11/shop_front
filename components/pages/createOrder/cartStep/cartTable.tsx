@@ -10,9 +10,7 @@ import TablePagination from "@mui/material/TablePagination";
 import { IsProduct } from "@/data/categories";
 import { ProductQuantity } from "@/components/common/productQuantity";
 import { ProductTableCell } from "./productTableCell";
-import { useProductsQuery } from "@/store/reducer/apis/productApi";
-import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
-import { addItemsToProducts } from "@/utils/products";
+
 
 export const CartTableRow: React.FC<{ product: IsProduct }> = ({ product }) => {
   const price = roundPrice(product.current_price * product.cart_item.quantity);

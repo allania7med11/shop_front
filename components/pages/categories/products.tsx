@@ -8,7 +8,7 @@ import { FetchWrap } from "@/components/common/fetchWrap";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/reducer";
 import { IsProductFilters } from "@/data/categories";
-import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
+import { useCurrentCartQuery } from "@/store/reducer/apis/cartApi";
 import { addItemsToProducts } from "@/utils/products";
 
 const sxProducts: SxProps = {
@@ -20,7 +20,7 @@ const sxProducts: SxProps = {
 };
 
 export const Products = () => {
-  const { data: items = [] } = useCartItemsQuery();
+  const { data: { items } } = useCurrentCartQuery();
   const filters: IsProductFilters = useSelector((state: RootState) => ({
     category: state.filters.categorySlug || "",
     search: state.filters.search || [""],
