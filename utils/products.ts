@@ -10,8 +10,11 @@ export const addItemsToProducts = (
   items: IsCartItemRead[]
 ) : IsProduct[] => {
   const mapProductItem = items.reduce((acc, item) => {
-    acc[item.product.id] = item;
-    acc[item.product.id].product = item.product.id
+    acc[item.product.id] = {
+      id: item.id,
+      product: item.product.id,
+      quantity: item.quantity,
+    };
     return acc;
   }, {});
   return products.map((product) => ({
