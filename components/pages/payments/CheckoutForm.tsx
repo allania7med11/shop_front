@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useSaveStripeInfoMutation } from '@/store/reducer/apis/paymentApi';
-import {  Button, Radio, RadioGroup, FormControlLabel, FormControl, Typography, Box } from '@mui/material';
+import { Button, Radio, RadioGroup, FormControlLabel, FormControl, Typography, Box } from '@mui/material';
 
 const CheckoutForm = () => {
   const [error, setError] = useState<string | null>(null);
@@ -50,16 +50,37 @@ const CheckoutForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="stripe-form">
+    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
       <FormControl component="fieldset">
         <RadioGroup value={paymentMethod} onChange={handlePaymentMethodChange}>
           <FormControlLabel value="credit_card" control={<Radio />} label="Credit Card" />
           {paymentMethod === 'credit_card' && (
-            <Box mt={2} mb={2}>
-              <CardElement options={{ style: { base: { fontSize: '18px' } } }} onChange={handleChange} />
-              <div className="card-errors" role="alert">
-                {error}
-              </div>
+            <Box mt={2} mb={2} sx={{ display: "flex", flexDirection: "column", gap: '8px' }}>
+              <Box sx={{ padding: '12px', border: '1px solid #ced4da', borderRadius: '4px' }}>
+                <CardElement 
+                  options={{
+                    style: {
+                      base: {
+                        color: '#424770',
+                        fontSize: '16px',
+                        iconColor: '#c4f0ff',
+                        '::placeholder': {
+                          color: '#aab7c4',
+                        },
+                        fontFamily: 'Roboto, Open Sans, Segoe UI, sans-serif',
+                        fontSmoothing: 'antialiased',
+                      },
+                      invalid: {
+                        color: '#9e2146',
+                        iconColor: '#fa755a',
+                      },
+                    },
+                    hidePostalCode: true,
+                  }}
+                  onChange={handleChange}
+                />
+              </Box>
+              {error && <Typography color="error" role="alert">{error}</Typography>}
             </Box>
           )}
           <FormControlLabel value="cash_on_delivery" control={<Radio />} label="Pay with cash upon delivery" />
