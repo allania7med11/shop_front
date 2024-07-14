@@ -3,6 +3,7 @@ import { Control } from "react-hook-form";
 import { DeliveryAddress } from "./deliveryAddress";
 import { Box } from "@mui/material";
 import OrderSummary from "./orderSummary";
+import { PaymentMethod } from "./paymentMethod";
 
 interface OrderValidationStepProps {
   globalErrors: string[];
@@ -14,6 +15,7 @@ export const OrderValidationStep: React.FC<OrderValidationStepProps> = ({ global
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
       <OrderSummary />
       <DeliveryAddress globalErrors={globalErrors} control={control} />
+      <PaymentMethod />
     </Box>
   );
 };
