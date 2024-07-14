@@ -17,7 +17,8 @@ interface IsProductFile {
     url: string;
 }
 
-interface IsProduct {
+export interface IsCartProduct {
+    slug: string;
     id: number;
     name: string;
     files: IsProductFile[];
@@ -25,7 +26,7 @@ interface IsProduct {
 
 export interface IsCartItemRead {
     id: number;
-    product: IsProduct;
+    product: IsCartProduct;
     quantity: number;
     subtotal: string;
 }

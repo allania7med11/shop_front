@@ -7,27 +7,31 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-import { IsProduct } from "@/data/categories";
 import { ProductQuantity } from "@/components/common/productQuantity";
 import { ProductTableCell } from "./productTableCell";
+import { IsCartItem, IsCartItemRead } from "@/data/cart";
 
 
-export const CartTableRow: React.FC<{ product: IsProduct }> = ({ product }) => {
-  const price = roundPrice(product.current_price * product.cart_item.quantity);
+export const CartTableRow: React.FC<{ item: IsCartItemRead }> = ({ item }) => {
+  let cart_item: IsCartItem = {
+    id: item.id,
+    product: item.product.id,
+    quantity: item.quantity
+  }
   return (
     <TableRow>
       <TableCell>
-        <ProductTableCell product={product} />
+        <ProductTableCell item={item} />
       </TableCell>
       <TableCell>
-        <ProductQuantity cart_item={product.cart_item} />
+        <ProductQuantity cart_item={cart_item} />
       </TableCell>
-      <TableCell>${price}</TableCell>
+      <TableCell>${item.subtotal}</TableCell>
     </TableRow>
   );
 };
 
-export const CartTable: React.FC<{ products: IsProduct[] }> = ({products}) => {
+export const CartTable: React.FC<{ items: IsCartItemRead[], total_amount: string }> = ({items, total_amount}) => {
   const headers = ["Name", "Quantity", "Price"];
 
   // Pagination state
@@ -49,14 +53,11 @@ export const CartTable: React.FC<{ products: IsProduct[] }> = ({products}) => {
   };
 
   // Calculate total items and total price
-  const totalItems = products.reduce(
-    (acc, product) => acc + product.cart_item.quantity,
+  const totalItems = items.reduce(
+    (acc, item) => acc + item.quantity,
     0
   );
-  const totalPrice = products.reduce(
-    (acc, product) => acc + product.current_price * product.cart_item.quantity,
-    0
-  );
+  const totalPrice = total_amount
 
   return (
     <Paper>
@@ -73,10 +74,10 @@ export const CartTable: React.FC<{ products: IsProduct[] }> = ({products}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {products
+            {items
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((product, key) => (
-                <CartTableRow key={key} product={product} />
+              .map((item, key) => (
+                <CartTableRow key={key} item={item} />
               ))}
           </TableBody>
           <TableBody>
@@ -91,7 +92,7 @@ export const CartTable: React.FC<{ products: IsProduct[] }> = ({products}) => {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={products.length}
+        count={items.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
