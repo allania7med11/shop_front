@@ -34,7 +34,7 @@ const OrderSummary = () => {
       <Box sx={{ backgroundColor: "rgba(0, 0, 0, 0.02)", padding: "16px 48px" }}>
         <Box sx={{ display: "flex", justifyContent: "space-between", fontWeight: "bold" }}>
           <Typography variant="h6" color="rgba(0, 0, 0, 0.6)">Payable Total</Typography>
-          <Typography variant="h6" color="rgba(0, 0, 0, 0.6)">{total_amount}</Typography>
+          <Typography variant="h6" color="rgba(0, 0, 0, 0.6)">${total_amount}</Typography>
         </Box>
       </Box>
     </Paper>
