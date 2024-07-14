@@ -1,22 +1,21 @@
-import * as React from "react";
-import Grid from "@mui/material/Grid";
-import { StripeTextFieldCVC, StripeTextFieldExpiry, StripeTextFieldNumber } from "./Form/commonTextFields";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import { StripeTextFieldCVC, StripeTextFieldExpiry, StripeTextFieldNumber } from './Form/commonTextFields';
 
-export default function CreditCardDetail() {
+const CreditCardDetail = ({ onCardDetailsChange }) => {
   const [state, setState] = React.useState({
-    cardNumberComplete: false,
-    expiredComplete: false,
-    cvcComplete: false,
     cardNumberError: null,
     expiredError: null,
     cvcError: null
   });
 
-  const onElementChange = (field, errorField) => ({
-    complete,
-    error = { message: null }
-  }) => {
-    setState({ ...state, [field]: complete, [errorField]: error.message });
+  const onElementChange = (errorField) => (event) => {
+    const { error } = event;
+    setState((prevState) => ({
+      ...prevState,
+      [errorField]: error ? error.message : null,
+    }));
+    onCardDetailsChange(errorField, error ? error.message : null);
   };
 
   const { cardNumberError, expiredError, cvcError } = state;
@@ -27,23 +26,25 @@ export default function CreditCardDetail() {
         <StripeTextFieldNumber
           error={Boolean(cardNumberError)}
           labelErrorMessage={cardNumberError}
-          onChange={onElementChange("cardNumberComplete", "cardNumberError")}
+          onChange={onElementChange('cardNumberError')}
         />
       </Grid>
       <Grid item xs={6}>
         <StripeTextFieldExpiry
           error={Boolean(expiredError)}
           labelErrorMessage={expiredError}
-          onChange={onElementChange("expiredComplete", "expiredError")}
+          onChange={onElementChange('expiredError')}
         />
       </Grid>
       <Grid item xs={6}>
         <StripeTextFieldCVC
           error={Boolean(cvcError)}
           labelErrorMessage={cvcError}
-          onChange={onElementChange("cvcComplete", "cvcError")}
+          onChange={onElementChange('cvcError')}
         />
       </Grid>
     </Grid>
   );
-}
+};
+
+export default CreditCardDetail;
