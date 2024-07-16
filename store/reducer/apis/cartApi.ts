@@ -36,7 +36,7 @@ const cartApi = api.injectEndpoints({
     }),
     createOrder: builder.mutation<IsOrder, Partial<IsOrder>>({
       query: (orderData) => ({
-        url: "/orders/",
+        url: "/cart/",
         method: "POST",
         body: orderData,
       }),

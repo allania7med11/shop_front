@@ -1,16 +1,17 @@
 import React from "react";
-import { Control } from "react-hook-form";
+import { FieldValues, UseFormReturn } from "react-hook-form";
 import { DeliveryAddress } from "./deliveryAddress";
 import { Alert, Box } from "@mui/material";
 import OrderSummary from "./orderSummary";
 import { PaymentMethod } from "./paymentMethod";
 
+
 interface OrderValidationStepProps {
   globalErrors: string[];
-  control: Control<any>;
+  form: UseFormReturn<FieldValues, any, undefined>
 }
 
-export const OrderValidationStep: React.FC<OrderValidationStepProps> = ({ globalErrors, control }) => {
+export const OrderValidationStep: React.FC<OrderValidationStepProps> = ({ globalErrors, form }) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
       <OrderSummary />
@@ -19,8 +20,8 @@ export const OrderValidationStep: React.FC<OrderValidationStepProps> = ({ global
           {error}
         </Alert>
       ))}
-      <DeliveryAddress  control={control} />
-      <PaymentMethod  control={control} />
+      <DeliveryAddress form={form} />
+      <PaymentMethod form={form} />
     </Box>
   );
 };

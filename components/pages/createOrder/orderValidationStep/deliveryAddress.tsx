@@ -5,12 +5,13 @@ import {
     InputLabel,
     Typography
 } from "@mui/material";
-import { Control } from "react-hook-form";
+import { FieldValues, UseFormReturn } from "react-hook-form";
 import FormTextField from "@/components/common/Form/formTextField";
 
 
 
-export const DeliveryAddress: React.FC<{ control: Control<any> }> = ({ control }) => {
+export const DeliveryAddress: React.FC<{ form: UseFormReturn<FieldValues, any, undefined> }> = ({ form }) => {
+    const { control } = form
     return (
         <Paper
             elevation={3}

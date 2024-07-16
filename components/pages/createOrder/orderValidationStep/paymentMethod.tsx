@@ -4,15 +4,11 @@ import {
     Paper,
     Typography
 } from "@mui/material";
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import CheckoutForm from '@/components/pages/payments/CheckoutForm';
-import { Control } from "react-hook-form";
-import { stripePublicKey } from '@/utils/config';
+import {  FieldValues, UseFormReturn } from "react-hook-form";
 
-const stripePromise = loadStripe(stripePublicKey);
 
-export const PaymentMethod: React.FC<{ control: Control<any> }> = ({ control }) => {
+export const PaymentMethod: React.FC<{ form: UseFormReturn<FieldValues, any, undefined> }> = ({ form }) => {
     return (
         <Paper
             elevation={3}
@@ -23,9 +19,7 @@ export const PaymentMethod: React.FC<{ control: Control<any> }> = ({ control }) 
                 </Typography>
             </Box>
             <Box sx={{ padding: "16px 48px 32px" }}>
-                <Elements stripe={stripePromise}>
-                    <CheckoutForm control={control} />
-                </Elements>
+                <CheckoutForm form={form} />
             </Box>
         </Paper>
     );

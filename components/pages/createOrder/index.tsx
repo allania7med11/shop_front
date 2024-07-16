@@ -19,6 +19,7 @@ import useErrors from "@/hooks/useErrors";
 import { OrderCompleteStep } from "./orderCompleteStep";
 import { useRouter } from "next/router";
 import { grey } from "@mui/material/colors";
+import { CardNumberElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
 export const CreateOrder = () => {
   const router = useRouter();
@@ -41,7 +42,8 @@ export const CreateOrder = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
+  const form = useForm();
+  const { handleSubmit, setError, clearErrors, getValues } = form;
   const [createOrder, { isLoading, error, isSuccess }] =
     useCreateOrderMutation();
   const { globalErrors, setGlobalErrors } = useErrors(
@@ -52,7 +54,33 @@ export const CreateOrder = () => {
   const onSubmit = async (form_data) => {
     clearErrors();
     setGlobalErrors([]);
+    await setPaymentMethodId(form_data)
     await createOrder(form_data);
+  };
+  const stripe = useStripe();
+  const elements = useElements();
+  const setPaymentMethodId = async (form_data) => {
+    if (!stripe || !elements) {
+      setGlobalErrors(['Stripe has not loaded']);
+      return;
+    }
+
+    const cardElement = elements.getElement(CardNumberElement);
+    if (!cardElement) {
+      setGlobalErrors(['Card Element not found']);
+      return;
+    }
+
+    const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+    });
+
+    if (stripeError) {
+      setGlobalErrors([stripeError.message]);
+      return;
+    }
+    form_data.payment.payment_method_id = paymentMethod?.id
   };
   // End Address Form
   React.useEffect(() => {
@@ -106,7 +134,7 @@ export const CreateOrder = () => {
         <StepHeader title={steps[activeStep]} />
         {activeStep == 0 && <CartStep />}
         {activeStep == 1 && (
-          <OrderValidationStep globalErrors={globalErrors} control={control} />
+          <OrderValidationStep globalErrors={globalErrors} form={form} />
         )}
         {activeStep == 2 && <OrderCompleteStep />}
       </Box>
