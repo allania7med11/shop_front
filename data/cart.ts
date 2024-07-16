@@ -35,3 +35,14 @@ export interface IsCart {
     total_amount: string;
     items: IsCartItemRead[];
 }
+
+export interface IsPayment {
+    payment_method: string;
+    payment_method_id?: string;
+}
+
+
+export interface IsOrder {
+    address: IsAddress;
+    payment: IsPayment;
+}

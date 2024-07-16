@@ -3,8 +3,9 @@ import { CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-
 import { useSaveStripeInfoMutation } from '@/store/reducer/apis/paymentApi';
 import { Button, Radio, RadioGroup, FormControlLabel, FormControl, Typography, Box } from '@mui/material';
 import CreditCardDetail from '@/components/common/creditCardDetail';
+import { Control } from 'react-hook-form';
 
-const CheckoutForm = () => {
+const CheckoutForm: React.FC<{ control: Control<any> }> = ({ control }) => {
   const [error, setError] = useState<string | null>(null);
   const [paymentMethod, setPaymentMethod] = useState('credit_card');
   const stripe = useStripe();

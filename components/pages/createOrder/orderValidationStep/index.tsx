@@ -1,7 +1,7 @@
 import React from "react";
 import { Control } from "react-hook-form";
 import { DeliveryAddress } from "./deliveryAddress";
-import { Box } from "@mui/material";
+import { Alert, Box } from "@mui/material";
 import OrderSummary from "./orderSummary";
 import { PaymentMethod } from "./paymentMethod";
 
@@ -14,8 +14,13 @@ export const OrderValidationStep: React.FC<OrderValidationStepProps> = ({ global
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
       <OrderSummary />
-      <DeliveryAddress globalErrors={globalErrors} control={control} />
-      <PaymentMethod />
+      {globalErrors && globalErrors.map((error, index) => (
+        <Alert key={index} severity="error">
+          {error}
+        </Alert>
+      ))}
+      <DeliveryAddress  control={control} />
+      <PaymentMethod  control={control} />
     </Box>
   );
 };

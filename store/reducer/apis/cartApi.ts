@@ -1,4 +1,4 @@
-import { IsAddress, IsCartItem, IsCart } from "@/data/cart"; // Make sure to define IsCart type
+import { IsAddress, IsCartItem, IsCart, IsOrder } from "@/data/cart";
 import { api } from ".";
 
 const cartApi = api.injectEndpoints({
@@ -34,6 +34,14 @@ const cartApi = api.injectEndpoints({
       query: () => "/cart/current/",
       providesTags: ["Cart"],
     }),
+    createOrder: builder.mutation<IsOrder, Partial<IsOrder>>({
+      query: (orderData) => ({
+        url: "/orders/",
+        method: "POST",
+        body: orderData,
+      }),
+      invalidatesTags: ["Cart"],
+    }),
   }),
 });
 
@@ -42,4 +50,5 @@ export const {
   useDeleteCartItemMutation,
   useCreateAddressMutation,
   useCurrentCartQuery, 
+  useCreateOrderMutation,
 } = cartApi;

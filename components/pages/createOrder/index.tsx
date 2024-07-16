@@ -13,7 +13,7 @@ import { StepHeader } from "./stepHeader";
 import { useForm } from "react-hook-form";
 import {
   useCurrentCartQuery,
-  useCreateAddressMutation,
+  useCreateOrderMutation,
 } from "@/store/reducer/apis/cartApi";
 import useErrors from "@/hooks/useErrors";
 import { OrderCompleteStep } from "./orderCompleteStep";
@@ -41,10 +41,9 @@ export const CreateOrder = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  // Address Form
   const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
-  const [createAddress, { isLoading, error, isSuccess }] =
-    useCreateAddressMutation();
+  const [createOrder, { isLoading, error, isSuccess }] =
+    useCreateOrderMutation();
   const { globalErrors, setGlobalErrors } = useErrors(
     error,
     setError,
@@ -53,7 +52,7 @@ export const CreateOrder = () => {
   const onSubmit = async (form_data) => {
     clearErrors();
     setGlobalErrors([]);
-    await createAddress(form_data);
+    await createOrder(form_data);
   };
   // End Address Form
   React.useEffect(() => {
