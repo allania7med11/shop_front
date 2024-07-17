@@ -1,19 +1,19 @@
-import React from 'react';
-import {  Radio, FormControlLabel, FormControl, Typography, Box } from '@mui/material';
-import CreditCardDetail from '@/components/common/creditCardDetail';
-import { FieldValues, UseFormReturn } from 'react-hook-form';
-import FormRadioGroupField from '@/components/common/Form/formRadioGroupField';
+import React from "react";
+import {  Radio, FormControlLabel, FormControl, Typography, Box } from "@mui/material";
+import CreditCardDetail from "@/components/common/creditCardDetail";
+import { FieldValues, UseFormReturn } from "react-hook-form";
+import FormRadioGroupField from "@/components/common/Form/formRadioGroupField";
 
 const CheckoutForm: React.FC<{ form: UseFormReturn<FieldValues, any, undefined> }> = ({ form }) => {
   const { control, watch } = form
-  const paymentMethod = watch('payment.payment_method');
+  const paymentMethod = watch("payment.payment_method");
 
   return (
     <>
       <FormControl component="fieldset">
         <FormRadioGroupField name="payment.payment_method" control={control} rules={{ required: "Payment Method is required" }}>
-          <FormControlLabel value="credit_card" control={<Radio />} label="Credit Card" />
-          {paymentMethod === 'credit_card' && (
+          <FormControlLabel value="stripe" control={<Radio />} label="Credit Card" />
+          {paymentMethod === "stripe" && (
             <Box sx={{ my: 2 }}>
               <CreditCardDetail />
             </Box>
