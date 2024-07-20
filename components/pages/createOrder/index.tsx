@@ -10,7 +10,7 @@ import useAuth from "@/hooks/useAuth";
 import { OrderValidationStep } from "./orderValidationStep";
 import { AuthModal } from "./authModal";
 import { StepHeader } from "./stepHeader";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import {
   useCurrentCartQuery,
   useCreateOrderMutation,
@@ -24,6 +24,8 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
+import { IsOrder } from "@/data/cart";
+
 
 export const CreateOrder = () => {
   const router = useRouter();
@@ -46,12 +48,12 @@ export const CreateOrder = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const form = useForm({
+  const form: UseFormReturn<IsOrder>  = useForm<IsOrder>({
     defaultValues: {
       payment: {
-        payment_method: "stripe",
-      },
-    },
+        payment_method: "stripe"
+      }
+    }
   });
   const { handleSubmit, setError, clearErrors, getValues } = form;
   const [createOrder, { isLoading, error, isSuccess }] =
@@ -61,7 +63,7 @@ export const CreateOrder = () => {
     setError,
     getValues
   );
-  const onSubmit = async (form_data) => {
+  const onSubmit = async (form_data: IsOrder) => {
     clearErrors();
     setGlobalErrors([]);
     if (form_data.payment.payment_method === "stripe") {
@@ -71,7 +73,7 @@ export const CreateOrder = () => {
   };
   const stripe = useStripe();
   const elements = useElements();
-  const setPaymentMethodId = async (form_data) => {
+  const setPaymentMethodId = async (form_data: IsOrder) => {
     if (!stripe || !elements) {
       setGlobalErrors(["Stripe has not loaded"]);
       return;

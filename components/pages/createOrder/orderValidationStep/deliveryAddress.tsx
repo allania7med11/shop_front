@@ -5,12 +5,13 @@ import {
     InputLabel,
     Typography
 } from "@mui/material";
-import { FieldValues, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import FormTextField from "@/components/common/Form/formTextField";
+import { IsOrder } from "@/data/cart";
 
 
 
-export const DeliveryAddress: React.FC<{ form: UseFormReturn<FieldValues, any, undefined> }> = ({ form }) => {
+export const DeliveryAddress: React.FC<{ form: UseFormReturn<IsOrder> }> = ({ form }) => {
     const { control } = form
     return (
         <Paper

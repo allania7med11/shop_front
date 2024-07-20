@@ -1,10 +1,11 @@
 import React from "react";
 import {  Radio, FormControlLabel, FormControl, Typography, Box } from "@mui/material";
 import CreditCardDetail from "@/components/common/creditCardDetail";
-import { FieldValues, UseFormReturn } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import FormRadioGroupField from "@/components/common/Form/formRadioGroupField";
+import { IsOrder } from "@/data/cart";
 
-const CheckoutForm: React.FC<{ form: UseFormReturn<FieldValues, any, undefined> }> = ({ form }) => {
+const CheckoutForm: React.FC<{ form: UseFormReturn<IsOrder>  }> = ({ form }) => {
   const { control, watch } = form
   const paymentMethod = watch("payment.payment_method");
 

@@ -5,10 +5,11 @@ import {
     Typography
 } from "@mui/material";
 import CheckoutForm from '@/components/pages/payments/CheckoutForm';
-import {  FieldValues, UseFormReturn } from "react-hook-form";
+import {  UseFormReturn } from "react-hook-form";
+import { IsOrder } from "@/data/cart";
 
 
-export const PaymentMethod: React.FC<{ form: UseFormReturn<FieldValues, any, undefined> }> = ({ form }) => {
+export const PaymentMethod: React.FC<{ form: UseFormReturn<IsOrder> }> = ({ form }) => {
     return (
         <Paper
             elevation={3}
