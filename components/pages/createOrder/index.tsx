@@ -19,85 +19,15 @@ import useErrors from "@/hooks/useErrors";
 import { OrderCompleteStep } from "./orderCompleteStep";
 import { useRouter } from "next/router";
 import { grey } from "@mui/material/colors";
-import {
-  CardNumberElement,
-  useElements,
-  useStripe,
-} from "@stripe/react-stripe-js";
 import { IsOrder } from "@/data/cart";
 import { OrderContext } from "./orderContext";
-import { useEffect, useState } from "react";
+import useOrderState from "./hooks/useOrderState";
+import usePayment from "./hooks/usePayment";
 
 
 const steps = ["Cart", "Order Validation", "Order Complete"];
 const stepsNext = ["Next", "Order", "Continue Shopping"];
 const stepsBack = ["Back", "Back", "Back Home"];
-
-
-const useOrderState = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const [disableNext, setDisableNext] = useState(true);
-  const [open, setOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
-  const { data } = useCurrentCartQuery();
-  const items = data ? data.items : [];
-  const cartEmpty = items.length === 0;
-
-  useEffect(() => {
-    setDisableNext(activeStep < 2 && cartEmpty);
-  }, [cartEmpty, activeStep]);
-
-  useEffect(() => {
-    if (activeStep === 1 && !isAuthenticated) {
-      setActiveStep(0);
-      setOpen(true);
-    }
-    if (isAuthenticated) {
-      setOpen(false);
-    }
-  }, [isAuthenticated, activeStep]);
-
-  return {
-    activeStep,
-    setActiveStep,
-    disableNext,
-    setDisableNext,
-    open,
-    setOpen,
-  };
-};
-
-const usePayment = (setGlobalErrors) => {
-  const stripe = useStripe();
-  const elements = useElements();
-
-  const setPaymentMethodId = async (form_data) => {
-    if (!stripe || !elements) {
-      setGlobalErrors(["Stripe has not loaded"]);
-      return;
-    }
-
-    const cardElement = elements.getElement(CardNumberElement);
-    if (!cardElement) {
-      setGlobalErrors(["Card Element not found"]);
-      return;
-    }
-
-    const { error: stripeError, paymentMethod } =
-      await stripe.createPaymentMethod({
-        type: "card",
-        card: cardElement,
-      });
-
-    if (stripeError) {
-      setGlobalErrors([stripeError.message]);
-      return;
-    }
-    form_data.payment.payment_method_id = paymentMethod?.id;
-  };
-
-  return setPaymentMethodId;
-};
 
 
 export const CreateOrder = () => {
