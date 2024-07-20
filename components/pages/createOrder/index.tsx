@@ -26,6 +26,46 @@ import {
 } from "@stripe/react-stripe-js";
 import { IsOrder } from "@/data/cart";
 import { OrderContext } from "./orderContext";
+import { useEffect, useState } from "react";
+
+
+const steps = ["Cart", "Order Validation", "Order Complete"];
+const stepsNext = ["Next", "Order", "Continue Shopping"];
+const stepsBack = ["Back", "Back", "Back Home"];
+
+
+const useOrderState = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const [disableNext, setDisableNext] = useState(true);
+  const [open, setOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : [];
+  const cartEmpty = items.length === 0;
+
+  useEffect(() => {
+    setDisableNext(activeStep < 2 && cartEmpty);
+  }, [cartEmpty, activeStep]);
+
+  useEffect(() => {
+    if (activeStep === 1 && !isAuthenticated) {
+      setActiveStep(0);
+      setOpen(true);
+    }
+    if (isAuthenticated) {
+      setOpen(false);
+    }
+  }, [isAuthenticated, activeStep]);
+
+  return {
+    activeStep,
+    setActiveStep,
+    disableNext,
+    setDisableNext,
+    open,
+    setOpen,
+  };
+};
 
 
 export const CreateOrder = () => {
@@ -33,12 +73,8 @@ export const CreateOrder = () => {
   const { data } = useCurrentCartQuery();
   const items = data ? data.items : [];
   let cartEmpty = items.length == 0;
-  let steps = ["Cart", "Order Validation", "Order Complete"];
-  let stepsNext = ["Next", "Order", "Continue Shopping"];
-  let stepsBack = ["Back", "Back", "Back Home"];
+  const { activeStep, setActiveStep, disableNext, setDisableNext, open, setOpen } = useOrderState();
   let { isAuthenticated } = useAuth();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [disableNext, setDisableNext] = React.useState(true);
   React.useEffect(() => {
     if (activeStep < 2 && cartEmpty) {
       setDisableNext(true);
@@ -46,7 +82,6 @@ export const CreateOrder = () => {
       setDisableNext(false);
     }
   }, [cartEmpty, activeStep]);
-  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const form: UseFormReturn<IsOrder>  = useForm<IsOrder>({
