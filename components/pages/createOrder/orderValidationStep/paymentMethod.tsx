@@ -9,7 +9,7 @@ import {  UseFormReturn } from "react-hook-form";
 import { IsOrder } from "@/data/cart";
 
 
-export const PaymentMethod: React.FC<{ form: UseFormReturn<IsOrder> }> = ({ form }) => {
+export const PaymentMethod = () => {
     return (
         <Paper
             elevation={3}
@@ -20,7 +20,7 @@ export const PaymentMethod: React.FC<{ form: UseFormReturn<IsOrder> }> = ({ form
                 </Typography>
             </Box>
             <Box sx={{ padding: "16px 48px 32px" }}>
-                <CheckoutForm form={form} />
+                <CheckoutForm  />
             </Box>
         </Paper>
     );

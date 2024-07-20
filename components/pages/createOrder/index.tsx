@@ -10,7 +10,7 @@ import useAuth from "@/hooks/useAuth";
 import { OrderValidationStep } from "./orderValidationStep";
 import { AuthModal } from "./authModal";
 import { StepHeader } from "./stepHeader";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
 import {
   useCurrentCartQuery,
   useCreateOrderMutation,
@@ -133,51 +133,53 @@ export const CreateOrder = () => {
   }, [isSuccess]);
   return (
     <OrderContext.Provider value={setActiveStep}>
-      <Box sx={{ width: "100%", maxWidth: "1000px", margin: "auto" }}>
-        <AuthModal open={open} onClose={handleClose} />
-        <Card sx={{ padding: "24px", margin: "32px auto", maxWidth: "800px" }}>
-          <Stepper activeStep={activeStep}>
-            {steps.map((label) => {
-              const stepProps: { completed?: boolean } = {};
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-        </Card>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-          <StepHeader title={steps[activeStep]} />
-          {activeStep == 0 && <CartStep />}
-          {activeStep == 1 && (
-            <OrderValidationStep globalErrors={globalErrors} form={form} />
-          )}
-          {activeStep == 2 && <OrderCompleteStep />}
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            pt: 2,
-            justifyContent: "center",
-            gap: 2,
-          }}
-        >
-          <Button
-            color="inherit"
-            sx={{ color: grey[700] }}
-            disabled={activeStep === 0}
-            onClick={handleBack}
+      <FormProvider {...form}>
+        <Box sx={{ width: "100%", maxWidth: "1000px", margin: "auto" }}>
+          <AuthModal open={open} onClose={handleClose} />
+          <Card sx={{ padding: "24px", margin: "32px auto", maxWidth: "800px" }}>
+            <Stepper activeStep={activeStep}>
+              {steps.map((label) => {
+                const stepProps: { completed?: boolean } = {};
+                return (
+                  <Step key={label} {...stepProps}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
+          </Card>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+            <StepHeader title={steps[activeStep]} />
+            {activeStep == 0 && <CartStep />}
+            {activeStep == 1 && (
+                <OrderValidationStep globalErrors={globalErrors} />
+            )}
+            {activeStep == 2 && <OrderCompleteStep />}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              pt: 2,
+              justifyContent: "center",
+              gap: 2,
+            }}
           >
-            {stepsBack[activeStep]}
-          </Button>
-          <Button onClick={handleNext} disabled={disableNext} variant="contained">
-            {stepsNext[activeStep]}
-            {isLoading && <CircularProgress size={24} color="inherit" />}
-          </Button>
+            <Button
+              color="inherit"
+              sx={{ color: grey[700] }}
+              disabled={activeStep === 0}
+              onClick={handleBack}
+            >
+              {stepsBack[activeStep]}
+            </Button>
+            <Button onClick={handleNext} disabled={disableNext} variant="contained">
+              {stepsNext[activeStep]}
+              {isLoading && <CircularProgress size={24} color="inherit" />}
+            </Button>
+          </Box>
         </Box>
-      </Box>
+      </FormProvider>
     </OrderContext.Provider>
   );
 };

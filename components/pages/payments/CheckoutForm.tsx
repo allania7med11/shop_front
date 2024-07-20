@@ -8,13 +8,12 @@ import {
   Divider,
 } from "@mui/material";
 import CreditCardDetail from "@/components/common/creditCardDetail";
-import { UseFormReturn } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import FormRadioGroupField from "@/components/common/Form/formRadioGroupField";
-import { IsOrder } from "@/data/cart";
 import { useCurrentCartQuery } from "@/store/reducer/apis/cartApi";
 
-const CheckoutForm: React.FC<{ form: UseFormReturn<IsOrder> }> = ({ form }) => {
-  const { control, watch } = form;
+const CheckoutForm = () => {
+  const { control, watch } = useFormContext();
   const paymentMethod = watch("payment.payment_method");
   const { data } = useCurrentCartQuery();
   const total_amount = data ? data.total_amount : "";
