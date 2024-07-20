@@ -12,6 +12,7 @@ import useOrderState from "./hooks/useOrderState";
 import useSubmitOrder from "./hooks/useSubmitOrder";
 import useOrderNavigation from "./hooks/useOrderNavigation";
 import OrderNavigationButtons from "./orderNavigationButtons";
+import { OrderStepper } from "./orderStepper";
 
 const steps = ["Cart", "Order Validation", "Order Complete"];
 const stepsNext = ["Next", "Order", "Continue Shopping"];
@@ -46,17 +47,7 @@ export const CreateOrder: React.FC = () => {
       <FormProvider {...form}>
         <Box sx={{ width: "100%", maxWidth: "1000px", margin: "auto" }}>
           <AuthModal open={open} onClose={() => setOpen(false)} />
-          <Card
-            sx={{ padding: "24px", margin: "32px auto", maxWidth: "800px" }}
-          >
-            <Stepper activeStep={activeStep}>
-              {steps.map((label) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </Card>
+          <OrderStepper activeStep={activeStep} steps={steps} />
           <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
             <StepHeader title={steps[activeStep]} />
             {activeStep === 0 && <CartStep />}
