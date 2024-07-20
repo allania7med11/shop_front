@@ -22,6 +22,7 @@ This project uses a `.env` file to configure its environment. You can create a `
 
 - `ENVIRONMENT`: Specifies the current environment (e.g., 'debug', 'dev', 'prod').
 - `PORT`: Defines the port on which the application will listen.
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`: Your Stripe publishable key used for client-side requests.
 
 Make sure to update these values to match your specific environment configuration. You can check `.env.example` for reference.
 
