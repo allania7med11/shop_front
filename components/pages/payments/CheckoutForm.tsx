@@ -5,6 +5,7 @@ import {
   FormControl,
   Typography,
   Box,
+  Divider,
 } from "@mui/material";
 import CreditCardDetail from "@/components/common/creditCardDetail";
 import { UseFormReturn } from "react-hook-form";
@@ -20,7 +21,7 @@ const CheckoutForm: React.FC<{ form: UseFormReturn<IsOrder> }> = ({ form }) => {
 
   return (
     <>
-      <FormControl component="fieldset">
+      <FormControl component="fieldset" sx={{ width: "100%" }}>
         <FormRadioGroupField
           name="payment.payment_method"
           control={control}
@@ -43,6 +44,7 @@ const CheckoutForm: React.FC<{ form: UseFormReturn<IsOrder> }> = ({ form }) => {
           />
         </FormRadioGroupField>
       </FormControl>
+      <Divider sx={{ margin: "10px auto" }} />
       <Typography variant="h6" gutterBottom>
         All Total: ${total_amount}
       </Typography>
