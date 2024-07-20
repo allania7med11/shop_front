@@ -8,7 +8,7 @@ import { ProductInfos } from "@/components/pages/products/productInfos";
 import { ProductImages } from "@/components/pages/products/productImages";
 import { useProductQuery } from "@/store/reducer/apis/productApi";
 import { FetchWrap } from "@/components/common/fetchWrap";
-import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
+import { useCurrentCartQuery } from "@/store/reducer/apis/cartApi";
 import { addItemsToProducts } from "@/utils/products";
 
 export default function Index() {
@@ -17,7 +17,8 @@ export default function Index() {
   const { data: productApi = null, error, isLoading } = useProductQuery(slug, {
     skip: !slug,
   });
-  const { data: items = [] } = useCartItemsQuery();
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : []
   const product = productApi && addItemsToProducts([productApi], items)[0];
   return (
     <Container maxWidth={false} sx={{ maxWidth: "1400px" }}>

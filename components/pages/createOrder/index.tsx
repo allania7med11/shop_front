@@ -1,137 +1,72 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Card from "@mui/material/Card";
+import { Box } from "@mui/material";
+import { useForm, FormProvider, UseFormReturn } from "react-hook-form";
+import { OrderContext } from "./orderContext";
 import { CartStep } from "./cartStep";
-import { Button, CircularProgress } from "@mui/material";
-import useAuth from "@/hooks/useAuth";
 import { OrderValidationStep } from "./orderValidationStep";
+import { OrderCompleteStep } from "./orderCompleteStep";
 import { AuthModal } from "./authModal";
 import { StepHeader } from "./stepHeader";
-import { useForm } from "react-hook-form";
-import {
-  useCartItemsQuery,
-  useCreateAddressMutation,
-} from "@/store/reducer/apis/cartApi";
-import useErrors from "@/hooks/useErrors";
-import { OrderCompleteStep } from "./orderCompleteStep";
-import { useRouter } from "next/router";
-import { grey } from "@mui/material/colors";
+import { IsOrder } from "@/data/cart";
+import useOrderState from "./hooks/useOrderState";
+import useSubmitOrder from "./hooks/useSubmitOrder";
+import useOrderNavigation from "./hooks/useOrderNavigation";
+import OrderNavigationButtons from "./orderNavigationButtons";
+import { OrderStepper } from "./orderStepper";
 
-export const CreateOrder = () => {
-  const router = useRouter();
-  const { data: items = [] } = useCartItemsQuery();
-  let cartEmpty = items.length == 0;
-  let steps = ["Cart", "Order Validation", "Order Complete"];
-  let stepsNext = ["Next", "Order", "Continue Shopping"];
-  let stepsBack = ["Back", "Back", "Back Home"];
-  let { isAuthenticated } = useAuth();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [disableNext, setDisableNext] = React.useState(true);
-  React.useEffect(() => {
-    if (activeStep < 2 && cartEmpty) {
-      setDisableNext(true);
-    } else {
-      setDisableNext(false);
-    }
-  }, [cartEmpty, activeStep]);
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  // Address Form
-  const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
-  const [createAddress, { isLoading, error, isSuccess }] =
-    useCreateAddressMutation();
-  const { globalErrors, setGlobalErrors } = useErrors(
-    error,
-    setError,
-    getValues
+const steps = ["Cart", "Order Validation", "Order Complete"];
+const stepsNext = ["Next", "Order", "Continue Shopping"];
+const stepsBack = ["Back", "Back", "Back Home"];
+
+export const CreateOrder: React.FC = () => {
+  const {
+    activeStep,
+    setActiveStep,
+    disableNext,
+    setDisableNext,
+    open,
+    setOpen,
+  } = useOrderState();
+  const form: UseFormReturn<IsOrder> = useForm<IsOrder>({
+    defaultValues: { payment: { payment_method: "stripe" } },
+  });
+  const { onSubmit, isLoading, isSuccess, globalErrors } = useSubmitOrder(form);
+  const { handleBack, handleNext } = useOrderNavigation(
+    activeStep,
+    setActiveStep,
+    setDisableNext,
+    onSubmit,
+    isSuccess,
+    form,
+    () => setOpen(true),
+    () => setOpen(false)
   );
-  const onSubmit = async (form_data) => {
-    clearErrors();
-    setGlobalErrors([]);
-    await createAddress(form_data);
-  };
-  // End Address Form
-  React.useEffect(() => {
-    if (activeStep == 1 && !isAuthenticated) {
-      setActiveStep(0);
-      handleOpen();
-    }
-    if (isAuthenticated) {
-      handleClose();
-    }
-  }, [isAuthenticated, activeStep]);
-  const handleBack = () => {
-    if (activeStep == 2) {
-      router.push("/");
-    } else {
-      setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    }
-  };
-  const handleNext = async () => {
-    if (activeStep == 1) {
-      setDisableNext(true);
-      await handleSubmit(onSubmit)();
-      setDisableNext(false);
-    } else if (activeStep == 2) {
-      router.back();
-    } else {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    }
-  };
-  React.useEffect(() => {
-    if (isSuccess) {
-      setActiveStep(2);
-    }
-  }, [isSuccess]);
+
   return (
-    <Box sx={{ width: "100%", maxWidth: "1000px", margin: "auto" }}>
-      <AuthModal open={open} onClose={handleClose} />
-      <Card sx={{ padding: "24px", margin: "32px auto", maxWidth: "800px" }}>
-        <Stepper activeStep={activeStep}>
-          {steps.map((label) => {
-            const stepProps: { completed?: boolean } = {};
-            return (
-              <Step key={label} {...stepProps}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
-      </Card>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-        <StepHeader title={steps[activeStep]} />
-        {activeStep == 0 && <CartStep />}
-        {activeStep == 1 && (
-          <OrderValidationStep globalErrors={globalErrors} control={control} />
-        )}
-        {activeStep == 2 && <OrderCompleteStep />}
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          pt: 2,
-          justifyContent: "center",
-          gap: 2,
-        }}
-      >
-        <Button
-          color="inherit"
-          sx={{ color: grey[700] }}
-          disabled={activeStep === 0}
-          onClick={handleBack}
-        >
-          {stepsBack[activeStep]}
-        </Button>
-        <Button onClick={handleNext} disabled={disableNext} variant="contained">
-          {stepsNext[activeStep]}
-          {isLoading && <CircularProgress size={24} color="inherit" />}
-        </Button>
-      </Box>
-    </Box>
+    <OrderContext.Provider value={setActiveStep}>
+      <FormProvider {...form}>
+        <Box sx={{ width: "100%", maxWidth: "1000px", margin: "auto" }}>
+          <AuthModal open={open} onClose={() => setOpen(false)} />
+          <OrderStepper activeStep={activeStep} steps={steps} />
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
+            <StepHeader title={steps[activeStep]} />
+            {activeStep === 0 && <CartStep />}
+            {activeStep === 1 && (
+              <OrderValidationStep globalErrors={globalErrors} />
+            )}
+            {activeStep === 2 && <OrderCompleteStep />}
+          </Box>
+          <OrderNavigationButtons
+            activeStep={activeStep}
+            stepsBack={stepsBack}
+            stepsNext={stepsNext}
+            disableNext={disableNext}
+            handleBack={handleBack}
+            handleNext={handleNext}
+            isLoading={isLoading}
+          />
+        </Box>
+      </FormProvider>
+    </OrderContext.Provider>
   );
 };

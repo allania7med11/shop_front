@@ -7,10 +7,11 @@ import { AppBar } from "@/components/layouts/appBar.styled";
 import { Link } from "@/components/common/Link";
 import { AvatarComponent } from "@/components/common/avatar";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
+import { useCurrentCartQuery } from "@/store/reducer/apis/cartApi";
 
 export default function NavBar({ open, handleDrawerOpen }) {
-  const { data: items = [] } = useCartItemsQuery();
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : []
 
   return (
     <AppBar
@@ -38,7 +39,7 @@ export default function NavBar({ open, handleDrawerOpen }) {
           </Button>
         </Link>
         <Box sx={{ flexGrow: 1 }}></Box>
-        <AvatarComponent /> 
+        <AvatarComponent />
         <Link href="/cart">
           <IconButton>
             <Badge badgeContent={items.length} color="error">

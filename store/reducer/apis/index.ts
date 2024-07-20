@@ -1,8 +1,7 @@
 import Cookies from "universal-cookie";
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import axios from "axios";
-export const baseUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api`
-
+import { baseUrl } from "@/utils/config";
 
 
 const cookies = new Cookies();
