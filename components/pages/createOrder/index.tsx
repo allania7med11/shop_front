@@ -19,12 +19,16 @@ import useErrors from "@/hooks/useErrors";
 import { OrderCompleteStep } from "./orderCompleteStep";
 import { useRouter } from "next/router";
 import { grey } from "@mui/material/colors";
-import { CardNumberElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import {
+  CardNumberElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
 
 export const CreateOrder = () => {
   const router = useRouter();
   const { data } = useCurrentCartQuery();
-  const items = data ? data.items : []
+  const items = data ? data.items : [];
   let cartEmpty = items.length == 0;
   let steps = ["Cart", "Order Validation", "Order Complete"];
   let stepsNext = ["Next", "Order", "Continue Shopping"];
@@ -42,7 +46,13 @@ export const CreateOrder = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const form = useForm();
+  const form = useForm({
+    defaultValues: {
+      payment: {
+        payment_method: "stripe",
+      },
+    },
+  });
   const { handleSubmit, setError, clearErrors, getValues } = form;
   const [createOrder, { isLoading, error, isSuccess }] =
     useCreateOrderMutation();
@@ -54,33 +64,36 @@ export const CreateOrder = () => {
   const onSubmit = async (form_data) => {
     clearErrors();
     setGlobalErrors([]);
-    await setPaymentMethodId(form_data)
+    if (form_data.payment.payment_method === "stripe") {
+      await setPaymentMethodId(form_data);
+    }
     await createOrder(form_data);
   };
   const stripe = useStripe();
   const elements = useElements();
   const setPaymentMethodId = async (form_data) => {
     if (!stripe || !elements) {
-      setGlobalErrors(['Stripe has not loaded']);
+      setGlobalErrors(["Stripe has not loaded"]);
       return;
     }
 
     const cardElement = elements.getElement(CardNumberElement);
     if (!cardElement) {
-      setGlobalErrors(['Card Element not found']);
+      setGlobalErrors(["Card Element not found"]);
       return;
     }
 
-    const { error: stripeError, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
-    });
+    const { error: stripeError, paymentMethod } =
+      await stripe.createPaymentMethod({
+        type: "card",
+        card: cardElement,
+      });
 
     if (stripeError) {
       setGlobalErrors([stripeError.message]);
       return;
     }
-    form_data.payment.payment_method_id = paymentMethod?.id
+    form_data.payment.payment_method_id = paymentMethod?.id;
   };
   // End Address Form
   React.useEffect(() => {
