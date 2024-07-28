@@ -8,7 +8,7 @@ import { FC } from "react";
 import { IsCategory } from "@/data/categories";
 import { Link } from "@/components/common/Link";
 import { SxProps } from "@mui/material";
-import { useCartItemsQuery } from "@/store/reducer/apis/cartApi";
+import { useCurrentCartQuery } from "@/store/reducer/apis/cartApi";
 import { addItemsToProducts } from "@/utils/products";
 
 const sxLink: SxProps = {
@@ -28,7 +28,8 @@ export const Category: FC<{ category: IsCategory }> = ({ category }) => {
   if (productsApi.length == 0) {
     return <></>
   }
-  const { data: items = [] } = useCartItemsQuery();
+  const { data } = useCurrentCartQuery();
+  const items = data ? data.items : []
   const products = addItemsToProducts(productsApi, items);
   return (
     <Paper elevation={3}>
