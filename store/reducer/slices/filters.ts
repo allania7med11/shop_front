@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface filtersState {
   categorySlug: string;
-  search: string[];
+  search: string;
   current_price_min: string;
   current_price_max: string;
   discount_min: string;
@@ -13,7 +13,7 @@ interface filtersState {
 
 const initialState = {
   categorySlug: '',
-  search: [''],
+  search: '',
   current_price_min: '',
   current_price_max: '',
   discount_min: '',
@@ -31,7 +31,7 @@ const filtersSlice = createSlice({
       }
       state.categorySlug = action.payload;
     },
-    updateSearch: (state, action: PayloadAction<string[]>) => {
+    updateSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
     },
     updateCurrentPriceMin: (state, action: PayloadAction<string>) => {
