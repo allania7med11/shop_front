@@ -28,15 +28,15 @@ const renderInput = params => {
 
 export const Search: FC<{
   options: string[];
-  value: string[];
-  setValue: (value: string[]) => void;
+  value: string;
+  setValue: (value: string) => void;
 }> = ({ options, value, setValue }) => {
   return (
     <div>
       <Autocomplete
-        value={value}
-        onChange={(_: SyntheticEvent<Element, Event>, newValue: string[]) => {
-          setValue(newValue);
+        value={value} // Now the value is a single string, not an array
+        onChange={(_: SyntheticEvent<Element, Event>, newValue: string | null) => {
+          setValue(newValue || ''); // Handle the case where newValue might be null
         }}
         PopperComponent={CustomPopper}
         id="free-solo-demo"
