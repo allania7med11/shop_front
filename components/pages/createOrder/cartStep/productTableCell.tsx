@@ -1,26 +1,25 @@
-import * as React from "react";
-import Typography from "@mui/material/Typography";
-import Tooltip from "@mui/material/Tooltip";
-import { Box, Button } from "@mui/material";
-import { Link } from "@/components/common/Link";
-import { useDeleteCartItemMutation } from "@/store/reducer/apis/cartApi";
-import { IsCartItemRead } from "@/data/cart";
+import * as React from 'react';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import { Box, Button } from '@mui/material';
+import { Link } from '@/components/common/Link';
+import { useDeleteCartItemMutation } from '@/store/reducer/apis/cartApi';
+import { IsCartItemRead } from '@/data/cart';
 
-export const ProductTableCell: React.FC<{ item: IsCartItemRead }> = ({
-  item,
-}) => {
+export const ProductTableCell: React.FC<{ item: IsCartItemRead }> = ({ item }) => {
   const { slug, name, files } = item.product;
-  const imageUrl = files.length > 0 ? files[0].url : "";
-  const [deleteItem, {}] = useDeleteCartItemMutation();
+  const imageUrl = files.length > 0 ? files[0].url : '';
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [deleteItem, _] = useDeleteCartItemMutation();
   return (
-    <Box sx={{ display: "flex", px: 1, alignItems: "start", flexWrap: "wrap", gap: "16px" }}>
+    <Box sx={{ display: 'flex', px: 1, alignItems: 'start', flexWrap: 'wrap', gap: '16px' }}>
       <Link href={`/products?slug=${slug}`}>
         <Box
           component="img"
           height="80px"
           width="80px"
           src={imageUrl}
-          sx={{ objectFit: "contain" }}
+          sx={{ objectFit: 'contain' }}
         ></Box>
       </Link>
       <Box>
@@ -30,7 +29,7 @@ export const ProductTableCell: React.FC<{ item: IsCartItemRead }> = ({
             gutterBottom
             variant="h6"
             component="div"
-            sx={{ mb: 0, whiteSpace: "wrap" }}
+            sx={{ mb: 0, whiteSpace: 'wrap' }}
           >
             {name}
           </Typography>
@@ -38,7 +37,7 @@ export const ProductTableCell: React.FC<{ item: IsCartItemRead }> = ({
         <Button
           variant="text"
           color="error"
-          sx={{ textTransform: "none" }}
+          sx={{ textTransform: 'none' }}
           onClick={() => deleteItem(item.id)}
         >
           Remove

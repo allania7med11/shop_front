@@ -1,10 +1,10 @@
-import Paper from "@mui/material/Paper";
-import { FC } from "react";
-import { SxProps } from "@mui/material";
-import React from "react";
-import { Products } from "./products";
-import { CategoryHeader } from "./categoryHeader";
-import { blueGrey } from "@mui/material/colors";
+import Paper from '@mui/material/Paper';
+import { FC } from 'react';
+import { SxProps } from '@mui/material';
+import React from 'react';
+import { Products } from './products';
+import { CategoryHeader } from './categoryHeader';
+import { blueGrey } from '@mui/material/colors';
 
 export const Category: FC<{
   sx: SxProps;

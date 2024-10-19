@@ -1,46 +1,46 @@
-import { IsAddress, IsCartItem, IsCart, IsOrder } from "@/data/cart";
-import { api } from ".";
+import { IsAddress, IsCartItem, IsCart, IsOrder } from '@/data/cart';
+import { api } from '.';
 
 const cartApi = api.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     cartItems: builder.query<IsCartItem[], void>({
-      query: () => "/cart_items/",
-      providesTags: ["Cart"],
+      query: () => '/cart_items/',
+      providesTags: ['Cart'],
     }),
     createCartItem: builder.mutation<IsCartItem, Partial<IsCartItem>>({
-      query: (newCartItem) => ({
-        url: "/cart_items/",
-        method: "POST",
+      query: newCartItem => ({
+        url: '/cart_items/',
+        method: 'POST',
         body: newCartItem,
       }),
-      invalidatesTags: ["Cart"],
+      invalidatesTags: ['Cart'],
     }),
     deleteCartItem: builder.mutation<void, number>({
-      query: (id) => ({
+      query: id => ({
         url: `/cart_items/${id}/`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Cart"],
+      invalidatesTags: ['Cart'],
     }),
     createAddress: builder.mutation<IsAddress, Partial<IsAddress>>({
-      query: (newAddress) => ({
-        url: "/addresses/",
-        method: "POST",
+      query: newAddress => ({
+        url: '/addresses/',
+        method: 'POST',
         body: newAddress,
       }),
-      invalidatesTags: ["Cart"],
+      invalidatesTags: ['Cart'],
     }),
     currentCart: builder.query<IsCart, void>({
-      query: () => "/cart/current/",
-      providesTags: ["Cart"],
+      query: () => '/cart/current/',
+      providesTags: ['Cart'],
     }),
     createOrder: builder.mutation<IsOrder, Partial<IsOrder>>({
-      query: (orderData) => ({
-        url: "/cart/",
-        method: "POST",
+      query: orderData => ({
+        url: '/cart/',
+        method: 'POST',
         body: orderData,
       }),
-      invalidatesTags: ["Cart"],
+      invalidatesTags: ['Cart'],
     }),
   }),
 });
@@ -49,6 +49,6 @@ export const {
   useCreateCartItemMutation,
   useDeleteCartItemMutation,
   useCreateAddressMutation,
-  useCurrentCartQuery, 
+  useCurrentCartQuery,
   useCreateOrderMutation,
 } = cartApi;

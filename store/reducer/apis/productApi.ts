@@ -1,16 +1,16 @@
-import { IsCategory, IsProduct, IsProductFilters } from "@/data/categories";
-import { api } from ".";
+import { IsCategory, IsProduct, IsProductFilters } from '@/data/categories';
+import { api } from '.';
 
 const productApi = api.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     categories: builder.query<IsCategory[], void>({
-      query: () => "/categories/",
+      query: () => '/categories/',
     }),
     category: builder.query<IsCategory, string | string[]>({
       query: (slug: string) => `/categories/${slug}/`,
     }),
     products: builder.query<IsProduct[], IsProductFilters>({
-      query: (filters) => ({
+      query: filters => ({
         url: `/products/`,
         params: filters,
       }),
@@ -20,9 +20,5 @@ const productApi = api.injectEndpoints({
     }),
   }),
 });
-export const {
-  useCategoriesQuery,
-  useCategoryQuery,
-  useProductsQuery,
-  useProductQuery,
-} = productApi;
+export const { useCategoriesQuery, useCategoryQuery, useProductsQuery, useProductQuery } =
+  productApi;

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   AuBankAccountElement,
   CardCvcElement,
@@ -6,10 +6,10 @@ import {
   CardNumberElement,
   FpxBankElement,
   IbanElement,
-  IdealBankElement
-} from "@stripe/react-stripe-js";
-import TextField, { TextFieldProps } from "@mui/material/TextField";
-import StripeInput from "./stripeInput";
+  IdealBankElement,
+} from '@stripe/react-stripe-js';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
+import StripeInput from './stripeInput';
 
 type StripeElement =
   | typeof AuBankAccountElement
@@ -21,16 +21,14 @@ type StripeElement =
   | typeof IdealBankElement;
 
 interface StripeTextFieldProps<T extends StripeElement>
-  extends Omit<TextFieldProps, "onChange" | "inputComponent" | "inputProps"> {
+  extends Omit<TextFieldProps, 'onChange' | 'inputComponent' | 'inputProps'> {
   inputProps?: React.ComponentProps<T>;
   labelErrorMessage?: string;
-  onChange?: React.ComponentProps<T>["onChange"];
+  onChange?: React.ComponentProps<T>['onChange'];
   stripeElement?: T;
 }
 
-export const StripeTextField = <T extends StripeElement>(
-  props: StripeTextFieldProps<T>
-) => {
+export const StripeTextField = <T extends StripeElement>(props: StripeTextFieldProps<T>) => {
   const {
     helperText,
     InputLabelProps,
@@ -47,7 +45,7 @@ export const StripeTextField = <T extends StripeElement>(
       fullWidth
       InputLabelProps={{
         ...InputLabelProps,
-        shrink: true
+        shrink: true,
       }}
       error={error}
       InputProps={{
@@ -55,48 +53,27 @@ export const StripeTextField = <T extends StripeElement>(
         inputProps: {
           ...inputProps,
           ...InputProps.inputProps,
-          component: stripeElement
+          component: stripeElement,
         },
-        inputComponent: StripeInput
+        inputComponent: StripeInput,
       }}
       helperText={error ? labelErrorMessage : helperText}
-      {...(other as any)}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      {...(other as any)} // Ignore the `any` usage here
     />
   );
 };
 
-export function StripeTextFieldNumber(
-  props: StripeTextFieldProps<typeof CardNumberElement>
-) {
+export function StripeTextFieldNumber(props: StripeTextFieldProps<typeof CardNumberElement>) {
   return (
-    <StripeTextField
-      label="Credit Card Number"
-      stripeElement={CardNumberElement}
-      {...props}
-    />
+    <StripeTextField label="Credit Card Number" stripeElement={CardNumberElement} {...props} />
   );
 }
 
-export function StripeTextFieldExpiry(
-  props: StripeTextFieldProps<typeof CardExpiryElement>
-) {
-  return (
-    <StripeTextField
-      label="Expires"
-      stripeElement={CardExpiryElement}
-      {...props}
-    />
-  );
+export function StripeTextFieldExpiry(props: StripeTextFieldProps<typeof CardExpiryElement>) {
+  return <StripeTextField label="Expires" stripeElement={CardExpiryElement} {...props} />;
 }
 
-export function StripeTextFieldCVC(
-  props: StripeTextFieldProps<typeof CardCvcElement>
-) {
-  return (
-    <StripeTextField
-      label="CVC Code"
-      stripeElement={CardCvcElement}
-      {...props}
-    />
-  );
+export function StripeTextFieldCVC(props: StripeTextFieldProps<typeof CardCvcElement>) {
+  return <StripeTextField label="CVC Code" stripeElement={CardCvcElement} {...props} />;
 }

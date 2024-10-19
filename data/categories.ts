@@ -1,4 +1,4 @@
-import { IsCartItem } from "./cart";
+import { IsCartItem } from './cart';
 
 export interface IsFile {
   url: string;
@@ -9,7 +9,6 @@ export interface IsDiscount {
   percent: string;
   active: boolean;
 }
-
 
 export interface IsCategoryNoProducts {
   id: number;
@@ -28,10 +27,10 @@ export interface IsProduct {
   files: IsFile[];
   discount: IsDiscount;
   description_html: string;
-  cart_item?: IsCartItem
+  cart_item?: IsCartItem;
 }
 
-export type IsProductOrder = "current_price" | "-current_price" | "name" | "-name"| "";
+export type IsProductOrder = 'current_price' | '-current_price' | 'name' | '-name' | '';
 
 export interface IsProductFilters {
   category?: string;

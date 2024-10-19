@@ -1,6 +1,6 @@
-import React from "react";
-import { Box, Button, CircularProgress } from "@mui/material";
-import { grey } from "@mui/material/colors";
+import React from 'react';
+import { Box, Button, CircularProgress } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 interface OrderNavigationButtonsProps {
   activeStep: number;
@@ -24,10 +24,10 @@ const OrderNavigationButtons: React.FC<OrderNavigationButtonsProps> = ({
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "row",
+        display: 'flex',
+        flexDirection: 'row',
         pt: 2,
-        justifyContent: "center",
+        justifyContent: 'center',
         gap: 2,
       }}
     >

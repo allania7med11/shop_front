@@ -10,26 +10,27 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { CategoriesList } from '@/components/layouts/categoriesList';
 import { DrawerHeader } from '@/components/layouts/drawer.styled';
-import Logo from "@/components/layouts/logo"
-import { drawerWidth } from "@/constants/drawerWidth"
-
+import Logo from '@/components/layouts/logo';
+import { drawerWidth } from '@/constants/drawerWidth';
 
 export default function MiniDrawer({ open, handleDrawerClose }) {
   const theme = useTheme();
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <Drawer sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
+      <Drawer
+        sx={{
           width: drawerWidth,
-          boxSizing: 'border-box',
-        },
-      }}
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
         anchor="left"
         onClose={handleDrawerClose}
-        open={open}>
+        open={open}
+      >
         <DrawerHeader>
           <Button variant="text">
             <Logo />

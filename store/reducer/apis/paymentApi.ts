@@ -1,17 +1,15 @@
-import { IsPaymentInfo } from "@/data/payment";
-import { api } from ".";
+import { IsPaymentInfo } from '@/data/payment';
+import { api } from '.';
 
 const cartApi = api.injectEndpoints({
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     saveStripeInfo: builder.mutation<IsPaymentInfo, Partial<IsPaymentInfo>>({
-      query: (newAddress) => ({
-        url: "/payments/save-stripe-info/",
-        method: "POST",
+      query: newAddress => ({
+        url: '/payments/save-stripe-info/',
+        method: 'POST',
         body: newAddress,
       }),
     }),
   }),
 });
-export const {
-  useSaveStripeInfoMutation
-} = cartApi;
+export const { useSaveStripeInfoMutation } = cartApi;

@@ -2,11 +2,7 @@
   "extends": "./tsconfig.extend.json",
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -27,8 +23,6 @@
     "hooks/api/index.ts",
     "pages/index.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ],
-  "sourceMap": true,
+  "exclude": ["node_modules"],
+  "sourceMap": true
 }

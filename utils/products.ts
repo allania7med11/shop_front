@@ -1,14 +1,10 @@
-import { IsCartItem, IsCartItemRead } from "@/data/cart";
-import { IsProduct } from "@/data/categories";
+import { IsCartItemRead } from '@/data/cart';
+import { IsProduct } from '@/data/categories';
 
 function getValue(obj, key, dflt) {
-  return obj.hasOwnProperty(key) ? obj[key] : dflt;
+  return Object.prototype.hasOwnProperty.call(obj, key) ? obj[key] : dflt;
 }
-
-export const addItemsToProducts = (
-  products: IsProduct[],
-  items: IsCartItemRead[]
-) : IsProduct[] => {
+export const addItemsToProducts = (products: IsProduct[], items: IsCartItemRead[]): IsProduct[] => {
   const mapProductItem = items.reduce((acc, item) => {
     acc[item.product.id] = {
       id: item.id,
@@ -17,7 +13,7 @@ export const addItemsToProducts = (
     };
     return acc;
   }, {});
-  return products.map((product) => ({
+  return products.map(product => ({
     ...product,
     cart_item: getValue(mapProductItem, product.id, {
       id: 0,

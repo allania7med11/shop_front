@@ -1,8 +1,8 @@
-import { FC, ReactNode } from "react";
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { Loading } from "./loading";
-import { Warning } from "./warning";
+import { FC, ReactNode } from 'react';
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { Loading } from './loading';
+import { Warning } from './warning';
 
 export const FetchWrap: FC<{
   data: unknown;
