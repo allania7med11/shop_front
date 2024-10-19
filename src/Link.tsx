@@ -44,7 +44,7 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
         <Anchor ref={ref} {...other} />
       </NextLink>
     );
-  },
+  }
 );
 
 export type LinkProps = {
@@ -70,7 +70,6 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
     noLinkStyle,
     prefetch,
     replace,
-    role, // Link don't have roles.
     scroll,
     shallow,
     ...other

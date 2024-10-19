@@ -1,8 +1,8 @@
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import { blueGrey } from "@mui/material/colors";
-import pluralize from "pluralize";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { blueGrey } from '@mui/material/colors';
+import pluralize from 'pluralize';
 import {
   createTheme,
   FormControl,
@@ -12,29 +12,29 @@ import {
   SelectChangeEvent,
   SxProps,
   ThemeProvider,
-} from "@mui/material";
-import React from "react";
-import { useRouter } from "next/router";
-import { useCategoryQuery } from "@/store/reducer/apis/productApi";
-import { useDispatch, useSelector } from "react-redux";
-import { updateOrdering } from "@/store/reducer/slices/filters";
-import { IsProductOrder } from "@/data/categories";
-import { RootState } from "@/store/reducer";
+} from '@mui/material';
+import React from 'react';
+import { useRouter } from 'next/router';
+import { useCategoryQuery } from '@/store/reducer/apis/productApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateOrdering } from '@/store/reducer/slices/filters';
+import { IsProductOrder } from '@/data/categories';
+import { RootState } from '@/store/reducer';
 
 const darkTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: 'dark',
   },
 });
 
 const sxToolbar: SxProps = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  flexWrap: "wrap",
-  gap: "12px 6px",
-  py: "12px",
-  minHeight: "64px",
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  flexWrap: 'wrap',
+  gap: '12px 6px',
+  py: '12px',
+  minHeight: '64px',
 };
 
 export const CategoryHeader = () => {
@@ -45,10 +45,10 @@ export const CategoryHeader = () => {
   });
   const products = data && data.products;
   const { order } = useSelector((state: RootState) => ({
-    order: state.filters.ordering || "",
+    order: state.filters.ordering || '',
   }));
   const dispatch = useDispatch();
-  const setOrder = (value) => dispatch(updateOrdering(value));
+  const setOrder = value => dispatch(updateOrdering(value));
   const handleChange = (event: SelectChangeEvent) => {
     setOrder(event.target.value as IsProductOrder);
   };
@@ -59,7 +59,7 @@ export const CategoryHeader = () => {
           <Typography variant="h6" component="div">
             {data && data.name}
           </Typography>
-          <FormControl sx={{ minWidth: "180px" }} size="small">
+          <FormControl sx={{ minWidth: '180px' }} size="small">
             <InputLabel id="order-select-label">Order by</InputLabel>
             <Select
               labelId="order-select-label"
@@ -76,8 +76,7 @@ export const CategoryHeader = () => {
             </Select>
           </FormControl>
           <Typography variant="subtitle1" component="div">
-            {products &&
-              `${products.length} ${pluralize("Result", products.length)}`}
+            {products && `${products.length} ${pluralize('Result', products.length)}`}
           </Typography>
         </Toolbar>
       </AppBar>

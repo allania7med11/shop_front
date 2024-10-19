@@ -1,17 +1,21 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import { StripeTextFieldCVC, StripeTextFieldExpiry, StripeTextFieldNumber } from './Form/commonTextFields';
+import {
+  StripeTextFieldCVC,
+  StripeTextFieldExpiry,
+  StripeTextFieldNumber,
+} from './Form/commonTextFields';
 
 const CreditCardDetail = () => {
   const [state, setState] = React.useState({
     cardNumberError: null,
     expiredError: null,
-    cvcError: null
+    cvcError: null,
   });
 
-  const onElementChange = (errorField) => (event) => {
+  const onElementChange = errorField => event => {
     const { error } = event;
-    setState((prevState) => ({
+    setState(prevState => ({
       ...prevState,
       [errorField]: error ? error.message : null,
     }));

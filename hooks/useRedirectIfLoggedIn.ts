@@ -3,14 +3,14 @@ import { useRouter } from 'next/router';
 import useAuth from './useAuth';
 
 const useRedirectIfLoggedIn = () => {
-    const router = useRouter();
-    let { isAuthenticated } = useAuth()
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            router.push('/');
-        }
-    }, [isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated]);
 };
 
 export default useRedirectIfLoggedIn;

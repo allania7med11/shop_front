@@ -1,31 +1,30 @@
 export interface IsUserProfile {
-    first_name: string;
-    last_name: string;
-    email: string;
+  first_name: string;
+  last_name: string;
+  email: string;
 }
 
 export interface LoginCredentials {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 }
 
 export interface RegisterCredentials {
-    username: string;
-    email: string;
-    password1: string;
-    password2: string;
+  username: string;
+  email: string;
+  password1: string;
+  password2: string;
 }
 
-
 export interface IsUser {
-    email: string;
-    first_name: string;
-    last_name: string;
+  email: string;
+  first_name: string;
+  last_name: string;
 }
 
 export interface ConfirmResetPasswordCredentials {
-    uid: string;
-    token: string;
-    new_password1: string;
-    new_password2: string;
+  uid: string;
+  token: string;
+  new_password1: string;
+  new_password2: string;
 }

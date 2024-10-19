@@ -1,44 +1,37 @@
-import * as React from "react";
-import { FC } from "react";
-import { Box, Paper, SxProps, Typography } from "@mui/material";
-import { IsProduct } from "@/data/categories";
-import { ProductPrice } from "@/components/common/productPrice";
-import { HtmlRender } from "@/components/common/htmlRender";
-import { grey } from "@mui/material/colors";
-import { ProductQuantity } from "@/components/common/productQuantity";
+import * as React from 'react';
+import { FC } from 'react';
+import { Box, Paper, SxProps, Typography } from '@mui/material';
+import { IsProduct } from '@/data/categories';
+import { ProductPrice } from '@/components/common/productPrice';
+import { HtmlRender } from '@/components/common/htmlRender';
+import { grey } from '@mui/material/colors';
+import { ProductQuantity } from '@/components/common/productQuantity';
 
 const sxPaper: SxProps = {
-  p: "24px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "16px",
-  height: "100%",
+  p: '24px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '16px',
+  height: '100%',
 };
 
 export const ProductInfos: FC<{
   product: IsProduct;
 }> = ({ product }) => {
-  const {
-    name,
-    price,
-    price_currency,
-    discount,
-    current_price,
-    description_html,
-    cart_item
-  } = product;
+  const { name, price, price_currency, discount, current_price, description_html, cart_item } =
+    product;
 
   return (
     <Paper elevation={3} sx={sxPaper}>
       <Typography gutterBottom variant="h5" component="div">
         {name}
       </Typography>
-      <Box sx={{display:"flex", flexDirection: "column", gap: "8px"}}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         <ProductPrice
           priceInfos={{ price, price_currency, discount, current_price }}
           size="medium"
         />
-        <ProductQuantity cart_item={cart_item}  />
+        <ProductQuantity cart_item={cart_item} />
       </Box>
       <Box>
         {description_html && (
@@ -50,7 +43,7 @@ export const ProductInfos: FC<{
           gutterBottom
           variant="body1"
           component="div"
-          sx={{ color: grey[800], wordBreak: "break-all" }}
+          sx={{ color: grey[800], wordBreak: 'break-all' }}
         >
           <HtmlRender rawHTML={description_html} />
         </Typography>

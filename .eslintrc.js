@@ -16,4 +16,9 @@ module.exports = {
   rules: {
     // Place your ESLint rules here
   },
+  settings: {
+    react: {
+      version: 'detect', // Automatically detect the React version
+    },
+  },
 };

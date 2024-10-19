@@ -1,18 +1,15 @@
-import { useDebounce } from "use-debounce";
-import { Box, Button, OutlinedInput, SxProps, Theme } from "@mui/material";
-import {
-  useCreateCartItemMutation,
-  useDeleteCartItemMutation,
-} from "@/store/reducer/apis/cartApi";
-import { useEffect, useState } from "react";
-import { FetchWrap } from "@/components/common/fetchWrap";
-import { IsCartItem } from "@/data/cart";
+import { useDebounce } from 'use-debounce';
+import { Box, Button, OutlinedInput, SxProps, Theme } from '@mui/material';
+import { useCreateCartItemMutation, useDeleteCartItemMutation } from '@/store/reducer/apis/cartApi';
+import { useEffect, useState } from 'react';
+import { FetchWrap } from '@/components/common/fetchWrap';
+import { IsCartItem } from '@/data/cart';
 
 const PositifIntegerInput: React.FC<{
   numberInput: string;
   setNumberInput: (value: string) => void;
 }> = ({ numberInput, setNumberInput }) => {
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     const inputValue = event.target.value;
 
     // Allow an empty string or positive integers
@@ -26,17 +23,17 @@ const PositifIntegerInput: React.FC<{
       value={numberInput}
       onChange={handleInputChange}
       margin="dense"
-      sx={{ height: "38px" }}
+      sx={{ height: '38px' }}
     />
   );
 };
 
 // Define increment and decrement styles
 const sxButton: SxProps = {
-  width: "38px",
-  minWidth: "38px",
-  height: "38px",
-  fontSize: "24px",
+  width: '38px',
+  minWidth: '38px',
+  height: '38px',
+  fontSize: '24px',
 };
 
 export const ProductQuantity: React.FC<{
@@ -44,9 +41,8 @@ export const ProductQuantity: React.FC<{
   sx?: SxProps<Theme>;
 }> = ({ cart_item, sx }) => {
   const item = cart_item;
-  const quantity =  item.quantity;
-  const [addItem, { error: errorCreate, isLoading: isLoadingCreate }] =
-    useCreateCartItemMutation();
+  const quantity = item.quantity;
+  const [addItem, { error: errorCreate, isLoading: isLoadingCreate }] = useCreateCartItemMutation();
   const [deleteItem, { error: errorDelete, isLoading: isLoadingDelete }] =
     useDeleteCartItemMutation();
   const isLoading = isLoadingCreate && isLoadingDelete;
@@ -54,13 +50,13 @@ export const ProductQuantity: React.FC<{
   const [numberInput, setNumberInput] = useState(String(quantity));
   const number = parseInt(numberInput);
   const [debouncedNumber] = useDebounce(number, 500);
-  const displayAddCarte = numberInput === "0";
+  const displayAddCarte = numberInput === '0';
   const [changedNumberFromHere, setChangedNumberFromHere] = useState(true);
-  const updateNumberFromHere = (value) => {
+  const updateNumberFromHere = value => {
     setNumberInput(value);
     setChangedNumberFromHere(true);
   };
-  const updateNumberFromOutside = (value) => {
+  const updateNumberFromOutside = value => {
     setNumberInput(value);
     setChangedNumberFromHere(false);
   };
@@ -75,7 +71,7 @@ export const ProductQuantity: React.FC<{
           await addItem(data).unwrap();
         } catch (error) {
           // Handle error
-          console.error("Error creating cart item:", error);
+          console.error('Error creating cart item:', error);
         }
       }
       if (item.id && value === 0) {
@@ -83,7 +79,7 @@ export const ProductQuantity: React.FC<{
           await deleteItem(item.id).unwrap();
         } catch (error) {
           // Handle error
-          console.error("Error deleting cart item:", error);
+          console.error('Error deleting cart item:', error);
         }
       }
     }
@@ -101,18 +97,18 @@ export const ProductQuantity: React.FC<{
     <FetchWrap isLoading={isLoading} error={error} data={!isLoading}>
       <Box
         sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "stretch",
-          justifyContent: "center",
-          maxWidth: "160px",
+          display: 'flex',
+          flexWrap: 'wrap',
+          alignItems: 'stretch',
+          justifyContent: 'center',
+          maxWidth: '160px',
           ...sx,
         }}
       >
         {displayAddCarte && (
           <Button
             variant="contained"
-            sx={{ width: "150px" }}
+            sx={{ width: '150px' }}
             onClick={() => updateNumberFromHere(1)}
           >
             Add To Cart
@@ -120,24 +116,22 @@ export const ProductQuantity: React.FC<{
         )}
         {!displayAddCarte && (
           <>
-            <Box sx={{ flex: "0 0 38px" }}>
+            <Box sx={{ flex: '0 0 38px' }}>
               <Button
                 variant="contained"
                 sx={sxButton}
-                onClick={() =>
-                  number > 0 && updateNumberFromHere(String(number - 1))
-                }
+                onClick={() => number > 0 && updateNumberFromHere(String(number - 1))}
               >
                 -
               </Button>
             </Box>
-            <Box sx={{ flex: "1 1 100%", maxWidth: "70px" }}>
+            <Box sx={{ flex: '1 1 100%', maxWidth: '70px' }}>
               <PositifIntegerInput
                 numberInput={numberInput}
                 setNumberInput={updateNumberFromHere}
               />
             </Box>
-            <Box sx={{ flex: "0 0 38px" }}>
+            <Box sx={{ flex: '0 0 38px' }}>
               <Button
                 variant="contained"
                 sx={sxButton}
