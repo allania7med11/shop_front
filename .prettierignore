@@ -27,3 +27,7 @@ public/
 .prettierignore
 .eslintrc
 .eslintcache
+
+*.md
+devcontainer.json
+tsconfig.json
