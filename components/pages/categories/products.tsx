@@ -22,15 +22,34 @@ const sxProducts: SxProps = {
 export const Products = () => {
   const { data } = useCurrentCartQuery();
   const items = data ? data.items : [];
-  const filters: IsProductFilters = useSelector((state: RootState) => ({
-    category: state.filters.categorySlug || '',
-    search: state.filters.search || [''],
-    current_price_min: state.filters.current_price_min || '',
-    current_price_max: state.filters.current_price_max || '',
-    discount_min: state.filters.discount_min || '',
-    discount_max: state.filters.discount_max || '',
-    ordering: state.filters.ordering || '',
-  }));
+  const filters: IsProductFilters = useSelector((state: RootState) => {
+    // Define a list of keys excluding categorySlug since it's always present
+    const keys: (keyof IsProductFilters)[] = [
+      'search',
+      'current_price_min',
+      'current_price_max',
+      'discount_min',
+      'discount_max',
+      'ordering',
+    ];
+    // Create an object with only non-empty filters based on the list of keys
+    const category = state.filters.categorySlug;
+    let nonEmptyFilters = category ? { category: category } : {};
+    nonEmptyFilters = keys.reduce((acc, key) => {
+      const value = state.filters[key];
+      // Check if the value is not empty (for strings and arrays)
+      if (value !== '' && !(Array.isArray(value) && value.length === 0)) {
+        acc[key] = value;
+      }
+      return acc;
+    }, nonEmptyFilters);
+
+    // Assign categorySlug to category since it's always not empty
+    nonEmptyFilters.category = state.filters.categorySlug;
+
+    return nonEmptyFilters;
+  });
+
   const {
     data: productsApi = [],
     error,
