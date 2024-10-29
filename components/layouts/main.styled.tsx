@@ -1,12 +1,11 @@
 import { styled } from '@mui/material/styles';
-import { drawerWidth } from "@/constants/drawerWidth"
-
+import { drawerWidth } from '@/constants/drawerWidth';
 
 interface IsMainProps {
   open?: boolean;
 }
 
-export const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<IsMainProps>(
+export const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })<IsMainProps>(
   ({ theme, open }) => ({
     flexGrow: 1,
     transition: theme.transitions.create('margin', {
@@ -19,7 +18,7 @@ export const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open
         duration: theme.transitions.duration.enteringScreen,
       }),
       [theme.breakpoints.up('sm')]: {
-        marginLeft: `${drawerWidth}px`
+        marginLeft: `${drawerWidth}px`,
       },
     }),
   })

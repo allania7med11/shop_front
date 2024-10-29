@@ -1,26 +1,20 @@
-import {
-  Autocomplete,
-  Box,
-  InputAdornment,
-  Popper,
-  TextField,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import React, { FC } from "react";
+import { Autocomplete, Box, InputAdornment, Popper, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import React, { FC, SyntheticEvent } from 'react';
 
-const CustomPopper = (props) => {
+const CustomPopper = props => {
   return (
     <Popper
       {...props}
       placement="bottom-start"
       style={{
-        width: "300px",
+        width: '300px',
       }}
     />
   );
 };
 
-const renderInput = (params) => {
+const renderInput = params => {
   params.InputProps.startAdornment = (
     <>
       <InputAdornment position="start">
@@ -29,36 +23,34 @@ const renderInput = (params) => {
       {params.InputProps.startAdornment}
     </>
   );
-  return (
-    <TextField {...params} label="Search" sx={{ backgroundColor: "white" }} />
-  );
+  return <TextField {...params} label="Search" sx={{ backgroundColor: 'white' }} />;
 };
 
 export const Search: FC<{
   options: string[];
-  value: string[];
-  setValue: (value: string[]) => any;
+  value: string;
+  setValue: (value: string) => void;
 }> = ({ options, value, setValue }) => {
   return (
     <div>
       <Autocomplete
-        value={value}
-        onChange={(event: any, newValue: string[]) => {
-          setValue(newValue);
+        value={value} // Now the value is a single string, not an array
+        onChange={(_: SyntheticEvent<Element, Event>, newValue: string | null) => {
+          setValue(newValue || ''); // Handle the case where newValue might be null
         }}
         PopperComponent={CustomPopper}
         id="free-solo-demo"
         freeSolo
-        getOptionLabel={(option) => option.toString()}
+        getOptionLabel={option => option.toString()}
         options={options}
         renderInput={renderInput}
         renderOption={(props, option) => (
           <Box
             component="li"
             sx={{
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             }}
             {...props}
           >

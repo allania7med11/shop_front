@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { store } from '@/store';
-import Box from "@mui/material/Box";
-import Navbar from '@/components/layouts/navBar'
-import Sidebar from '@/components/layouts/sideBar'
+import Box from '@mui/material/Box';
+import Navbar from '@/components/layouts/navBar';
+import Sidebar from '@/components/layouts/sideBar';
 import { Main } from '@/components/layouts/main.styled';
 import { Provider } from 'react-redux';
 
@@ -20,10 +20,8 @@ export default function Layout({ children }) {
       <Navbar open={open} handleDrawerOpen={handleDrawerOpen} />
       <Sidebar open={open} handleDrawerClose={handleDrawerClose} />
       <Main open={open}>
-      <Box sx={{ mt: 10 }}>
-        {children}
-      </Box>
+        <Box sx={{ mt: 10 }}>{children}</Box>
       </Main>
     </Provider>
-  )
+  );
 }
