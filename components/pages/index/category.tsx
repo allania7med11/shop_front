@@ -1,35 +1,35 @@
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import { ProductsSwiper } from "components/pages/index/productsSwiper";
-import { blueGrey } from "@mui/material/colors";
-import { FC } from "react";
-import { IsCategory } from "@/data/categories";
-import { Link } from "@/components/common/Link";
-import { SxProps } from "@mui/material";
-import { useCurrentCartQuery } from "@/store/reducer/apis/cartApi";
-import { addItemsToProducts } from "@/utils/products";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Paper from '@mui/material/Paper';
+import { ProductsSwiper } from 'components/pages/index/productsSwiper';
+import { blueGrey } from '@mui/material/colors';
+import { FC } from 'react';
+import { IsCategory } from '@/data/categories';
+import { Link } from '@/components/common/Link';
+import { SxProps } from '@mui/material';
+import { useCurrentCartQuery } from '@/store/reducer/apis/cartApi';
+import { addItemsToProducts } from '@/utils/products';
 
 const sxLink: SxProps = {
-  "& a": {
-    color: "white",
-    "&:-webkit-any-link": {
-      textDecoration: "underline",
+  '& a': {
+    color: 'white',
+    '&:-webkit-any-link': {
+      textDecoration: 'underline',
     },
-    "&:hover": {
-      textDecoration: "underline",
+    '&:hover': {
+      textDecoration: 'underline',
     },
   },
 };
 
 export const Category: FC<{ category: IsCategory }> = ({ category }) => {
-  let productsApi = category ? category.products : [];
+  const productsApi = category ? category.products : [];
   if (productsApi.length == 0) {
-    return <></>
+    return <></>;
   }
   const { data } = useCurrentCartQuery();
-  const items = data ? data.items : []
+  const items = data ? data.items : [];
   const products = addItemsToProducts(productsApi, items);
   return (
     <Paper elevation={3}>

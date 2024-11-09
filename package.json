@@ -1,14 +1,27 @@
 {
   "name": "shop_front",
-  "version": "v1.3.0+build20240529",
+  "version": "v1.4.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "export": "next build && next export -o shop_front",
-    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest"
+    "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
+    "prepare": "husky install",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write ."
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@emotion/cache": "latest",
@@ -17,7 +30,6 @@
     "@emotion/styled": "latest",
     "@mui/icons-material": "latest",
     "@mui/material": "latest",
-    "@next/font": "^13.1.1",
     "@reduxjs/toolkit": "^1.9.1",
     "@stripe/react-stripe-js": "^2.7.3",
     "@stripe/stripe-js": "^4.1.0",
@@ -26,7 +38,7 @@
     "currency-symbol-map": "^5.1.0",
     "dataclass": "^2.1.1",
     "isomorphic-dompurify": "^0.26.0",
-    "next": "^13.0.6",
+    "next": "^14.2.15",
     "next-redux-wrapper": "^8.1.0",
     "pluralize": "^8.0.0",
     "prop-types": "latest",
@@ -47,9 +59,16 @@
     "@svgr/webpack": "^6.2.1",
     "@types/node": "^18.11.17",
     "@types/react": "^18.0.26",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.10.0",
     "depcheck": "^1.4.3",
-    "eslint": "latest",
+    "eslint": "^8.57.1",
     "eslint-config-next": "latest",
-    "typescript": "^4.9.4"
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "typescript": "^4.9.5"
   }
 }

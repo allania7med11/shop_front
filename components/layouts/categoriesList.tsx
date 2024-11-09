@@ -1,27 +1,27 @@
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListSubheader from "@mui/material/ListSubheader";
-import ListItemText from "@mui/material/ListItemText";
-import { Link } from "../common/Link";
-import { grey } from "@mui/material/colors";
-import { useCategoriesQuery } from "@/store/reducer/apis/productApi";
-import { SxProps } from "@mui/material";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItemText from '@mui/material/ListItemText';
+import { Link } from '../common/Link';
+import { grey } from '@mui/material/colors';
+import { useCategoriesQuery } from '@/store/reducer/apis/productApi';
+import { SxProps } from '@mui/material';
 
 const sxItem: SxProps = {
-  display: "flex",
-  "& >div": {
+  display: 'flex',
+  '& >div': {
     flexGrow: 1,
   },
-  "& a": {
-    with: "100%",
+  '& a': {
+    with: '100%',
     color: grey[700],
-    display: "flex",
-    alignItems: "center",
-    "&:-webkit-any-link": {
-      textDecoration: "none",
+    display: 'flex',
+    alignItems: 'center',
+    '&:-webkit-any-link': {
+      textDecoration: 'none',
     },
-    "&:hover": {
-      textDecoration: "none",
+    '&:hover': {
+      textDecoration: 'none',
       backgroundColor: grey[100],
       color: grey[900],
     },
@@ -33,9 +33,9 @@ export const CategoriesList = () => {
   return (
     <List
       sx={{
-        overflow: "auto",
-        maxHeight: "90%",
-        "& ul": { padding: 0 },
+        overflow: 'auto',
+        maxHeight: '90%',
+        '& ul': { padding: 0 },
       }}
       subheader={<li />}
     >
@@ -43,10 +43,10 @@ export const CategoriesList = () => {
         <ul>
           <ListSubheader>{`CATEGORIES`}</ListSubheader>
           {data &&
-            data.map((category) => (
+            data.map(category => (
               <ListItem key={`item-category-${category.name}`} sx={sxItem}>
-                <Link href={`/categories?slug=${category.slug}`} >
-                  <ListItemText sx={{  pl: 4 }} primary={`${category.name}`} />
+                <Link href={`/categories?slug=${category.slug}`}>
+                  <ListItemText sx={{ pl: 4 }} primary={`${category.name}`} />
                 </Link>
               </ListItem>
             ))}

@@ -1,5 +1,6 @@
 #!/bin/sh
-echo "envs $ENVIRONMENT $PORT"
+echo "ENVIRONMENT=$ENVIRONMENT"
+echo "PORT=$PORT"
 if [ "$COLLECTSTATIC" = "True" ]; then
     npm run export && echo "Generation completed successfully"
 fi
