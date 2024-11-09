@@ -1,4 +1,6 @@
 module.exports = {
+  output: 'export',
+  distDir: 'shop_front',
   typescript: {
     ignoreBuildErrors: true,
   },

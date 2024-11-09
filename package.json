@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "export": "next build && next export -o shop_front",
+    "export": "next build",
     "post-update": "echo \"codesandbox preview only, need an update\" && yarn upgrade --latest",
     "prepare": "husky install",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
