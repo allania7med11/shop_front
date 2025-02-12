@@ -10,7 +10,7 @@ const useAuth = () => {
 
   const isAuthenticated = !!profile;
   const fullName = profile ? getFullName(profile) : null;
-  const profile_photo = profile ? profile.profile_photo : null;
+  const profile_photo = profile && profile.profile_photo ? profile.profile_photo : "/static/images/user_authenticated.png";
 
   return { isAuthenticated, profile, fullName, profile_photo };
 };

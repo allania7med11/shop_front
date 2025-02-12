@@ -41,7 +41,7 @@ export const AvatarComponent = () => {
             <Avatar
               alt="User Name"
               src={profile_photo}
-              sx={{ width: 48, height: 48 }}
+              sx={{ width: 40, height: 40 }}
             />
             <ArrowDropDownOutlinedIcon />
           </>
