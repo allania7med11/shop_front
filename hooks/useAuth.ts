@@ -10,8 +10,9 @@ const useAuth = () => {
 
   const isAuthenticated = !!profile;
   const fullName = profile ? getFullName(profile) : null;
+  const profile_photo = profile ? profile.profile_photo : null;
 
-  return { isAuthenticated, profile, fullName };
+  return { isAuthenticated, profile, fullName, profile_photo };
 };
 
 export default useAuth;
