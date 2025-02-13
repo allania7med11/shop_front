@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { Alert, Avatar, Badge, CircularProgress, InputLabel, Paper, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Avatar,
+  Badge,
+  CircularProgress,
+  InputLabel,
+  Paper,
+  Slide,
+  SlideProps,
+  Snackbar,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useRegisterMutation } from '@/store/reducer/apis/authApi';
+import { useUpdateUserProfileMutation } from '@/store/reducer/apis/authApi';
 import useErrors from '@/hooks/useErrors';
 import { sxAuthButton } from '@/styles/authButtonStyle';
 import LogoSmall from '@/components/common/logoSmall';
@@ -20,14 +32,18 @@ export const UpdateAccount = () => {
       last_name: userProfile.last_name || '',
     },
   });
-  const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
+  const [updateUserProfile, { isLoading, error, isSuccess }] = useUpdateUserProfileMutation();
+  let successMessage = 'Your account has been successfully updated! 🎉';
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setOpen(isSuccess);
+  }, [isSuccess]);
   const { globalErrors, setGlobalErrors } = useErrors(error, setError, getValues);
   const onSubmit = async form_data => {
     clearErrors();
     setGlobalErrors([]);
-    await register(form_data);
+    await updateUserProfile(form_data);
   };
-
   return (
     <Paper
       elevation={3}
@@ -58,18 +74,34 @@ export const UpdateAccount = () => {
               </Alert>
             ))}
         </Box>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={open}
+          TransitionComponent={SlideTransition}
+          autoHideDuration={3000}
+          onClose={() => setOpen(false)}
+        >
+          <Alert severity="success" variant="filled" sx={{ width: '100%' }}>
+            {successMessage}
+          </Alert>
+        </Snackbar>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Badge
               overlap="circular"
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              badgeContent={
-                <Avatar alt="Camera Button" src="/static/images/camera_button.png" />
-              }
+              badgeContent={<Avatar alt="Camera Button" src="/static/images/camera_button.png" />}
             >
-              <Avatar alt="Profile Photo" src={profile_photo} sx={{
-                width: 175, height: 175, boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.4)', mb: 1
-              }} />
+              <Avatar
+                alt="Profile Photo"
+                src={profile_photo}
+                sx={{
+                  width: 175,
+                  height: 175,
+                  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.4)',
+                  mb: 1,
+                }}
+              />
             </Badge>
           </Box>
           <Box sx={{ display: 'flex', gap: 2 }}>
@@ -115,7 +147,7 @@ export const UpdateAccount = () => {
                 '& input': {
                   paddingTop: '16px',
                   paddingBottom: '16px',
-                  cursor: 'not-allowed'
+                  cursor: 'not-allowed',
                 },
               }}
             />
@@ -126,17 +158,17 @@ export const UpdateAccount = () => {
             type="submit"
             variant="contained"
             color="primary"
-            disabled={isLoading || isSuccess}
+            disabled={isLoading}
             sx={sxAuthButton}
           >
-            {isLoading || isSuccess ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              'Update Account'
-            )}
+            {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Update Account'}
           </Button>
         </Box>
       </form>
     </Paper>
   );
 };
+
+function SlideTransition(props: SlideProps) {
+  return <Slide {...props} direction="left" />;
+}
