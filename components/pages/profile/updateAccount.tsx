@@ -1,16 +1,22 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { Alert, CircularProgress, InputLabel, Paper, Typography } from '@mui/material';
+import { Alert, CircularProgress, InputLabel, Paper, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useRegisterMutation } from '@/store/reducer/apis/authApi';
+import { useGetUserProfileQuery, useRegisterMutation } from '@/store/reducer/apis/authApi';
 import useErrors from '@/hooks/useErrors';
 import { sxAuthButton } from '@/styles/authButtonStyle';
 import LogoSmall from '@/components/common/logoSmall';
 import FormTextField from '@/components/common/Form/formTextField';
 
 export const UpdateAccount = () => {
-  const { control, handleSubmit, setError, clearErrors, getValues } = useForm();
+  let { data: profile } = useGetUserProfileQuery();
+  const { control, handleSubmit, setError, clearErrors, getValues } = useForm({
+    defaultValues: {
+      first_name: profile?.first_name || '',
+      last_name: profile?.last_name || '',
+    },
+  });
   const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
   const { globalErrors, setGlobalErrors } = useErrors(error, setError, getValues);
   const onSubmit = async form_data => {
@@ -81,16 +87,22 @@ export const UpdateAccount = () => {
           </Box>
           <Box>
             <InputLabel htmlFor="email">Email</InputLabel>
-            <FormTextField
+            <TextField
+              disabled
               name="email"
-              control={control}
-              defaultValue=""
-              rules={{ required: 'Email is required' }}
               type="email"
               id="email"
               placeholder="example@gmail.com"
-              variant="outlined"
+              defaultValue={profile?.email || ''}
               fullWidth
+              variant="filled"
+              sx={{
+                '& input': {
+                  paddingTop: '16px',
+                  paddingBottom: '16px',
+                  cursor: 'not-allowed'
+                },
+              }}
             />
           </Box>
         </Box>
