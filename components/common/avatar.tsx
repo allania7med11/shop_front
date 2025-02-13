@@ -39,7 +39,7 @@ export const AvatarComponent = () => {
         {userLoggedIn ? (
           <>
             <Avatar
-              alt="User Name"
+              alt="Profile Photo"
               src={profile_photo}
               sx={{ width: 40, height: 40 }}
             />
@@ -62,7 +62,7 @@ export const AvatarComponent = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }} >
                     <Avatar
-                      alt="User Name"
+                      alt="Profile Photo"
                       src={profile_photo}
                       sx={{ width: 48, height: 48 }}
                     />

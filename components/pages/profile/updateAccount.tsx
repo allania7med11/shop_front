@@ -1,20 +1,23 @@
 import React from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { Alert, CircularProgress, InputLabel, Paper, TextField, Typography } from '@mui/material';
+import { Alert, Avatar, Badge, CircularProgress, InputLabel, Paper, TextField, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useGetUserProfileQuery, useRegisterMutation } from '@/store/reducer/apis/authApi';
+import { useRegisterMutation } from '@/store/reducer/apis/authApi';
 import useErrors from '@/hooks/useErrors';
 import { sxAuthButton } from '@/styles/authButtonStyle';
 import LogoSmall from '@/components/common/logoSmall';
 import FormTextField from '@/components/common/Form/formTextField';
+import useAuth from '@/hooks/useAuth';
+import { IsUserProfile } from '@/data/auth';
 
 export const UpdateAccount = () => {
-  let { data: profile } = useGetUserProfileQuery();
+  const { profile, profile_photo } = useAuth();
+  const userProfile = profile as IsUserProfile;
   const { control, handleSubmit, setError, clearErrors, getValues } = useForm({
     defaultValues: {
-      first_name: profile?.first_name || '',
-      last_name: profile?.last_name || '',
+      first_name: userProfile.first_name || '',
+      last_name: userProfile.last_name || '',
     },
   });
   const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
@@ -41,7 +44,6 @@ export const UpdateAccount = () => {
           flexDirection: 'column',
           gap: 1,
           alignItems: 'center',
-          pb: 2,
         }}
       >
         <LogoSmall />
@@ -57,6 +59,19 @@ export const UpdateAccount = () => {
             ))}
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Badge
+              overlap="circular"
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              badgeContent={
+                <Avatar alt="Camera Button" src="/static/images/camera_button.png" />
+              }
+            >
+              <Avatar alt="Profile Photo" src={profile_photo} sx={{
+                width: 175, height: 175, boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.4)', mb: 1
+              }} />
+            </Badge>
+          </Box>
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Box>
               <InputLabel htmlFor="first_name">First Name</InputLabel>
@@ -93,7 +108,7 @@ export const UpdateAccount = () => {
               type="email"
               id="email"
               placeholder="example@gmail.com"
-              defaultValue={profile?.email || ''}
+              defaultValue={userProfile.email || ''}
               fullWidth
               variant="filled"
               sx={{
