@@ -3,8 +3,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import {
   Alert,
-  Avatar,
-  Badge,
   CircularProgress,
   InputLabel,
   Paper,
@@ -22,6 +20,7 @@ import LogoSmall from '@/components/common/logoSmall';
 import FormTextField from '@/components/common/Form/formTextField';
 import useAuth from '@/hooks/useAuth';
 import { IsUserProfile } from '@/data/auth';
+import ProfilePhotoField from './profilePhotoField';
 
 export const UpdateAccount = () => {
   const { profile, profile_photo } = useAuth();
@@ -39,7 +38,7 @@ export const UpdateAccount = () => {
     setOpen(isSuccess);
   }, [isSuccess]);
   const { globalErrors, setGlobalErrors } = useErrors(error, setError, getValues);
-  const onSubmit = async form_data => {
+  const onSubmit = async (form_data) => {
     clearErrors();
     setGlobalErrors([]);
     await updateUserProfile(form_data);
@@ -87,22 +86,7 @@ export const UpdateAccount = () => {
         </Snackbar>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Badge
-              overlap="circular"
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-              badgeContent={<Avatar alt="Camera Button" src="/static/images/camera_button.png" />}
-            >
-              <Avatar
-                alt="Profile Photo"
-                src={profile_photo}
-                sx={{
-                  width: 175,
-                  height: 175,
-                  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.4)',
-                  mb: 1,
-                }}
-              />
-            </Badge>
+            <ProfilePhotoField name="profile_photo" control={control} src={profile_photo} />
           </Box>
           <Box sx={{ display: 'flex', gap: 2 }}>
             <Box>
@@ -110,7 +94,6 @@ export const UpdateAccount = () => {
               <FormTextField
                 name="first_name"
                 control={control}
-                defaultValue=""
                 rules={{ required: 'First Name is required' }}
                 type="first_name"
                 id="first_name"
@@ -123,7 +106,6 @@ export const UpdateAccount = () => {
               <FormTextField
                 name="last_name"
                 control={control}
-                defaultValue=""
                 rules={{ required: 'Last Name is required' }}
                 type="last_name"
                 id="last_name"
