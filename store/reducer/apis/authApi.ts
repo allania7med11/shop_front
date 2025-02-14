@@ -28,6 +28,22 @@ const authApi = api.injectEndpoints({
       query: () => '/auth/profile/',
       providesTags: ['User'],
     }),
+    updateUserProfile: builder.mutation<void, Partial<IsUserProfile>>({
+      query: profileData => {
+        const formData = new FormData();
+        Object.entries(profileData).forEach(([key, value]) => {
+          if (value !== undefined && value !== null) {
+            formData.append(key, value);
+          }
+        });
+        return {
+          url: '/auth/profile/',
+          method: 'POST',
+          body: formData,
+        };
+      },
+      invalidatesTags: ['User'],
+    }),
     logoutUser: builder.mutation<void, void>({
       query: () => ({
         url: '/auth/logout/',
@@ -56,6 +72,7 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
   useLogoutUserMutation,
   useResetPasswordMutation,
   useConfirmResetPasswordMutation,
