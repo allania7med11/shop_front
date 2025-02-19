@@ -24,5 +24,5 @@ const api_init = createApi({
 });
 
 export const api = api_init.enhanceEndpoints({
-  addTagTypes: ['Cart', 'User'],
+  addTagTypes: ['Cart', 'User', 'Messages'],
 });
