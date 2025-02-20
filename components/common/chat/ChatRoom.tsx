@@ -15,6 +15,8 @@ import {
 import { Close, Send } from '@mui/icons-material';
 import { Message, MessageWrite, ChatUserProfile } from '@/data/chat'; // Imported ChatUserProfile
 import { grey } from '@mui/material/colors';
+import useChatScroll from '@/hooks/useChatScroll';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 
 const ChatRoom = ({
   roomOwner,
@@ -28,6 +30,7 @@ const ChatRoom = ({
   roomOwner: ChatUserProfile; // Room Owner Profile
 }) => {
   const [input, setInput] = useState('');
+  const { messagesEndRef, chatContainerRef, farFromBottom } = useChatScroll(messages);
 
   const handleSend = () => {
     if (input.trim()) {
@@ -45,6 +48,7 @@ const ChatRoom = ({
         flexDirection: 'column',
         boxShadow: 3,
         gap: 1,
+        position: 'relative',
       }}
     >
       <Box
@@ -74,6 +78,7 @@ const ChatRoom = ({
         justifyContent="space-between"
         gap={2}
         sx={{ overflowY: 'auto', maxHeight: 400, px: 1, pt: 1 }}
+        ref={chatContainerRef} // Attach ref to detect scroll changes
       >
         <Box display="flex" flexGrow={1} flexDirection="column" alignItems="center">
           <Avatar src={roomOwner.profile_photo} />
@@ -109,7 +114,34 @@ const ChatRoom = ({
               />
             </ListItem>
           ))}
+          {/* Dummy div for scrolling to bottom */}
+          <div ref={messagesEndRef} />
         </List>
+        {/* Floating Arrow Down Button - Shows only when user far from bottom */}
+        {farFromBottom > 100 && (
+          <IconButton
+            onClick={() => {
+              messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            sx={{
+              position: 'absolute',
+              bottom: 70,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              backgroundColor: 'white',
+              color: 'primary.main',
+              '&:hover': { backgroundColor: 'grey.200' },
+              '&:focus': { backgroundColor: 'white' },
+              '&:active': { backgroundColor: 'grey.300' },
+              width: 40,
+              height: 40,
+              borderRadius: '50%',
+              boxShadow: 3,
+            }}
+          >
+            <ArrowDownwardIcon sx={{ fontSize: 24 }} />
+          </IconButton>
+        )}
       </Box>
       <Box display="flex" p={1} borderTop={`1px solid ${grey[300]}`}>
         <TextField
