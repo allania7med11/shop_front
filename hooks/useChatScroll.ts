@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { throttle } from 'lodash';
 
 const useChatScroll = messages => {
-  const messagesEndRef = useRef(null);
-  const chatContainerRef = useRef(null);
-  const [isAtBottom, setIsAtBottom] = useState(true);
-  const [farFromBottom, setFarFromBAtBottom] = useState(0);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const [isAtBottom, setIsAtBottom] = useState<boolean>(true);
+  const [farFromBottom, setFarFromBottom] = useState<number>(0);
 
   // Detect if user is at the bottom
   const handleScroll = () => {
@@ -14,7 +14,7 @@ const useChatScroll = messages => {
     const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current;
     const scrollBottom = scrollTop + clientHeight;
     setIsAtBottom(scrollHeight - scrollBottom <= 10); // Adding margin to account for small inconsistencies
-    setFarFromBAtBottom(scrollHeight - scrollBottom);
+    setFarFromBottom(scrollHeight - scrollBottom);
   };
 
   useEffect(() => {
