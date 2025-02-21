@@ -143,7 +143,16 @@ const ChatRoom = ({
           </IconButton>
         )}
       </Box>
-      <Box display="flex" p={1} borderTop={`1px solid ${grey[300]}`}>
+      <Box
+        component="form"
+        display="flex"
+        p={1}
+        borderTop={`1px solid ${grey[300]}`}
+        onSubmit={e => {
+          e.preventDefault();
+          handleSend();
+        }}
+      >
         <TextField
           fullWidth
           variant="outlined"
@@ -152,7 +161,7 @@ const ChatRoom = ({
           onChange={e => setInput(e.target.value)}
           placeholder="Write a message..."
         />
-        <IconButton color="primary" onClick={handleSend} disabled={!input.trim()}>
+        <IconButton color="primary" type="submit" disabled={!input.trim()}>
           <Send />
         </IconButton>
       </Box>
