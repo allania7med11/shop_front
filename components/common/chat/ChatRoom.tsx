@@ -162,6 +162,13 @@ const ChatRoom = ({
           onChange={e => setInput(e.target.value)}
           placeholder="Write a message..."
           multiline
+          maxRows={5}
+          onKeyDown={e => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
         />
         <IconButton color="primary" type="submit" disabled={!input.trim()}>
           <Send />
