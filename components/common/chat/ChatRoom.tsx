@@ -77,7 +77,7 @@ const ChatRoom = ({
         flexDirection="column"
         justifyContent="space-between"
         gap={2}
-        sx={{ overflowY: 'auto', maxHeight: 400, px: 1, pt: 1 }}
+        sx={{ overflowY: 'auto', overflowX: 'hidden', maxHeight: 400, px: 1, pt: 1 }}
         ref={chatContainerRef} // Attach ref to detect scroll changes
       >
         <Box display="flex" flexGrow={1} flexDirection="column" alignItems="center">
@@ -107,6 +107,7 @@ const ChatRoom = ({
                   bgcolor: msg.is_mine ? 'primary.main' : grey[100],
                   color: msg.is_mine ? 'white' : grey[900],
                   p: 1,
+                  wordBreak: 'break-word',
                   borderRadius: 2,
                   maxWidth: '75%',
                   cursor: 'pointer',
