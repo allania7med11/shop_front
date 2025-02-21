@@ -42,13 +42,16 @@ const ChatRoom = ({
   return (
     <Paper
       sx={{
-        width: 350,
-        height: 500,
+        width: 400,
+        height: 600,
+        maxWidth: '90vw',
+        maxHeight: '90vh',
         display: 'flex',
         flexDirection: 'column',
         boxShadow: 3,
         gap: 1,
         position: 'relative',
+        overflow: 'auto',
       }}
     >
       <Box
@@ -77,7 +80,7 @@ const ChatRoom = ({
         flexDirection="column"
         justifyContent="space-between"
         gap={2}
-        sx={{ overflowY: 'auto', overflowX: 'hidden', maxHeight: 400, px: 1, pt: 1 }}
+        sx={{ overflowY: 'auto', overflowX: 'hidden', px: 1, pt: 1 }}
         ref={chatContainerRef} // Attach ref to detect scroll changes
       >
         <Box display="flex" flexGrow={1} flexDirection="column" alignItems="center">
@@ -108,8 +111,8 @@ const ChatRoom = ({
                   color: msg.is_mine ? 'white' : grey[900],
                   p: 1,
                   wordBreak: 'break-word',
-                  borderRadius: 2,
-                  maxWidth: '75%',
+                  borderRadius: 4,
+                  maxWidth: '70%',
                   cursor: 'pointer',
                 }}
               />
