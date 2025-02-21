@@ -160,6 +160,7 @@ const ChatRoom = ({
           value={input}
           onChange={e => setInput(e.target.value)}
           placeholder="Write a message..."
+          multiline
         />
         <IconButton color="primary" type="submit" disabled={!input.trim()}>
           <Send />
