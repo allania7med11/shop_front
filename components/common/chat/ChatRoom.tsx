@@ -17,6 +17,7 @@ import { Message, MessageWrite, ChatUserProfile } from '@/data/chat'; // Importe
 import { grey } from '@mui/material/colors';
 import useChatScroll from '@/hooks/useChatScroll';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { formatDate } from '@/utils/date';
 
 const ChatRoom = ({
   roomOwner,
@@ -102,7 +103,7 @@ const ChatRoom = ({
               )}
               <ListItemText
                 primary={
-                  <Tooltip title={msg.created_at} arrow>
+                  <Tooltip title={formatDate(msg.created_at)} arrow>
                     <span>{msg.content}</span>
                   </Tooltip>
                 }
