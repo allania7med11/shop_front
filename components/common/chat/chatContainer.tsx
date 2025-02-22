@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ChatButton } from './ChatButton';
-import { ChatRoom } from './ChatRoom';
+import { ChatButton } from './chatButton';
+import { ChatRoom } from './chatRoom';
 import { ChatUserProfile, MessageWrite } from '@/data/chat';
 import { useCreateMessageMutation, useMessagesQuery } from '@/store/reducer/apis/chatApi';
 
