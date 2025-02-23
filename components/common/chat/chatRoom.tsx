@@ -70,7 +70,7 @@ const ChatRoom = ({
         boxShadow={3}
       >
         <Box display="flex" alignItems="center" gap={1}>
-          <Avatar src={roomOwner.profile_photo} />
+          <Avatar src={roomOwner.profile_photo || '/static/images/user_authenticated.png'} />
           <Typography variant="h6" fontWeight="bold">
             {roomOwner.first_name} {roomOwner.last_name}
           </Typography>
