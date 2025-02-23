@@ -11,6 +11,8 @@ import {
   ListItemAvatar,
   ListItemText,
   Tooltip,
+  SxProps,
+  Theme,
 } from '@mui/material';
 import { Close, Send } from '@mui/icons-material';
 import { Message, MessageWrite, ChatUserProfile } from '@/data/chat'; // Imported ChatUserProfile
@@ -24,11 +26,13 @@ const ChatRoom = ({
   messages,
   onSend,
   onClose,
+  sx,
 }: {
+  roomOwner: ChatUserProfile; // Room Owner Profile
   messages: Message[];
   onSend: (msg: MessageWrite) => void;
-  onClose: () => void;
-  roomOwner: ChatUserProfile; // Room Owner Profile
+  onClose?: () => void;
+  sx?: SxProps<Theme>;
 }) => {
   const [input, setInput] = useState('');
   const { messagesEndRef, chatContainerRef, farFromBottom } = useChatScroll(messages);
@@ -53,6 +57,7 @@ const ChatRoom = ({
         gap: 1,
         position: 'relative',
         overflow: 'auto',
+        ...sx,
       }}
     >
       <Box
@@ -71,9 +76,11 @@ const ChatRoom = ({
           </Typography>
         </Box>
 
-        <IconButton onClick={onClose}>
-          <Close />
-        </IconButton>
+        {onClose && (
+          <IconButton onClick={onClose}>
+            <Close />
+          </IconButton>
+        )}
       </Box>
       <Box
         display="flex"
