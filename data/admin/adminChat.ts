@@ -1,14 +1,12 @@
-import { Message, MessageWrite } from '@/data/chat';
+import { ChatUserProfile, Message } from '@/data/chat';
 
 export interface AdminChatRoom {
   id: number;
-  latest_message?: Message;
+  created_by: ChatUserProfile | null;
+  created_at: string;
+  latest_message?: Message | null;
 }
 
 export interface AdminChatRoomDetail extends AdminChatRoom {
   messages: Message[];
-}
-
-export interface AdminChatRoomWrite {
-  message: MessageWrite;
 }

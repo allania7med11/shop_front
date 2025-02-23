@@ -1,25 +1,22 @@
 import { Message, MessageWrite } from '@/data/chat';
-import { AdminChatRoom } from '@/data/admin/adminChat';
+import { AdminChatRoom, AdminChatRoomDetail } from '@/data/admin/adminChat';
 import { api } from '..';
 
 const chatAdminApi = api.injectEndpoints({
   endpoints: builder => ({
-    adminChats: builder.query<AdminChatRoom[], void>({
+    chats: builder.query<AdminChatRoom[], void>({
       query: () => '/admin/chats/',
       providesTags: ['AdminChats'],
     }),
 
-    adminChatMessages: builder.query<Message[], number>({
-      query: chatId => `/admin/chats/${chatId}/messages/`,
+    chat: builder.query<AdminChatRoomDetail, number>({
+      query: chatId => `/admin/chats/${chatId}/`,
       providesTags: (result, error, chatId) => [{ type: 'AdminChatRoomDetail', id: chatId }],
     }),
 
-    createAdminChatMessage: builder.mutation<
-      Message,
-      { chatId: number; data: { message: MessageWrite } }
-    >({
+    addChatMessage: builder.mutation<Message, { chatId: number; data: MessageWrite }>({
       query: ({ chatId, data }) => ({
-        url: `/admin/chats/${chatId}/messages/`,
+        url: `/admin/chats/${chatId}/add_message/`,
         method: 'POST',
         body: data,
       }),
@@ -28,7 +25,5 @@ const chatAdminApi = api.injectEndpoints({
   }),
 });
 
-export const { useAdminChatsQuery, useAdminChatMessagesQuery, useCreateAdminChatMessageMutation } =
-  chatAdminApi;
-
+export const { useChatsQuery, useChatQuery, useAddChatMessageMutation } = chatAdminApi;
 export default chatAdminApi;
