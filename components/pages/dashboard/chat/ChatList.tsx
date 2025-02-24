@@ -15,6 +15,7 @@ import {
   Avatar,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { getProfilePhoto } from '@/utils/chat';
 
 type ChatListProps = {
   chats: AdminChatRoom[];
@@ -62,7 +63,7 @@ export const ChatList: React.FC<ChatListProps> = ({ chats, selectedChatId, onSel
               onClick={() => onSelectChat(chat.id)}
             >
               <ListItemAvatar>
-                <Avatar src={chat.created_by?.profile_photo || '/defaultAvatar.png'} />
+                <Avatar src={getProfilePhoto(chat.created_by)} />
               </ListItemAvatar>
               <ListItemText
                 primary={

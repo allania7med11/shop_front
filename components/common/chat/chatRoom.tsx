@@ -20,6 +20,7 @@ import { grey } from '@mui/material/colors';
 import useChatScroll from '@/hooks/useChatScroll';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { formatDate } from '@/utils/date';
+import { getProfilePhoto } from '@/utils/chat';
 
 const ChatRoom = ({
   roomOwner,
@@ -70,7 +71,7 @@ const ChatRoom = ({
         boxShadow={3}
       >
         <Box display="flex" alignItems="center" gap={1}>
-          <Avatar src={roomOwner.profile_photo || '/static/images/user_authenticated.png'} />
+          <Avatar src={getProfilePhoto(roomOwner)} />
           <Typography variant="h6" fontWeight="bold">
             {roomOwner.first_name} {roomOwner.last_name}
           </Typography>
@@ -92,7 +93,7 @@ const ChatRoom = ({
         ref={chatContainerRef} // Attach ref to detect scroll changes
       >
         <Box display="flex" flexGrow={1} flexDirection="column" alignItems="center">
-          <Avatar src={roomOwner.profile_photo} />
+          <Avatar src={getProfilePhoto(roomOwner)} />
           <Typography variant="h6" fontWeight="bold">
             {roomOwner.first_name} {roomOwner.last_name}
           </Typography>
@@ -103,9 +104,9 @@ const ChatRoom = ({
               key={msg.id}
               sx={{ justifyContent: msg.is_mine ? 'flex-end' : 'flex-start', py: '2px' }}
             >
-              {!msg.is_mine && msg.created_by && (
+              {!msg.is_mine && (
                 <ListItemAvatar>
-                  <Avatar src={msg.created_by.profile_photo || undefined} />
+                  <Avatar src={getProfilePhoto(msg.created_by)} />
                 </ListItemAvatar>
               )}
               <ListItemText

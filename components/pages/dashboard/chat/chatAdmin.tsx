@@ -29,7 +29,7 @@ export default function ChatAdmin() {
   const roomOwner: ChatUserProfile = chatDetail?.created_by ?? {
     first_name: 'Anonymous',
     last_name: '',
-    profile_photo: '/static/LogoSmall.svg',
+    profile_photo: '/static/images/anonymous.png',
   };
   const messages = chatDetail?.messages || [];
   if (isChatsLoading) {
