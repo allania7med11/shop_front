@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { getFullName, getProfilePhoto } from '@/utils/auth';
+import { timeAgoShort } from '@/utils/date';
 
 type ChatListProps = {
   chats: AdminChatRoom[];
@@ -67,7 +68,28 @@ export const ChatList: React.FC<ChatListProps> = ({ chats, selectedChatId, onSel
               </ListItemAvatar>
               <ListItemText
                 primary={getFullName(chat.created_by)}
-                secondary={chat.latest_message?.content || 'No messages yet'}
+                secondary={
+                  chat.latest_message ? (
+                    <>
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          maxWidth: '80%',
+                          overflow: 'hidden',
+                          whiteSpace: 'nowrap',
+                          textOverflow: 'ellipsis',
+                          verticalAlign: 'middle',
+                        }}
+                      >
+                        {chat.latest_message.content}
+                      </span>
+                      {' • '}
+                      {timeAgoShort(chat.latest_message.created_at)}
+                    </>
+                  ) : (
+                    'No messages yet'
+                  )
+                }
               />
             </ListItemButton>
           </ListItem>
