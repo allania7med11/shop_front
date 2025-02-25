@@ -110,22 +110,20 @@ const ChatRoom = ({
                   <Avatar src={getProfilePhoto(msg.created_by)} />
                 </ListItemAvatar>
               )}
-              <ListItemText
-                primary={
-                  <Tooltip title={formatDate(msg.created_at)} arrow>
-                    <span>{msg.content}</span>
-                  </Tooltip>
-                }
-                sx={{
-                  bgcolor: msg.is_mine ? 'primary.main' : grey[100],
-                  color: msg.is_mine ? 'white' : grey[900],
-                  p: 1,
-                  wordBreak: 'break-word',
-                  borderRadius: 4,
-                  maxWidth: '70%',
-                  cursor: 'pointer',
-                }}
-              />
+              <Tooltip title={formatDate(msg.created_at)} arrow>
+                <ListItemText
+                  primary={<span>{msg.content}</span>}
+                  sx={{
+                    bgcolor: msg.is_mine ? 'primary.main' : grey[100],
+                    color: msg.is_mine ? 'white' : grey[900],
+                    p: 1,
+                    wordBreak: 'break-word',
+                    borderRadius: 4,
+                    maxWidth: '70%',
+                    cursor: 'pointer',
+                  }}
+                />
+              </Tooltip>
             </ListItem>
           ))}
           {/* Dummy div for scrolling to bottom */}
