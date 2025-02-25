@@ -116,11 +116,13 @@ const ChatRoom = ({
                   sx={{
                     bgcolor: msg.is_mine ? 'primary.main' : grey[100],
                     color: msg.is_mine ? 'white' : grey[900],
-                    p: 1,
+                    py: 1,
+                    px: 2,
                     wordBreak: 'break-word',
                     borderRadius: 4,
                     maxWidth: '70%',
                     cursor: 'pointer',
+                    flexGrow: 0,
                   }}
                 />
               </Tooltip>
