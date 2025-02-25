@@ -1,5 +1,4 @@
-// src/components/pages/dashboard/chat/ChatList.tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { AdminChatRoom } from '@/data/admin/adminChat';
 import {
   Paper,
@@ -25,6 +24,12 @@ type ChatListProps = {
 };
 
 export const ChatList: React.FC<ChatListProps> = ({ chats, selectedChatId, onSelectChat }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredChats = chats.filter(chat =>
+    getFullName(chat.created_by).toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <Paper
       sx={{
@@ -45,6 +50,8 @@ export const ChatList: React.FC<ChatListProps> = ({ chats, selectedChatId, onSel
         <TextField
           placeholder="Search"
           fullWidth
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
           slotProps={{
             input: {
               startAdornment: (
@@ -57,43 +64,47 @@ export const ChatList: React.FC<ChatListProps> = ({ chats, selectedChatId, onSel
         />
       </Box>
       <List sx={{ flexGrow: 1, overflowY: 'auto' }}>
-        {chats.map(chat => (
-          <ListItem disablePadding key={chat.id}>
-            <ListItemButton
-              selected={chat.id === selectedChatId}
-              onClick={() => onSelectChat(chat.id)}
-            >
-              <ListItemAvatar>
-                <Avatar src={getProfilePhoto(chat.created_by)} />
-              </ListItemAvatar>
-              <ListItemText
-                primary={getFullName(chat.created_by)}
-                secondary={
-                  chat.latest_message ? (
-                    <>
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          maxWidth: '80%',
-                          overflow: 'hidden',
-                          whiteSpace: 'nowrap',
-                          textOverflow: 'ellipsis',
-                          verticalAlign: 'middle',
-                        }}
-                      >
-                        {chat.latest_message.content}
-                      </span>
-                      {' • '}
-                      {timeAgoShort(chat.latest_message.created_at)}
-                    </>
-                  ) : (
-                    'No messages yet'
-                  )
-                }
-              />
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {filteredChats.length > 0 ? (
+          filteredChats.map(chat => (
+            <ListItem disablePadding key={chat.id}>
+              <ListItemButton
+                selected={chat.id === selectedChatId}
+                onClick={() => onSelectChat(chat.id)}
+              >
+                <ListItemAvatar>
+                  <Avatar src={getProfilePhoto(chat.created_by)} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={getFullName(chat.created_by)}
+                  secondary={
+                    chat.latest_message ? (
+                      <>
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            maxWidth: '80%',
+                            overflow: 'hidden',
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                            verticalAlign: 'middle',
+                          }}
+                        >
+                          {chat.latest_message.content}
+                        </span>
+                        {' • '}
+                        {timeAgoShort(chat.latest_message.created_at)}
+                      </>
+                    ) : (
+                      'No messages yet'
+                    )
+                  }
+                />
+              </ListItemButton>
+            </ListItem>
+          ))
+        ) : (
+          <Typography sx={{ p: 2, textAlign: 'center' }}>No chats found</Typography>
+        )}
       </List>
     </Paper>
   );
