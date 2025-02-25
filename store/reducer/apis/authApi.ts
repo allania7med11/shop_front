@@ -14,7 +14,7 @@ const authApi = api.injectEndpoints({
         method: 'POST',
         body: credentials,
       }),
-      invalidatesTags: ['Cart', 'User'],
+      invalidatesTags: ['Cart', 'User', 'Messages', 'AdminChats', 'AdminChatRoomDetail'],
     }),
     register: builder.mutation<void, RegisterCredentials>({
       query: credentials => ({
@@ -22,7 +22,7 @@ const authApi = api.injectEndpoints({
         method: 'POST',
         body: credentials,
       }),
-      invalidatesTags: ['Cart', 'User'],
+      invalidatesTags: ['Cart', 'User', 'Messages', 'AdminChats', 'AdminChatRoomDetail'],
     }),
     getUserProfile: builder.query<IsUserProfile, void>({
       query: () => '/auth/profile/',
@@ -49,7 +49,7 @@ const authApi = api.injectEndpoints({
         url: '/auth/logout/',
         method: 'POST',
       }),
-      invalidatesTags: ['Cart', 'User'],
+      invalidatesTags: ['Cart', 'User', 'Messages', 'AdminChats', 'AdminChatRoomDetail'],
     }),
     resetPassword: builder.mutation<void, { email: string }>({
       query: data => ({
