@@ -15,7 +15,7 @@ import {
   Avatar,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { getProfilePhoto } from '@/utils/chat';
+import { getFullName, getProfilePhoto } from '@/utils/auth';
 
 type ChatListProps = {
   chats: AdminChatRoom[];
@@ -66,11 +66,7 @@ export const ChatList: React.FC<ChatListProps> = ({ chats, selectedChatId, onSel
                 <Avatar src={getProfilePhoto(chat.created_by)} />
               </ListItemAvatar>
               <ListItemText
-                primary={
-                  chat.created_by
-                    ? `${chat.created_by.first_name} ${chat.created_by.last_name}`
-                    : 'Anonymous'
-                }
+                primary={getFullName(chat.created_by)}
                 secondary={chat.latest_message?.content || 'No messages yet'}
               />
             </ListItemButton>

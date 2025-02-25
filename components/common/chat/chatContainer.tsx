@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { ChatButton } from './chatButton';
 import { ChatRoom } from './chatRoom';
-import { ChatUserProfile, MessageWrite } from '@/data/chat';
+import { MessageWrite } from '@/data/chat';
 import { useCreateMessageMutation, useMessagesQuery } from '@/store/reducer/apis/chatApi';
+import { IsUserProfile } from '@/data/auth';
+import { getAdminProfile } from '@/utils/auth';
 
 const ChatContainer = () => {
   const [open, setOpen] = useState(false);
   const { data: messages } = useMessagesQuery();
   const [createMessage] = useCreateMessageMutation();
-  const roomOwner: ChatUserProfile = {
-    first_name: 'Logipsum',
-    last_name: '',
-    profile_photo: '/static/LogoSmall.svg',
-  };
+  const roomOwner: IsUserProfile = getAdminProfile();
 
   const handleSend = (message: MessageWrite) => {
     createMessage(message);

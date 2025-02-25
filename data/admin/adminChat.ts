@@ -1,8 +1,9 @@
-import { ChatUserProfile, Message } from '@/data/chat';
+import { Message } from '@/data/chat';
+import { IsUserProfile } from '../auth';
 
 export interface AdminChatRoom {
   id: number;
-  created_by: ChatUserProfile | null;
+  created_by: IsUserProfile | null;
   created_at: string;
   latest_message?: Message | null;
 }

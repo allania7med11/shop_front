@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ChatUserProfile, MessageWrite } from '@/data/chat';
+import { MessageWrite } from '@/data/chat';
 import {
   useChatsQuery,
   useChatQuery,
@@ -8,6 +8,8 @@ import {
 import { ChatRoom } from '@/components/common/chat/chatRoom';
 import { Box, Typography } from '@mui/material';
 import { ChatList } from './ChatList';
+import { IsUserProfile } from '@/data/auth';
+import { getGuestProfile } from '@/utils/auth';
 
 export default function ChatAdmin() {
   const { data: chats = [], isLoading: isChatsLoading } = useChatsQuery();
@@ -26,11 +28,7 @@ export default function ChatAdmin() {
       addChatMessage({ chatId: selectedChatId, data: message });
     }
   };
-  const roomOwner: ChatUserProfile = chatDetail?.created_by ?? {
-    first_name: 'Anonymous',
-    last_name: '',
-    profile_photo: '/static/images/anonymous.png',
-  };
+  const roomOwner: IsUserProfile = chatDetail?.created_by ?? getGuestProfile();
   const messages = chatDetail?.messages || [];
   if (isChatsLoading) {
     return <Typography variant="body1">Loading chats...</Typography>;

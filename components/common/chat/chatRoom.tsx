@@ -15,12 +15,13 @@ import {
   Theme,
 } from '@mui/material';
 import { Close, Send } from '@mui/icons-material';
-import { Message, MessageWrite, ChatUserProfile } from '@/data/chat'; // Imported ChatUserProfile
+import { Message, MessageWrite } from '@/data/chat';
 import { grey } from '@mui/material/colors';
 import useChatScroll from '@/hooks/useChatScroll';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { formatDate } from '@/utils/date';
-import { getProfilePhoto } from '@/utils/chat';
+import { IsUserProfile } from '@/data/auth';
+import { getFullName, getProfilePhoto } from '@/utils/auth';
 
 const ChatRoom = ({
   roomOwner,
@@ -29,7 +30,7 @@ const ChatRoom = ({
   onClose,
   sx,
 }: {
-  roomOwner: ChatUserProfile; // Room Owner Profile
+  roomOwner: IsUserProfile; // Room Owner Profile
   messages: Message[];
   onSend: (msg: MessageWrite) => void;
   onClose?: () => void;
@@ -73,7 +74,7 @@ const ChatRoom = ({
         <Box display="flex" alignItems="center" gap={1}>
           <Avatar src={getProfilePhoto(roomOwner)} />
           <Typography variant="h6" fontWeight="bold">
-            {roomOwner.first_name} {roomOwner.last_name}
+            {getFullName(roomOwner)}
           </Typography>
         </Box>
 
@@ -95,7 +96,7 @@ const ChatRoom = ({
         <Box display="flex" flexGrow={1} flexDirection="column" alignItems="center">
           <Avatar src={getProfilePhoto(roomOwner)} />
           <Typography variant="h6" fontWeight="bold">
-            {roomOwner.first_name} {roomOwner.last_name}
+            {getFullName(roomOwner)}
           </Typography>
         </Box>
         <List>
