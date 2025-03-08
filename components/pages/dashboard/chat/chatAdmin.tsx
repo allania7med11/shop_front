@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from 'react';
 import { MessageWrite } from '@/data/chat';
-import {
-  useChatsQuery,
-  useChatQuery,
-  useAddChatMessageMutation,
-} from '@/store/reducer/apis/admin/chatAdminApi';
+import { useChatsQuery } from '@/store/reducer/apis/admin/chatAdminApi';
 import { ChatRoom } from '@/components/common/chat/chatRoom';
 import { Box, Typography } from '@mui/material';
 import { ChatList } from './ChatList';
-import { IsUserProfile } from '@/data/auth';
-import { getGuestProfile } from '@/utils/auth';
+import { useAdminChatWebSocket } from '@/hooks/useAdminChatWebSocket';
 
 export default function ChatAdmin() {
   const { data: chats = [], isLoading: isChatsLoading } = useChatsQuery();
   const [selectedChatId, setSelectedChatId] = useState<number | null>(null);
+
   useEffect(() => {
     if (!selectedChatId && chats.length > 0) {
       setSelectedChatId(chats[0].id);
     }
   }, [chats, selectedChatId]);
-  const { data: chatDetail, isLoading: isChatDetailLoading } = useChatQuery(selectedChatId!, {
-    skip: !selectedChatId,
-  });
-  const [addChatMessage] = useAddChatMessageMutation();
+
+  // Use the custom WebSocket hook for admin chat if a chat is selected.
+  const {
+    roomOwner,
+    messages,
+    sendMessage,
+    isLoading: isChatDetailLoading,
+  } = useAdminChatWebSocket(selectedChatId!);
+
+  // Use the WebSocket send function to send a message.
   const handleSend = (message: MessageWrite) => {
     if (selectedChatId) {
-      addChatMessage({ chatId: selectedChatId, data: message });
+      sendMessage(message);
     }
   };
-  const roomOwner: IsUserProfile = chatDetail?.created_by ?? getGuestProfile();
-  const messages = chatDetail?.messages || [];
+
   if (isChatsLoading) {
     return <Typography variant="body1">Loading chats...</Typography>;
   }
+
   return (
     <Box display="flex" alignItems="center">
       <ChatList
