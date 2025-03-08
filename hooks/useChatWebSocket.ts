@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { useMessagesQuery } from '@/store/reducer/apis/chatApi';
 import { MessageWrite, Message } from '@/data/chat';
 import { wsBaseUrl } from '@/utils/config';
+import { useGetUserProfileQuery } from '@/store/reducer/apis/authApi';
+import { IsUserProfile } from '@/data/auth';
 
 export const useChatWebSocket = () => {
+  const { data: profile = false } = useGetUserProfileQuery();
   const { data: initialMessages, isLoading, error } = useMessagesQuery();
   const [messages, setMessages] = useState<Message[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -28,7 +31,11 @@ export const useChatWebSocket = () => {
         const messageData = JSON.parse(event.data);
 
         if (messageData.data) {
-          setMessages(prev => [...prev, messageData.data]); // Append the new message
+          const message: Message = {
+            ...messageData.data,
+            is_mine: is_mine_by_user(messageData.data, profile),
+          };
+          setMessages(prev => [...prev, message]); // Append the new message
         } else if (messageData.error) {
           console.error('WebSocket error:', messageData.error);
         }
@@ -64,4 +71,11 @@ export const useChatWebSocket = () => {
   };
 
   return { messages, sendMessage, isLoading, error };
+};
+
+const is_mine_by_user = (message: Message, profile: false | IsUserProfile) => {
+  if (!message.created_by || !profile) {
+    return true;
+  }
+  return message.created_by.email == profile.email;
 };
