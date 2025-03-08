@@ -3,6 +3,7 @@ export interface IsUserProfile {
   last_name: string;
   email: string;
   profile_photo: string;
+  is_admin: boolean;
 }
 
 export interface LoginCredentials {

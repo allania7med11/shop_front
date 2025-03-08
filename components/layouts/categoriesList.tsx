@@ -35,7 +35,7 @@ const sxItem: SxProps = {
 
 export const CategoriesList = () => {
   const { data } = useCategoriesQuery();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isAdmin } = useAuth();
   return (
     <List
       sx={{
@@ -60,7 +60,7 @@ export const CategoriesList = () => {
           </ul>
         </li>
       )}
-      {isAuthenticated && (
+      {isAdmin && (
         <li key={`section-user`}>
           <ul>
             <ListSubheader sx={{ lineHeight: '36px', mt: '16px' }}>{`ADMIN`}</ListSubheader>
