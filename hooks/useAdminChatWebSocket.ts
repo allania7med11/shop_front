@@ -4,8 +4,10 @@ import { wsBaseUrl } from '@/utils/config';
 import { useChatQuery } from '@/store/reducer/apis/admin/chatAdminApi';
 import { IsUserProfile } from '@/data/auth';
 import { getGuestProfile } from '@/utils/auth';
+import { useGetUserProfileQuery } from '@/store/reducer/apis/authApi';
 
 export const useAdminChatWebSocket = (chatId: number) => {
+  const { data: profile } = useGetUserProfileQuery();
   const {
     data: chatDetail,
     isLoading,
@@ -39,7 +41,11 @@ export const useAdminChatWebSocket = (chatId: number) => {
         const messageData = JSON.parse(event.data);
 
         if (messageData.data) {
-          setMessages(prev => [...prev, messageData.data]); // Append the new message
+          const message: Message = {
+            ...messageData.data,
+            is_mine: is_mine_by_admin(messageData.data, profile),
+          };
+          setMessages(prev => [...prev, message]);
         } else if (messageData.error) {
           console.error('WebSocket error:', messageData.error);
         }
@@ -76,4 +82,11 @@ export const useAdminChatWebSocket = (chatId: number) => {
   };
 
   return { roomOwner, messages, sendMessage, isLoading, error };
+};
+
+const is_mine_by_admin = (message: Message, profile: IsUserProfile) => {
+  if (!message.created_by) {
+    return false;
+  }
+  return message.created_by.email == profile.email;
 };
