@@ -7,7 +7,7 @@ import { IsUserProfile } from '@/data/auth';
 
 export const useChatWebSocket = () => {
   const { data: profile = false } = useGetUserProfileQuery();
-  const { data: initialMessages, isLoading, error } = useMessagesQuery();
+  const { data: initialMessages, isLoading, error, isSuccess } = useMessagesQuery();
   const [messages, setMessages] = useState<Message[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
@@ -18,6 +18,7 @@ export const useChatWebSocket = () => {
   }, [initialMessages]);
 
   useEffect(() => {
+    if (!isSuccess) return;
     const wsUrl = `${wsBaseUrl}/chats/`;
 
     const ws = new WebSocket(wsUrl);
@@ -57,7 +58,7 @@ export const useChatWebSocket = () => {
     return () => {
       ws.close();
     };
-  }, []);
+  }, [isSuccess]);
 
   const sendMessage = (message: MessageWrite) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
