@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Avatar, Menu, MenuItem, Typography, Box, Button } from '@mui/material';
+import { Avatar, Menu, MenuItem, Typography, Box, Button, Divider } from '@mui/material';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import PersonIcon from '@mui/icons-material/Person';
 import { Link } from '@/components/common/Link';
@@ -9,7 +9,7 @@ import useAuth from '@/hooks/useAuth';
 import { sxLink } from '@/styles/linkStyle';
 
 export const AvatarComponent = () => {
-  const { isAuthenticated, fullName } = useAuth();
+  const { isAuthenticated, fullName, profile_photo } = useAuth();
   const [logoutUser, { isLoading }] = useLogoutUserMutation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -37,10 +37,14 @@ export const AvatarComponent = () => {
         sx={{ color: grey[800], textTransform: 'none' }}
       >
         {userLoggedIn ? (
-          <Box display="flex" alignItems="center">
-            <Typography variant="body1">{fullName}</Typography>
+          <>
+            <Avatar
+              alt="Profile Photo"
+              src={profile_photo}
+              sx={{ width: 40, height: 40 }}
+            />
             <ArrowDropDownOutlinedIcon />
-          </Box>
+          </>
         ) : (
           <>
             <Avatar>
@@ -52,9 +56,28 @@ export const AvatarComponent = () => {
       </Button>
       <Menu id="user-menu" anchorEl={anchorEl} keepMounted open={open} onClose={handleClose}>
         {isAuthenticated ? (
-          <MenuItem onClick={handleLogout} disabled={isLoading}>
-            {isLoading ? 'Logging out...' : 'Logout'}
-          </MenuItem>
+          [
+            <MenuItem key="1" onClick={handleClose}>
+              <Link href="/auth/profile" sx={sxLink}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }} >
+                    <Avatar
+                      alt="Profile Photo"
+                      src={profile_photo}
+                      sx={{ width: 48, height: 48 }}
+                    />
+                    <Typography variant="body1">{fullName}</Typography>
+                  </Box>
+                  <Button variant="outlined" sx={{ textTransform: "none", width: "100%", p: 0, borderRadius: "50px" }}>View Profile</Button>
+                </Box>
+              </Link>
+            </MenuItem>,
+            <Divider />,
+            <MenuItem onClick={handleLogout} disabled={isLoading}>
+              {isLoading ? 'Logging out...' : 'Logout'}
+            </MenuItem>,
+          ]
+
         ) : (
           [
             <MenuItem key="1" onClick={handleClose}>
