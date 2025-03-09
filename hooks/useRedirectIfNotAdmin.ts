@@ -7,7 +7,7 @@ const useRedirectIfNotAdmin = () => {
   const { isAdmin, isSuccess, isLoading, error } = useAuth();
 
   useEffect(() => {
-    if (!isAdmin) {
+    if (isSuccess && !isAdmin) {
       router.push('/');
     }
   }, [isAdmin]);
