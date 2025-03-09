@@ -5,12 +5,11 @@ import useAuth from './useAuth';
 const useRedirectIfNotAdmin = () => {
   const router = useRouter();
   const { isAdmin, isSuccess, isLoading, error } = useAuth();
-
   useEffect(() => {
-    if (isSuccess && !isAdmin) {
+    if (!isLoading && !isAdmin) {
       router.push('/');
     }
-  }, [isAdmin]);
+  }, [isAdmin, isLoading]);
   return { isAdmin, isSuccess, isLoading, error };
 };
 
