@@ -2,18 +2,17 @@ import React, { useState } from 'react';
 import { ChatButton } from './chatButton';
 import { ChatRoom } from './chatRoom';
 import { MessageWrite } from '@/data/chat';
-import { useCreateMessageMutation, useMessagesQuery } from '@/store/reducer/apis/chatApi';
+import { useChatWebSocket } from '@/hooks/useChatWebSocket';
 import { IsUserProfile } from '@/data/auth';
 import { getAdminProfile } from '@/utils/auth';
 
 const ChatContainer = () => {
   const [open, setOpen] = useState(false);
-  const { data: messages } = useMessagesQuery();
-  const [createMessage] = useCreateMessageMutation();
+  const { messages, sendMessage } = useChatWebSocket();
   const roomOwner: IsUserProfile = getAdminProfile();
 
   const handleSend = (message: MessageWrite) => {
-    createMessage(message);
+    sendMessage(message);
   };
 
   return (

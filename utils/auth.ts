@@ -25,6 +25,7 @@ export function getAdminProfile(): IsUserProfile {
     last_name: '',
     profile_photo: '/static/LogoSmall.svg',
     email: 'admin@logipsum.com',
+    is_admin: true,
   };
 }
 
@@ -34,6 +35,7 @@ export function getGuestProfile(): IsUserProfile {
     last_name: 'User',
     profile_photo: '/static/images/anonymous.png',
     email: '',
+    is_admin: false,
   };
 }
 

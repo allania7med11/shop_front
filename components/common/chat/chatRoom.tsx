@@ -29,11 +29,13 @@ const ChatRoom = ({
   onSend,
   onClose,
   sx,
+  closeIcon = null,
 }: {
   roomOwner: IsUserProfile; // Room Owner Profile
   messages: Message[];
   onSend: (msg: MessageWrite) => void;
   onClose?: () => void;
+  closeIcon?: React.JSX.Element;
   sx?: SxProps<Theme>;
 }) => {
   const [input, setInput] = useState('');
@@ -78,11 +80,7 @@ const ChatRoom = ({
           </Typography>
         </Box>
 
-        {onClose && (
-          <IconButton onClick={onClose}>
-            <Close />
-          </IconButton>
-        )}
+        {onClose && <IconButton onClick={onClose}>{closeIcon ? closeIcon : <Close />}</IconButton>}
       </Box>
       <Box
         display="flex"
