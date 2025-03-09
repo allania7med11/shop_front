@@ -75,8 +75,11 @@ export const useChatWebSocket = () => {
 };
 
 const is_mine_by_user = (message: Message, profile: false | IsUserProfile) => {
-  if (!message.created_by || !profile) {
+  if (!message.created_by) {
     return true;
+  }
+  if (!profile) {
+    return false;
   }
   return message.created_by.email == profile.email;
 };
