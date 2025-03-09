@@ -36,13 +36,22 @@ export default function ChatAdmin() {
   }
 
   return (
-    <Box display="flex" alignItems="center">
-      <ChatList
-        chats={chats}
-        selectedChatId={selectedChatId}
-        onSelectChat={id => setSelectedChatId(id)}
-      />
-      <Box flex={1} display="flex" flexDirection="column">
+    <Box display="flex" alignItems="stretch" flexWrap="wrap" height="800px">
+      <Box
+        p={1}
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        flexGrow={1}
+        flexShrink={1}
+      >
+        <ChatList
+          chats={chats}
+          selectedChatId={selectedChatId}
+          onSelectChat={id => setSelectedChatId(id)}
+        />
+      </Box>
+      <Box flex={1} display="flex" flexDirection="column" alignItems="center" flexGrow={1}>
         <Box sx={{ height: '100%', p: 2 }}>
           {selectedChatId && !isChatDetailLoading ? (
             <ChatRoom
