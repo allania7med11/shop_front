@@ -2,12 +2,7 @@ import { useGetUserProfileQuery } from '@/store/reducer/apis/authApi';
 import { getFullName } from '@/utils/auth';
 
 const useAuth = () => {
-  let { data: profile = false } = useGetUserProfileQuery();
-  const { error } = useGetUserProfileQuery();
-  if (error) {
-    profile = false;
-  }
-
+  const { data: profile = false, isSuccess, isLoading, error } = useGetUserProfileQuery();
   const isAuthenticated = !!profile;
   const isAdmin = profile && profile.is_admin;
   const fullName = profile ? getFullName(profile) : null;
@@ -16,7 +11,16 @@ const useAuth = () => {
       ? profile.profile_photo
       : '/static/images/user_authenticated.png';
 
-  return { isAuthenticated, isAdmin, profile, fullName, profile_photo };
+  return {
+    isSuccess,
+    isLoading,
+    error,
+    isAuthenticated,
+    isAdmin,
+    profile,
+    fullName,
+    profile_photo,
+  };
 };
 
 export default useAuth;
