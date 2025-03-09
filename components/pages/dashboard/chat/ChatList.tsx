@@ -33,8 +33,8 @@ export const ChatList: React.FC<ChatListProps> = ({ chats, selectedChatId, onSel
   return (
     <Paper
       sx={{
-        width: '400px',
-        height: '600px',
+        width: 'min(400px, 90vw)',
+        maxHeight: 'min(600px, 80vh)',
         display: 'flex',
         flexDirection: 'column',
       }}

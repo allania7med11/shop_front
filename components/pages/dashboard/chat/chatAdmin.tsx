@@ -38,7 +38,7 @@ export default function ChatAdmin() {
   return (
     <Box display="flex" alignItems="center" flexWrap="wrap">
       <Box
-        p={1}
+        p={2}
         display="flex"
         flexDirection="column"
         alignItems="center"
