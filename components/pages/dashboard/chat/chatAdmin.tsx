@@ -36,7 +36,7 @@ export default function ChatAdmin() {
   }
 
   return (
-    <Box display="flex" alignItems="stretch" flexWrap="wrap" height="800px">
+    <Box display="flex" alignItems="center" flexWrap="wrap">
       <Box
         p={1}
         display="flex"
