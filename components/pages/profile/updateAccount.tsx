@@ -32,13 +32,13 @@ export const UpdateAccount = () => {
     },
   });
   const [updateUserProfile, { isLoading, error, isSuccess }] = useUpdateUserProfileMutation();
-  let successMessage = 'Your account has been successfully updated! 🎉';
+  const successMessage = 'Your account has been successfully updated! 🎉';
   const [open, setOpen] = useState(false);
   useEffect(() => {
     setOpen(isSuccess);
   }, [isSuccess]);
   const { globalErrors, setGlobalErrors } = useErrors(error, setError, getValues);
-  const onSubmit = async (form_data) => {
+  const onSubmit = async form_data => {
     clearErrors();
     setGlobalErrors([]);
     await updateUserProfile(form_data);

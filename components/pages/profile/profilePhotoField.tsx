@@ -6,11 +6,10 @@ export default function ProfilePhotoField({ name, control, src }) {
   const [profilePhoto, setProfilePhoto] = useState(src);
 
   const handlePhotoUpload = (event, onChange) => {
-    debugger
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = e => {
         const result = e.target.result;
         if (typeof result === 'string') {
           setProfilePhoto(result);
@@ -32,7 +31,7 @@ export default function ProfilePhotoField({ name, control, src }) {
             type="file"
             accept="image/*"
             style={{ display: 'none' }}
-            onChange={(e) => handlePhotoUpload(e, onChange)}
+            onChange={e => handlePhotoUpload(e, onChange)}
           />
           <Badge
             overlap="circular"
