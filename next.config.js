@@ -1,6 +1,8 @@
+const isSSGBuild = process.env.BUILD_TARGET === 'ssg';
+
 module.exports = {
-  output: 'export',
-  distDir: 'shop_front',
+  output: isSSGBuild ? 'export' : undefined, // Enables static export
+  distDir: isSSGBuild ? 'shop_front' : '.next', // Use a custom folder for SSG
   typescript: {
     ignoreBuildErrors: true,
   },

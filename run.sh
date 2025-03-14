@@ -1,15 +1,16 @@
 #!/bin/sh
 echo "ENVIRONMENT=$ENVIRONMENT"
-echo "PORT=$PORT"
+echo "PORT=${PORT:-3000}"
+
 if [ "$COLLECTSTATIC" = "True" ]; then
     npm run export && echo "Generation completed successfully"
 fi
+
 if [ "$ENVIRONMENT" = "debug" ]; then
     sleep infinity
 elif [ "$ENVIRONMENT" = "dev" ]; then
-    npm run dev -- --port $PORT
+    npm run dev -- --port "$PORT"
 elif [ "$ENVIRONMENT" = "prod" ]; then
-    npm run build
-    npm run export
-    npx serve out -p $PORT
+    npm run export  # Runs `next build` + `next export`
+    npx serve out -l "$PORT"  # Serves static files
 fi
