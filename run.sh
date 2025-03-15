@@ -12,5 +12,5 @@ elif [ "$ENVIRONMENT" = "dev" ]; then
     npm run dev -- --port "$PORT"
 elif [ "$ENVIRONMENT" = "prod" ]; then
     npm run export  # Runs `next build` + `next export`
-    npx serve out -l "$PORT"  # Serves static files
+    npx serve shop_front  -l "$PORT" --no-clipboard # Serves static files
 fi
