@@ -10,8 +10,10 @@ import { useProductQuery } from '@/store/reducer/apis/productApi';
 import { FetchWrap } from '@/components/common/fetchWrap';
 import { useCurrentCartQuery } from '@/store/reducer/apis/cartApi';
 import { addItemsToProducts } from '@/utils/products';
+import useRefreshOnMount from '@/hooks/useRefreshOnMount';
 
 export default function Index() {
+  useRefreshOnMount();
   const router = useRouter();
   const { slug } = router.query;
   const {

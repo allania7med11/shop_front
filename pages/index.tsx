@@ -6,8 +6,10 @@ import { PageTitle } from '@/components/common/pageTitle';
 import { Categories } from '@/components/pages/index/categories';
 import { useCategoriesQuery } from '@/store/reducer/apis/productApi';
 import { FetchWrap } from '@/components/common/fetchWrap';
+import useRefreshOnMount from '@/hooks/useRefreshOnMount';
 
 export default function Index() {
+  useRefreshOnMount();
   const { data, error, isLoading } = useCategoriesQuery();
   return (
     <Container maxWidth={false} sx={{ maxWidth: '1400px' }}>
