@@ -19,7 +19,6 @@ yarn-error.log*
 out
 .vscode
 .env
-shop_front
 server_build
 
 
