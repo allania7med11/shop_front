@@ -8,13 +8,16 @@ const useAuth = () => {
   const isAuthenticated = useMemo(() => isSuccess && !!profile, [isSuccess, profile]);
   const isAdmin = useMemo(() => isSuccess && profile && profile.is_admin, [isSuccess, profile]);
 
-  const fullName = useMemo(() => (profile ? getFullName(profile) : null), [profile]);
+  const fullName = useMemo(
+    () => (profile ? getFullName(profile) : null),
+    [isAuthenticated, profile]
+  );
   const profile_photo = useMemo(
     () =>
       profile && profile.profile_photo
         ? profile.profile_photo
         : '/static/images/user_authenticated.png',
-    [profile]
+    [isAuthenticated, profile]
   );
 
   return {
