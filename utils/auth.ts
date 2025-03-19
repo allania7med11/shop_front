@@ -9,14 +9,21 @@ export function getFullName(userProfile: IsUserProfile): string {
   return fullName || email.split('@')[0];
 }
 
+export function isAnonymous(userProfile: IsUserProfile | false): boolean {
+  if (!userProfile || !userProfile.email) {
+    return true;
+  }
+  return false;
+}
+
 export function getProfilePhoto(userProfile: IsUserProfile | false): string {
-  if (!userProfile) {
+  if (isAnonymous(userProfile)) {
     return '/static/images/anonymous.png';
   }
-  if (!userProfile.profile_photo) {
+  if (userProfile && !userProfile.profile_photo) {
     return '/static/images/user_authenticated.png';
   }
-  return userProfile.profile_photo;
+  return userProfile && userProfile.profile_photo;
 }
 
 export function getAdminProfile(): IsUserProfile {

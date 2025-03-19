@@ -16,7 +16,6 @@ export const useChatWebSocket = () => {
   } = useMessagesQuery();
   const [messages, setMessages] = useState<Message[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  console.log({ initialMessages, isLoading, error, isSuccess, isFetching });
   // Effect to clean up WebSocket when `profile` is invalidated or refetching
   useEffect(() => {
     if (isFetchingProfile) {

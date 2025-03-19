@@ -24,7 +24,6 @@ export const AvatarComponent = () => {
     await logoutUser().unwrap();
     handleClose();
   };
-
   return (
     <Box display="flex" alignItems="center">
       <Button
