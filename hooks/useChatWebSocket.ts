@@ -7,36 +7,43 @@ import { IsUserProfile } from '@/data/auth';
 
 export const useChatWebSocket = () => {
   const { data: profile = false } = useGetUserProfileQuery();
-  const { data: initialMessages, isLoading, error, isSuccess } = useMessagesQuery();
+  const { data: initialMessages = [], isLoading, error, isSuccess } = useMessagesQuery();
   const [messages, setMessages] = useState<Message[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
   useEffect(() => {
-    if (initialMessages) {
-      setMessages(initialMessages);
-    }
+    setMessages(initialMessages);
   }, [initialMessages]);
 
   useEffect(() => {
-    if (!isSuccess) return;
+    if (!isSuccess) {
+      return;
+    }
+    if (socket) {
+      console.log('Cleaning up WebSocket');
+      socket.onopen = null;
+      socket.onmessage = null;
+      socket.onclose = null;
+      socket.onerror = null;
+      socket.close();
+      setSocket(null); // Ensure state updates and removes reference
+    }
     const wsUrl = `${wsBaseUrl}/chats/`;
-
     const ws = new WebSocket(wsUrl);
 
-    ws.onopen = () => {
-      console.log('WebSocket connected:', wsUrl);
-    };
+    ws.onopen = () => console.log('WebSocket connected:', wsUrl);
 
     ws.onmessage = event => {
       try {
         const messageData = JSON.parse(event.data);
-
         if (messageData.data) {
-          const message: Message = {
-            ...messageData.data,
-            is_mine: is_mine_by_user(messageData.data, profile),
-          };
-          setMessages(prev => [...prev, message]); // Append the new message
+          setMessages(prev => [
+            ...prev,
+            {
+              ...messageData.data,
+              is_mine: is_mine_by_user(messageData.data, profile), // `profile` is used here
+            },
+          ]);
         } else if (messageData.error) {
           console.error('WebSocket error:', messageData.error);
         }
@@ -45,20 +52,24 @@ export const useChatWebSocket = () => {
       }
     };
 
-    ws.onclose = () => {
-      console.log('WebSocket disconnected');
-    };
+    ws.onclose = () => console.log('WebSocket disconnected');
 
-    ws.onerror = error => {
-      console.error('WebSocket error:', error);
-    };
+    ws.onerror = error => console.error('WebSocket error:', error);
 
     setSocket(ws);
 
     return () => {
-      ws.close();
+      console.log('Cleaning up WebSocket before reinitialization');
+
+      if (ws) {
+        ws.onopen = null;
+        ws.onmessage = null;
+        ws.onclose = null;
+        ws.onerror = null;
+        ws.close();
+      }
     };
-  }, [isSuccess]);
+  }, [isSuccess, profile]);
 
   const sendMessage = (message: MessageWrite) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
