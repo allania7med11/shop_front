@@ -13,7 +13,6 @@ export const AvatarComponent = () => {
   const [logoutUser, { isLoading }] = useLogoutUserMutation();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const userLoggedIn = Boolean(fullName);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -36,7 +35,7 @@ export const AvatarComponent = () => {
         size="large"
         sx={{ color: grey[800], textTransform: 'none' }}
       >
-        {userLoggedIn ? (
+        {isAuthenticated ? (
           <>
             <Avatar alt="Profile Photo" src={profile_photo} sx={{ width: 40, height: 40 }} />
             <ArrowDropDownOutlinedIcon />
@@ -73,8 +72,8 @@ export const AvatarComponent = () => {
                   </Box>
                 </Link>
               </MenuItem>,
-              <Divider />,
-              <MenuItem onClick={handleLogout} disabled={isLoading}>
+              <Divider key="2" />,
+              <MenuItem key="3" onClick={handleLogout} disabled={isLoading}>
                 {isLoading ? 'Logging out...' : 'Logout'}
               </MenuItem>,
             ]
