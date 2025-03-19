@@ -1,5 +1,5 @@
 import { useGetUserProfileQuery } from '@/store/reducer/apis/authApi';
-import { getFullName } from '@/utils/auth';
+import { getFullName, getProfilePhoto } from '@/utils/auth';
 import { useMemo } from 'react';
 
 const useAuth = () => {
@@ -12,13 +12,7 @@ const useAuth = () => {
     () => (profile ? getFullName(profile) : null),
     [isAuthenticated, profile]
   );
-  const profile_photo = useMemo(
-    () =>
-      profile && profile.profile_photo
-        ? profile.profile_photo
-        : '/static/images/user_authenticated.png',
-    [isAuthenticated, profile]
-  );
+  const profile_photo = useMemo(() => getProfilePhoto(profile), [isAuthenticated, profile]);
 
   return {
     isSuccess,

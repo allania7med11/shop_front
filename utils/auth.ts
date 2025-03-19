@@ -9,7 +9,7 @@ export function getFullName(userProfile: IsUserProfile): string {
   return fullName || email.split('@')[0];
 }
 
-export function getProfilePhoto(userProfile: IsUserProfile): string {
+export function getProfilePhoto(userProfile: IsUserProfile | false): string {
   if (!userProfile) {
     return '/static/images/anonymous.png';
   }

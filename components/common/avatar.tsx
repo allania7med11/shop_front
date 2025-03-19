@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Avatar, Menu, MenuItem, Typography, Box, Button, Divider } from '@mui/material';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
-import PersonIcon from '@mui/icons-material/Person';
 import { Link } from '@/components/common/Link';
 import { grey } from '@mui/material/colors';
 import { useLogoutUserMutation } from '@/store/reducer/apis/authApi';
@@ -35,19 +34,8 @@ export const AvatarComponent = () => {
         size="large"
         sx={{ color: grey[800], textTransform: 'none' }}
       >
-        {isAuthenticated ? (
-          <>
-            <Avatar alt="Profile Photo" src={profile_photo} sx={{ width: 40, height: 40 }} />
-            <ArrowDropDownOutlinedIcon />
-          </>
-        ) : (
-          <>
-            <Avatar>
-              <PersonIcon />
-            </Avatar>
-            <ArrowDropDownOutlinedIcon />
-          </>
-        )}
+        <Avatar alt="Profile Photo" src={profile_photo} sx={{ width: 40, height: 40 }} />
+        <ArrowDropDownOutlinedIcon />
       </Button>
       <Menu id="user-menu" anchorEl={anchorEl} keepMounted open={open} onClose={handleClose}>
         {isAuthenticated
