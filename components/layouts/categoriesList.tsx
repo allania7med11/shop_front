@@ -61,10 +61,10 @@ export const CategoriesList = () => {
         </li>
       )}
       {isAdmin && (
-        <li key={`section-user`}>
+        <li key={`section-admin`}>
           <ul>
             <ListSubheader sx={{ lineHeight: '36px', mt: '16px' }}>{`ADMIN`}</ListSubheader>
-            <ListItem key={`item-user-profile`} sx={sxItem}>
+            <ListItem key={`item-chat`} sx={sxItem}>
               <Link href={`/dashboard/chat/`}>
                 <ListItemIcon sx={{ minWidth: '40px' }}>
                   <ChatIcon />
