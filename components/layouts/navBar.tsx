@@ -11,7 +11,7 @@ import { useCurrentCartQuery } from '@/store/reducer/apis/cartApi';
 
 export default function NavBar({ open, handleDrawerOpen }) {
   const { data } = useCurrentCartQuery();
-  const items = data ? data.items : [];
+  const items = React.useMemo(() => data?.items ?? [], [data?.items]);
 
   return (
     <AppBar position="fixed" open={open} sx={{ bgcolor: 'white', color: 'black', height: '64px' }}>

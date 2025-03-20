@@ -44,9 +44,8 @@ export const CategoryHeader = () => {
     skip: !router.isReady,
   });
   const products = data && data.products;
-  const { order } = useSelector((state: RootState) => ({
-    order: state.filters.ordering || '',
-  }));
+  const order = useSelector((state: RootState) => state.filters.ordering || '');
+
   const dispatch = useDispatch();
   const setOrder = value => dispatch(updateOrdering(value));
   const handleChange = (event: SelectChangeEvent) => {

@@ -13,9 +13,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export const Discount = () => {
-  const { discount } = useSelector((state: RootState) => ({
-    discount: `${state.filters.discount_min}-${state.filters.discount_max}`,
-  }));
+  const discountMin = useSelector((state: RootState) => state.filters.discount_min);
+  const discountMax = useSelector((state: RootState) => state.filters.discount_max);
+
+  const discount = `${discountMin}-${discountMax}`;
   const dispatch = useDispatch();
   useEffect(() => {
     const discountRange = discount.split('-') as [string, string];

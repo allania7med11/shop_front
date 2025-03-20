@@ -10,6 +10,7 @@ import { RootState } from '@/store/reducer';
 import { IsProductFilters } from '@/data/categories';
 import { useCurrentCartQuery } from '@/store/reducer/apis/cartApi';
 import { addItemsToProducts } from '@/utils/products';
+import { useMemo } from 'react';
 
 const sxProducts: SxProps = {
   p: '24px',
@@ -21,7 +22,8 @@ const sxProducts: SxProps = {
 
 export const Products = () => {
   const { data } = useCurrentCartQuery();
-  const items = data ? data.items : [];
+
+  const items = useMemo(() => data?.items ?? [], [data?.items]);
   const filters: IsProductFilters = useSelector((state: RootState) => {
     // Define a list of keys excluding categorySlug since it's always present
     const keys: (keyof IsProductFilters)[] = [
