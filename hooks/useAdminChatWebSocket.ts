@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { MessageWrite, Message } from '@/data/chat';
 import { wsBaseUrl } from '@/utils/config';
 import { useChatQuery } from '@/store/reducer/apis/admin/chatAdminApi';
@@ -16,7 +16,7 @@ export const useAdminChatWebSocket = (chatId: number) => {
     skip: !chatId,
   });
   const roomOwner: IsUserProfile = chatDetail?.created_by ?? getGuestProfile();
-  const initialMessages = chatDetail?.messages || [];
+  const initialMessages = useMemo(() => chatDetail?.messages ?? [], [chatDetail?.messages]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
