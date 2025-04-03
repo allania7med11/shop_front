@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useMessagesQuery } from '@/store/reducer/apis/chatApi';
-import { MessageWrite, Message } from '@/data/chat';
+import { MessageWrite, Message, WebSocketMessage } from '@/data/chat';
 import { wsBaseUrl } from '@/utils/config';
 import { useGetUserProfileQuery } from '@/store/reducer/apis/authApi';
 import { IsUserProfile } from '@/data/auth';
@@ -16,6 +16,14 @@ export const useChatWebSocket = () => {
   } = useMessagesQuery();
   const [messages, setMessages] = useState<Message[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [typingMessage, setTypingMessage] = useState<Message | null>(null);
+
+  // Compute final messages array including typing indicator
+  const finalMessages = useMemo(() => {
+    if (!typingMessage) return messages;
+    return [...messages, typingMessage];
+  }, [messages, typingMessage]);
+
   // Effect to clean up WebSocket when `profile` is invalidated or refetching
   useEffect(() => {
     if (isFetchingProfile) {
@@ -58,25 +66,42 @@ export const useChatWebSocket = () => {
 
       ws.onmessage = event => {
         try {
-          const messageData = JSON.parse(event.data);
+          const data = JSON.parse(event.data).data as WebSocketMessage;
+          let message;
 
-          if (messageData.data) {
-            setMessages(prev => [
-              ...prev,
-              {
-                ...messageData.data,
-                is_mine: is_mine_by_user(messageData.data, profile), // ✅ Keep profile dependency
-              },
-            ]);
-          } else if (messageData.error) {
-            console.error('WebSocket error:', messageData.error);
+          switch (data.message_type) {
+            case 'typing':
+              if (data.payload.is_typing) {
+                setTypingMessage({
+                  ...data.payload.message,
+                  is_mine: false,
+                });
+              } else {
+                setTypingMessage(null);
+              }
+              break;
+
+            case 'message':
+              message = {
+                ...data.payload.message,
+                is_mine: is_mine_by_user(data.payload.message, profile),
+              };
+              setMessages(prev => [...prev, message]);
+              break;
+
+            default:
+              console.error('Unknown message type:', data.message_type);
           }
         } catch (error) {
           console.error('Error parsing WebSocket message:', error);
         }
       };
 
-      ws.onclose = () => console.log('WebSocket disconnected');
+      ws.onclose = () => {
+        console.log('WebSocket disconnected');
+        setTypingMessage(null);
+      };
+
       ws.onerror = error => console.error('WebSocket error:', error);
 
       setSocket(ws);
@@ -104,8 +129,12 @@ export const useChatWebSocket = () => {
       console.error('WebSocket is not open');
     }
   };
-
-  return { messages, sendMessage, isLoading, error };
+  return {
+    messages: finalMessages,
+    sendMessage,
+    isLoading,
+    error,
+  };
 };
 
 const is_mine_by_user = (message: Message, profile: false | IsUserProfile) => {
