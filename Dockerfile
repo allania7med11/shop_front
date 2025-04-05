@@ -1,8 +1,10 @@
-FROM node:18-alpine
+FROM node:18-slim
 
 # Install system dependencies as root
-RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y bash git openssh-client && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
