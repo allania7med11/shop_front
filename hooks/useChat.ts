@@ -7,8 +7,6 @@ interface UseChatOptions {
   initialMessages?: Message[];
   profile?: IsUserProfile | false;
   isMineFunction: (message: Message, profile: IsUserProfile | false | undefined) => boolean;
-  onConnect?: () => void;
-  onDisconnect?: () => void;
 }
 
 export const useChat = ({
@@ -16,8 +14,6 @@ export const useChat = ({
   initialMessages = [],
   profile,
   isMineFunction,
-  onConnect,
-  onDisconnect,
 }: UseChatOptions) => {
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -44,7 +40,6 @@ export const useChat = ({
 
     ws.onopen = () => {
       console.log('WebSocket connected:', wsUrl);
-      if (onConnect) onConnect();
     };
 
     ws.onmessage = event => {
@@ -83,7 +78,6 @@ export const useChat = ({
     ws.onclose = () => {
       console.log('WebSocket disconnected');
       setTypingMessage(null);
-      if (onDisconnect) onDisconnect();
     };
 
     ws.onerror = error => {
@@ -92,6 +86,7 @@ export const useChat = ({
 
     setSocket(ws);
 
+    // Return cleanup function
     return () => {
       if (ws) {
         ws.onopen = null;
@@ -101,7 +96,7 @@ export const useChat = ({
         ws.close();
       }
     };
-  }, [wsUrl, profile, isMineFunction, onConnect, onDisconnect]);
+  }, [wsUrl, profile, isMineFunction]);
 
   const sendMessage = (message: MessageWrite) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
