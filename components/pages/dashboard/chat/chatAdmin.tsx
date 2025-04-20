@@ -4,7 +4,7 @@ import { useChatsQuery } from '@/store/reducer/apis/admin/chatAdminApi';
 import { ChatRoom } from '@/components/common/chat/chatRoom';
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import { ChatList } from './ChatList';
-import { useAdminChatWebSocket } from '@/hooks/useAdminChatWebSocket';
+import { useAdminChat } from '@/hooks/useAdminChat';
 import { ArrowBack } from '@mui/icons-material';
 
 export default function ChatAdmin() {
@@ -24,7 +24,7 @@ export default function ChatAdmin() {
     messages,
     sendMessage,
     isLoading: isChatDetailLoading,
-  } = useAdminChatWebSocket(selectedChatId!);
+  } = useAdminChat(selectedChatId!);
 
   const handleSend = (message: MessageWrite) => {
     if (selectedChatId) {
