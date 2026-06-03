@@ -25,11 +25,8 @@ export const useChat = ({
     return [...messages, typingMessage];
   }, [messages, typingMessage]);
 
-  // Update messages when initialMessages change
   useEffect(() => {
-    if (initialMessages.length > 0) {
-      setMessages(initialMessages);
-    }
+    setMessages(initialMessages);
   }, [initialMessages]);
 
   // WebSocket connection management
