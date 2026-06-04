@@ -21,4 +21,7 @@ out
 .env
 server_build
 
+# TypeScript build cache
+*.tsbuildinfo
+
 

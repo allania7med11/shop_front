@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import Router from 'next/router';
 import { MessageWrite, Message, WebSocketMessage } from '@/data/chat';
 import { IsUserProfile } from '@/data/auth';
 import { api } from '@/store/reducer/apis';
@@ -69,6 +70,11 @@ export const useChat = ({
             // exactly the caches the server flagged so the UI (cart badge) stays live.
             if (data.payload.invalidates?.length) {
               dispatch(api.util.invalidateTags(data.payload.invalidates));
+            }
+            // The agent can also drive the screen (e.g. "show me my cart" -> /cart/).
+            // Router singleton (not the hook) so this needs no extra effect dependency.
+            if (data.payload.navigate) {
+              Router.push(data.payload.navigate);
             }
             break;
 

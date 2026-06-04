@@ -20,6 +20,8 @@ export interface WebSocketPayload {
   is_typing?: boolean;
   // Set when the AI reply changed server state, so the client refetches just these caches.
   invalidates?: CacheTag[];
+  // A path the agent wants the client to open (e.g. "/cart/"), so chat can drive the screen.
+  navigate?: string;
 }
 
 // Complete WebSocket Message Structure
