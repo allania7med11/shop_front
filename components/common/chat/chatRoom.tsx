@@ -52,8 +52,8 @@ const ChatRoom = ({
   return (
     <Paper
       sx={{
-        width: 400,
-        height: 600,
+        width: 440,
+        height: 640,
         maxWidth: '90vw',
         maxHeight: '90vh',
         display: 'flex',
@@ -115,6 +115,10 @@ const ChatRoom = ({
                     <ReactMarkdown
                       components={{
                         p: ({ children }) => <span style={{ margin: 0 }}>{children}</span>,
+                        ul: ({ children }) => (
+                          <ul style={{ margin: '4px 0', paddingLeft: '1.1em' }}>{children}</ul>
+                        ),
+                        li: ({ children }) => <li style={{ margin: 0 }}>{children}</li>,
                       }}
                     >
                       {msg.content}
@@ -127,7 +131,7 @@ const ChatRoom = ({
                     px: 2,
                     wordBreak: 'break-word',
                     borderRadius: 4,
-                    maxWidth: '70%',
+                    maxWidth: '85%',
                     cursor: 'pointer',
                     flexGrow: 0,
                   }}
