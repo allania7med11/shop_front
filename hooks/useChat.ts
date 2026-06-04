@@ -1,6 +1,8 @@
 import { useEffect, useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { MessageWrite, Message, WebSocketMessage } from '@/data/chat';
 import { IsUserProfile } from '@/data/auth';
+import { api } from '@/store/reducer/apis';
 
 interface UseChatOptions {
   wsUrl: string;
@@ -15,6 +17,7 @@ export const useChat = ({
   profile,
   isMineFunction,
 }: UseChatOptions) => {
+  const dispatch = useDispatch();
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [typingMessage, setTypingMessage] = useState<Message | null>(null);
@@ -62,6 +65,11 @@ export const useChat = ({
               is_mine: isMineFunction(data.payload.message, profile),
             };
             setMessages(prev => [...prev, message]);
+            // The AI reply may have changed server state (e.g. added to cart); refetch
+            // exactly the caches the server flagged so the UI (cart badge) stays live.
+            if (data.payload.invalidates?.length) {
+              dispatch(api.util.invalidateTags(data.payload.invalidates));
+            }
             break;
 
           default:
@@ -93,7 +101,7 @@ export const useChat = ({
         ws.close();
       }
     };
-  }, [wsUrl, profile, isMineFunction]);
+  }, [wsUrl, profile, isMineFunction, dispatch]);
 
   const sendMessage = (message: MessageWrite) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
