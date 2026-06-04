@@ -1,12 +1,17 @@
 import { useEffect, useState, useMemo } from 'react';
-import { MessageWrite, Message, WebSocketMessage } from '@/data/chat';
+import { useDispatch } from 'react-redux';
+import Router from 'next/router';
+import { MessageWrite, Message, WebSocketMessage, ClientContext } from '@/data/chat';
 import { IsUserProfile } from '@/data/auth';
+import { api } from '@/store/reducer/apis';
 
 interface UseChatOptions {
   wsUrl: string;
   initialMessages?: Message[];
   profile?: IsUserProfile | false;
   isMineFunction: (message: Message, profile: IsUserProfile | false | undefined) => boolean;
+  // Snapshot of the customer's live screen, attached to each outgoing message (client chat only).
+  getClientContext?: () => ClientContext;
 }
 
 export const useChat = ({
@@ -14,7 +19,9 @@ export const useChat = ({
   initialMessages = [],
   profile,
   isMineFunction,
+  getClientContext,
 }: UseChatOptions) => {
+  const dispatch = useDispatch();
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [typingMessage, setTypingMessage] = useState<Message | null>(null);
@@ -25,11 +32,8 @@ export const useChat = ({
     return [...messages, typingMessage];
   }, [messages, typingMessage]);
 
-  // Update messages when initialMessages change
   useEffect(() => {
-    if (initialMessages.length > 0) {
-      setMessages(initialMessages);
-    }
+    setMessages(initialMessages);
   }, [initialMessages]);
 
   // WebSocket connection management
@@ -65,6 +69,16 @@ export const useChat = ({
               is_mine: isMineFunction(data.payload.message, profile),
             };
             setMessages(prev => [...prev, message]);
+            // The AI reply may have changed server state (e.g. added to cart); refetch
+            // exactly the caches the server flagged so the UI (cart badge) stays live.
+            if (data.payload.invalidates?.length) {
+              dispatch(api.util.invalidateTags(data.payload.invalidates));
+            }
+            // The agent can also drive the screen (e.g. "show me my cart" -> /cart/).
+            // Router singleton (not the hook) so this needs no extra effect dependency.
+            if (data.payload.navigate) {
+              Router.push(data.payload.navigate);
+            }
             break;
 
           default:
@@ -96,12 +110,15 @@ export const useChat = ({
         ws.close();
       }
     };
-  }, [wsUrl, profile, isMineFunction]);
+  }, [wsUrl, profile, isMineFunction, dispatch]);
 
   const sendMessage = (message: MessageWrite) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
+      // Attach the current page so the agent is page-aware (won't offer a page they're on).
+      // Cart contents are NOT sent — the agent reads those via the view_cart tool.
       const formattedMessage = {
-        content: message.content, // Send only the "content" field (matches Django Channels)
+        content: message.content,
+        client_context: { current_path: Router.asPath },
       };
       socket.send(JSON.stringify(formattedMessage));
     } else {

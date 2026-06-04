@@ -22,6 +22,7 @@ import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { formatDate } from '@/utils/date';
 import { IsUserProfile } from '@/data/auth';
 import { getFullName, getProfilePhoto } from '@/utils/auth';
+import ReactMarkdown from 'react-markdown';
 
 const ChatRoom = ({
   roomOwner,
@@ -51,8 +52,8 @@ const ChatRoom = ({
   return (
     <Paper
       sx={{
-        width: 400,
-        height: 600,
+        width: 440,
+        height: 640,
         maxWidth: '90vw',
         maxHeight: '90vh',
         display: 'flex',
@@ -110,7 +111,19 @@ const ChatRoom = ({
               )}
               <Tooltip title={formatDate(msg.created_at)} arrow>
                 <ListItemText
-                  primary={<span>{msg.content}</span>}
+                  primary={
+                    <ReactMarkdown
+                      components={{
+                        p: ({ children }) => <span style={{ margin: 0 }}>{children}</span>,
+                        ul: ({ children }) => (
+                          <ul style={{ margin: '4px 0', paddingLeft: '1.1em' }}>{children}</ul>
+                        ),
+                        li: ({ children }) => <li style={{ margin: 0 }}>{children}</li>,
+                      }}
+                    >
+                      {msg.content}
+                    </ReactMarkdown>
+                  }
                   sx={{
                     bgcolor: msg.is_mine ? 'primary.main' : grey[100],
                     color: msg.is_mine ? 'white' : grey[900],
@@ -118,7 +131,7 @@ const ChatRoom = ({
                     px: 2,
                     wordBreak: 'break-word',
                     borderRadius: 4,
-                    maxWidth: '70%',
+                    maxWidth: '85%',
                     cursor: 'pointer',
                     flexGrow: 0,
                   }}
