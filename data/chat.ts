@@ -33,3 +33,9 @@ export interface WebSocketMessage {
 export interface MessageWrite {
   content: string;
 }
+
+// The customer's current page, sent with each message so the agent is page-aware
+// (e.g. won't offer to open a page they're already on). Cart contents stay in view_cart.
+export interface ClientContext {
+  current_path: string;
+}

@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import Router from 'next/router';
-import { MessageWrite, Message, WebSocketMessage } from '@/data/chat';
+import { MessageWrite, Message, WebSocketMessage, ClientContext } from '@/data/chat';
 import { IsUserProfile } from '@/data/auth';
 import { api } from '@/store/reducer/apis';
 
@@ -10,6 +10,8 @@ interface UseChatOptions {
   initialMessages?: Message[];
   profile?: IsUserProfile | false;
   isMineFunction: (message: Message, profile: IsUserProfile | false | undefined) => boolean;
+  // Snapshot of the customer's live screen, attached to each outgoing message (client chat only).
+  getClientContext?: () => ClientContext;
 }
 
 export const useChat = ({
@@ -17,6 +19,7 @@ export const useChat = ({
   initialMessages = [],
   profile,
   isMineFunction,
+  getClientContext,
 }: UseChatOptions) => {
   const dispatch = useDispatch();
   const [messages, setMessages] = useState<Message[]>(initialMessages);
@@ -111,8 +114,11 @@ export const useChat = ({
 
   const sendMessage = (message: MessageWrite) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
+      // Attach the current page so the agent is page-aware (won't offer a page they're on).
+      // Cart contents are NOT sent — the agent reads those via the view_cart tool.
       const formattedMessage = {
-        content: message.content, // Send only the "content" field (matches Django Channels)
+        content: message.content,
+        client_context: { current_path: Router.asPath },
       };
       socket.send(JSON.stringify(formattedMessage));
     } else {
