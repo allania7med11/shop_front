@@ -9,4 +9,4 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || getBackendUrl();
 export const baseUrl = backendUrl ? `${backendUrl}/api` : '';
 export const wsBaseUrl = backendUrl ? `${backendUrl.replace(/^http/, 'ws')}/ws` : '';
 
-export const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || '';
+export const stripePublicKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '';
